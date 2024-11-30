@@ -1,0 +1,20 @@
+{
+  "name": "@repo/payments",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "striped:pull": "striped pull",
+    "striped:deploy": "striped deploy"
+  },
+  "dependencies": {
+    "@repo/env": "workspace:*",
+    "@stripe/agent-toolkit": "^0.1.21",
+    "@usque/striped": "0.0.3",
+    "stripe": "^17.4.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5.7.2"
+  }
+}
