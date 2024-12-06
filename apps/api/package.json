@@ -1,0 +1,35 @@
+{
+  "name": "api",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"pnpm:next\" \"pnpm:stripe\"",
+    "next": "next dev -p 3002 --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "analyze": "ANALYZE=true pnpm build",
+    "stripe": "stripe listen --forward-to localhost:3002/webhooks/stripe"
+  },
+  "dependencies": {
+    "@repo/analytics": "workspace:*",
+    "@repo/auth": "workspace:*",
+    "@repo/database": "workspace:*",
+    "@repo/design-system": "workspace:*",
+    "@repo/env": "workspace:*",
+    "@repo/observability": "workspace:*",
+    "@repo/payments": "workspace:*",
+    "@sentry/nextjs": "^8.40.0",
+    "@repo/next-config": "workspace:*",
+    "next": "15.0.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "svix": "^1.41.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "22.9.4",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "concurrently": "^9.1.0",
+    "typescript": "^5.7.2"
+  }
+}
