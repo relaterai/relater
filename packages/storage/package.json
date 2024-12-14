@@ -3,9 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@vercel/blob": "^0.26.0"
+    "@repo/env": "workspace:*",
+    "@repo/utils": "workspace:*",
+    "aws4fetch": "^1.0.20"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*"
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.10.2"
   }
 }
