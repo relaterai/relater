@@ -1,10 +1,10 @@
-import { ContactTemplate } from '@repo/email/templates/contact';
+import { ContactTemplate } from '@repo/email/templates';
 
 const ExampleContactEmail = () => (
   <ContactTemplate
     name="Later Labs"
     email="hello@later.run"
-    message="Build Your Creativity Space"
+    message="Capture faster, review better."
   />
 );
 
