@@ -21,7 +21,7 @@ Elevate your online experience with Later - your essential tool for capturing, o
 - [app](apps/app) - The app for Later.
 - [api](apps/api) - Used for Stripe webhook, scheduled interfaces, and other third-party callbacks.
 - [studio](apps/studio) - Used for Prisma Studio, developing and debugging database schema.
-- [email](apps/email) - Used for Rect-email development and debugging of email templates.
+- [email](apps/email) - Used for React-email development and debugging of email templates.
 
 ## Documentation
 
