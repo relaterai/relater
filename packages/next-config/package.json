@@ -1,0 +1,18 @@
+{
+  "name": "@repo/next-config",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "@repo/env": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "next": "15.1.0"
+  },
+  "dependencies": {
+    "@logtail/next": "^0.1.6",
+    "@next/bundle-analyzer": "^15.1.0",
+    "@prisma/nextjs-monorepo-workaround-plugin": "^6.0.1",
+    "@sentry/nextjs": "^8.40.0",
+    "@vercel/toolbar": "^0.1.27",
+    "next-secure-headers": "^2.2.0"
+  }
+}
