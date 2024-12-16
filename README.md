@@ -16,7 +16,7 @@ Elevate your online experience with Later - your essential tool for capturing, o
 
 ## Documentation
 
-Visit https://later.run/docs to view the documentation.
+Visit [https://later.run/docs](https://later.run/docs) to view the documentation.
 
 ## Contributing
 
