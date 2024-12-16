@@ -27,12 +27,7 @@ const server: Parameters<typeof createEnv>[0]['server'] = {
   STRIPE_SECRET_KEY: z.string().min(1).startsWith('sk_'),
   STRIPE_WEBHOOK_SECRET: z.string().min(1).startsWith('whsec_').optional(),
   ANALYZE: z.string().optional(),
-  // SVIX_TOKEN: z
-  //   .string()
-  //   .min(1)
-  //   .startsWith('sk_')
-  //   .or(z.string().min(1).startsWith('testsk_')),
-  // LIVEBLOCKS_SECRET: z.string().min(1).startsWith('sk_').optional(),
+
   OPENAI_API_KEY: z.string().min(1).startsWith('sk-').optional(),
 
   // Added by Sentry Integration, Vercel Marketplace
@@ -56,6 +51,10 @@ const server: Parameters<typeof createEnv>[0]['server'] = {
   STORAGE_ACCESS_KEY_ID: z.string().min(1),
   STORAGE_SECRET_ACCESS_KEY: z.string().min(1),
   STORAGE_ENDPOINT: z.string().min(1).url(),
+
+  // Axiom Logger
+  NEXT_PUBLIC_AXIOM_TOKEN: z.string().min(1).optional(),
+  NEXT_PUBLIC_AXIOM_DATASET: z.string().min(1).optional(),
 };
 
 const client: Parameters<typeof createEnv>[0]['client'] = {
@@ -116,5 +115,9 @@ export const env = createEnv({
     STORAGE_ACCESS_KEY_ID: process.env.STORAGE_ACCESS_KEY_ID,
     STORAGE_SECRET_ACCESS_KEY: process.env.STORAGE_SECRET_ACCESS_KEY,
     STORAGE_ENDPOINT: process.env.STORAGE_ENDPOINT,
+
+    // Axiom Logger
+    NEXT_PUBLIC_AXIOM_TOKEN: process.env.NEXT_PUBLIC_AXIOM_TOKEN,
+    NEXT_PUBLIC_AXIOM_DATASET: process.env.NEXT_PUBLIC_AXIOM_DATASET,
   },
 });
