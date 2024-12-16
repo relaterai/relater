@@ -1,0 +1,18 @@
+{
+  "name": "@repo/observability",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@repo/env": "workspace:*",
+    "@sentry/nextjs": "^8.40.0",
+    "next-axiom": "^1.7.0",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "22.9.4",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.7.2"
+  }
+}
