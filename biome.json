@@ -1,0 +1,27 @@
+{
+  "extends": ["ultracite"],
+  "files": {
+    "ignore": [
+      "packages/design-system/components/ui/**",
+      "packages/design-system/lib/**",
+      "packages/design-system/hooks/**",
+      "packages/auth/**",
+      "apps/docs/**/*.json"
+    ]
+  },
+  "overrides": [
+    {
+      "include": [
+        "packages/env/index.ts",
+        "packages/tailwind-config/**.config.ts"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": "off"
+          }
+        }
+      }
+    }
+  ]
+}
