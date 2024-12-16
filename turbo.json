@@ -1,21 +1,35 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
+      "dependsOn": ["^build", "test"],
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "AUTH_SECRET",
+        "DATABASE_URL",
+        "STRIPE_SECRET_KEY",
+        "EMAIL_FROM",
+        "RESEND_TOKEN",
+        "SENTRY_AUTH_TOKEN",
+        "SENTRY_ORG",
+        "SENTRY_PROJECT",
+        "STRIPE_WEBHOOK_SECRET"
+      ]
     },
-    "db:migrate:deploy": {},
-    "db:push": {},
-    "db:seed": {},
+    "test": {
+      "dependsOn": ["^test"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "analyze": {
+      "dependsOn": ["^analyze"]
+    },
     "dev": {
+      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
-    },
-    "generate": {
-      "dependsOn": ["^generate"]
-    },
-    "lint": {}
+    }
   }
 }

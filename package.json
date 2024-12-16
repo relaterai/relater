@@ -15,12 +15,12 @@
     "@auto-it/first-time-contributor": "^11.3.0",
     "@biomejs/biome": "1.9.4",
     "@repo/typescript-config": "workspace:*",
-    "turbo": "^2.3.2",
+    "turbo": "^2.3.3",
     "typescript": "^5.7.2",
     "ultracite": "^4.1.7"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.9.0"
   },
   "packageManager": "pnpm@9.14.2"
 }
