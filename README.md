@@ -1,8 +1,8 @@
 # Later
 
-**About Later**
+## About Later
 
-Articles, social media posts, images, videos - AI makes everything saveable and easily digestible.
+Articles, social media posts, images, videos - Capture faster, review later.
 
 Later goes beyond traditional bookmarking, allowing you to save any content - web pages, articles, images, online videos, social media posts, and even selected text. Never miss valuable content again.
 
@@ -15,10 +15,13 @@ Later goes beyond traditional bookmarking, allowing you to save any content - we
 Elevate your online experience with Later - your essential tool for capturing, organizing, and discovering anything on the web.
 
 ## Documentation
+
 Visit https://later.run/docs to view the documentation.
 
 ## Contributing
+
 Please read the contributing guide.
 
 ## License
+
 Licensed under the [AGPL-3.0 license](LICENSE).
