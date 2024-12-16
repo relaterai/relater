@@ -142,7 +142,7 @@ export const Icons = {
       </svg>
     </svg>
   ),
-  logoclip: ({ ...props }: LucideProps) => (
+  logoClip: ({ ...props }: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
