@@ -14,10 +14,10 @@ Later goes beyond traditional bookmarking, allowing you to save any content - we
 
 Elevate your online experience with Later - your essential tool for capturing, organizing, and discovering anything on the web.
 
-## apps
+## Apps
 
 - [web](apps/web) - The web portal for Later, including application introductions, blogs, and more.
-- [bextension](apps/extension) - Browser extensions for Later, such as Chrome, Edge Add-on, Firefox Add-on, etc.
+- [extension](apps/extension) - Browser extensions for Later, such as Chrome, Edge Add-on, Firefox Add-on, etc.
 - [app](apps/app) - The app for Later.
 - [api](apps/api) - Used for Stripe webhook, scheduled interfaces, and other third-party callbacks.
 - [studio](apps/studio) - Used for Prisma Studio, developing and debugging database schema.
