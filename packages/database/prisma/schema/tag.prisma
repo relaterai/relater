@@ -1,0 +1,56 @@
+// Represents a tag that can be applied to pages
+model Tag {
+  id         String    @id @default(cuid())
+  /// Unique name of the tag
+  name       String    @unique
+  /// JSON string storing page IDs associated with this tag
+  pageIdDict String    @default("{}") @map("page_id_dict")
+  /// Color code for the tag
+  color      TagColor  @default(blue)
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  pages      PageTag[]
+
+  @@index([name])
+  @@map("tags")
+}
+
+model PageTag {
+  id        String   @id @default(cuid())
+  pageId    String   @map("page_id")
+  tagId     String   @map("tag_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  page      Page     @relation(fields: [pageId], references: [id])
+  tag       Tag      @relation(fields: [tagId], references: [id])
+
+  @@unique([pageId, tagId])
+  @@index([pageId])
+  @@index([tagId])
+  @@map("page_tags")
+}
+
+// https://ui.shadcn.com/colors
+enum TagColor {
+  gray
+  red
+  orange
+  yellow
+  zinc
+  neutral
+  stone
+  amber
+  lime
+  green
+  emerald
+  teal
+  cyan
+  sky
+  blue
+  indigo
+  violet
+  purple
+  fuchsia
+  pink
+  rose
+}
