@@ -1,8 +1,6 @@
 import { analytics } from '@repo/analytics/posthog/server';
 import prisma from '@repo/database';
 import { env } from '@repo/env';
-import { parseError } from '@repo/observability/error';
-import { log } from '@repo/observability/log';
 import { stripe } from '@repo/payments';
 import type { Stripe } from '@repo/payments';
 import { headers } from 'next/headers';
@@ -90,7 +88,7 @@ export const POST = async (request: Request): Promise<Response> => {
         break;
       }
       default: {
-        log.warn(`Unhandled event type ${event.type}`);
+        // log.warn(`Unhandled event type ${event.type}`);
       }
     }
 
@@ -98,9 +96,9 @@ export const POST = async (request: Request): Promise<Response> => {
 
     return NextResponse.json({ result: event, ok: true });
   } catch (error) {
-    const message = parseError(error);
+    // const message = parseError(error);
 
-    log.error(message);
+    // log.error(message);
 
     return NextResponse.json(
       {
