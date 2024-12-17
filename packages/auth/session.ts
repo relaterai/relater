@@ -25,8 +25,8 @@ export const withSession = (handler: WithSessionHandler) =>
         { params = {} }: { params: Record<string, string> | undefined }
     ) => {
       try {
-        const session = await auth();
-        if (!session?.user) {
+        const session = (await auth()) as Session;
+        if (!session || !session?.user || !session?.user?.id) {
           throw new LaterApiError({
             code: 'unauthorized',
             message: 'Unauthorized: Login required.',

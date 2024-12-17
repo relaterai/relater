@@ -19,7 +19,9 @@
     "@repo/feature-flags": "workspace:*",
     "@repo/next-config": "workspace:*",
     "@repo/tailwind-config": "workspace:*",
+    "@repo/zod": "workspace:*",
     "@sentry/nextjs": "^8.40.0",
+    "@vercel/functions": "^1.5.2",
     "fuse.js": "^7.0.0",
     "import-in-the-middle": "^1.11.2",
     "lucide-react": "^0.461.0",
@@ -29,7 +31,8 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "require-in-the-middle": "^7.4.0",
-    "swr": "^2.2.5"
+    "swr": "^2.2.5",
+    "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {
     "@repo/testing": "workspace:*",
