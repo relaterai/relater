@@ -59,6 +59,7 @@ model User {
   sessions Session[]
   pages    Page[]
   folders  Folder[]
+  tokens   Token[]
 
   @@index(source)
   @@map("users")
