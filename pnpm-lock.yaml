@@ -437,6 +437,9 @@ importers:
       '@repo/utils':
         specifier: workspace:*
         version: link:../utils
+      '@vercel/functions':
+        specifier: ^1.5.2
+        version: 1.5.2(@aws-sdk/credential-provider-web-identity@3.696.0(@aws-sdk/client-sts@3.699.0))
       lucide-react:
         specifier: ^0.461.0
         version: 0.461.0(react@18.3.1)
