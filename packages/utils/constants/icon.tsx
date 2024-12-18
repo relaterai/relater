@@ -152,7 +152,6 @@ export const Icons = {
       x="80"
       y="80"
       alignmentBaseline="middle"
-      style={{ color: 'rgb(35, 35, 35)' }}
       {...props}
     >
       <path
