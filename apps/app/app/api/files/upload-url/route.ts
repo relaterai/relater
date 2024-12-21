@@ -4,7 +4,7 @@ import { getPreSignedPutUrl } from '@repo/storage';
 import { fileUploadPreSignedUrlSchema } from '@repo/zod/schemas/file';
 import { NextResponse } from 'next/server';
 
-// POST /api/file/upload-url – get a signed URL to upload a screenshot or webpage archive
+// POST /api/files/upload-url – get a signed URL to upload a screenshot or webpage archive
 export const POST = withSession(async ({ session, req }) => {
   const { fileName, contentType, bucket, ttl } =
     fileUploadPreSignedUrlSchema.parse(await parseRequestBody(req));

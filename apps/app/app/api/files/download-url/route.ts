@@ -6,7 +6,7 @@ import { getPreSignedGetUrl } from '@repo/storage';
 import { fileDownloadPreSignedUrlSchema } from '@repo/zod/schemas/file';
 import { NextResponse } from 'next/server';
 
-// POST /api/file/download-url – get a signed URL to retrieve a screenshot or webpage archive
+// POST /api/files/download-url – get a signed URL to retrieve a screenshot or webpage archive
 export const POST = withSession(async ({ req, session }) => {
   const { key } = fileDownloadPreSignedUrlSchema.parse(
     await parseRequestBody(req)
