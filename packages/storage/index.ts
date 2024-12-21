@@ -1,153 +1,158 @@
+import path from 'node:path';
+import {
+  DeleteObjectCommand,
+  GetObjectCommand,
+  HeadObjectCommand,
+  type HeadObjectCommandOutput,
+  PutObjectCommand,
+  S3Client,
+  type S3ServiceException,
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { env } from '@repo/env';
-import { fetchWithTimeout } from '@repo/utils';
-import { AwsClient } from 'aws4fetch';
+import { nanoid } from '@repo/utils';
 
-interface ImageOptions {
-  contentType?: string;
-  width?: number;
-  height?: number;
+export const storageClient = new S3Client({
+  endpoint: env.STORAGE_ENDPOINT,
+  region: env.STORAGE_REGION,
+  credentials: {
+    accessKeyId: env.STORAGE_ACCESS_KEY_ID,
+    secretAccessKey: env.STORAGE_SECRET_ACCESS_KEY,
+  },
+  forcePathStyle: false,
+  maxAttempts: 3,
+});
+
+/**
+ * Generates a pre-signed URL for retrieving an object from a specified
+ * bucket.
+ *
+ * @param {string} key - The key of the object to retrieve.
+ * @param {string} [bucket=env.STORAGE_UPLOAD_BUCKET] - The name of the bucket to retrieve from.
+ * @param {number} [ttl=600] - The time to live (in seconds) of the pre-signed URL.
+ * @returns {Promise<string>} The pre-signed URL.
+ */
+export async function getPreSignedGetUrl(
+  key: string,
+  bucket: string = env.STORAGE_UPLOAD_BUCKET,
+  ttl = 600
+) {
+  const getObjectCommand = new GetObjectCommand({
+    Bucket: bucket,
+    Key: key,
+  });
+
+  const signedUrl = await getSignedUrl(storageClient, getObjectCommand, {
+    expiresIn: ttl,
+  });
+
+  return signedUrl;
+}
+/**
+ * Generates a pre-signed URL for uploading an object to a specified bucket.
+ *
+ * @param {string} fileName - The name of the file to upload.
+ * @param {string} userId - The ID of the user associated with the file.
+ * @param {string} contentType - The content type of the file.
+ * @param {string} [bucket=env.STORAGE_UPLOAD_BUCKET] - The name of the bucket to upload to.
+ * @param {number} [ttl=600] - The time to live (in seconds) of the pre-signed URL.
+ * @returns {Promise<string>} The pre-signed URL.
+ */
+export async function getPreSignedPutUrl(
+  fileName: string,
+  userId: string,
+  contentType: string,
+  bucket: string = env.STORAGE_UPLOAD_BUCKET,
+  ttl = 600
+) {
+  const slugify = await import('@sindresorhus/slugify').then(
+    (module) => module.default
+  );
+  const { name, ext } = path.parse(fileName);
+
+  const slugifiedName = slugify(name) + ext;
+  const key = `${userId}/${nanoid(16)}/${slugifiedName}`;
+  const putObjectcommand = new PutObjectCommand({
+    Bucket: bucket || process.env.STORAGE_UPLOAD_BUCKET,
+    Key: key,
+    ContentType: contentType,
+    ContentDisposition: `attachment; filename="${slugifiedName}"`,
+  });
+
+  const signedUrl = await getSignedUrl(storageClient, putObjectcommand, {
+    expiresIn: ttl,
+  });
+
+  return { url: signedUrl, key, userId, fileName: slugifiedName };
 }
 
-class StorageClient {
-  private client: AwsClient;
-
-  constructor() {
-    this.client = new AwsClient({
-      accessKeyId: env.STORAGE_ACCESS_KEY_ID || '',
-      secretAccessKey: env.STORAGE_SECRET_ACCESS_KEY || '',
-      service: 's3',
-      region: 'auto',
-    });
-  }
-
-  async upload(key: string, body: Blob | Buffer | string, opts?: ImageOptions) {
-    let uploadBody;
-    if (typeof body === 'string') {
-      if (this.isBase64(body)) {
-        uploadBody = this.base64ToArrayBuffer(body, opts);
-      } else if (this.isUrl(body)) {
-        uploadBody = await this.urlToBlob(body, opts);
-      } else {
-        throw new Error('Invalid input: Not a base64 string or a valid URL');
-      }
-    } else {
-      uploadBody = body;
-    }
-
-    const headers: Record<string, string> = {
-      'Content-Length':
-        uploadBody instanceof Blob
-          ? uploadBody.size.toString()
-          : Buffer.byteLength(uploadBody).toString(),
-    };
-    if (opts?.contentType) headers['Content-Type'] = opts.contentType;
-
-    try {
-      await this.client.fetch(`${process.env.STORAGE_ENDPOINT}/${key}`, {
-        method: 'PUT',
-        headers,
-        body: uploadBody,
-      });
-
-      return {
-        url: `${env.STORAGE_BASE_URL}/${key}`,
-      };
-    } catch (error: unknown) {
-      throw new Error(
-        `Failed to upload file: ${error instanceof Error ? error.message : 'Unknown error'}`
-      );
-    }
-  }
-
-  async fetch(key: string) {
-    return this.client.fetch(`${env.STORAGE_BASE_URL}/${key}`);
-  }
-
-  async delete(key: string) {
-    await this.client.fetch(`${env.STORAGE_BASE_URL}/${key}`, {
-      method: 'DELETE',
-    });
-
-    return { success: true };
-  }
-
-  async getSignedUrl(key: string) {
-    const url = new URL(`${env.STORAGE_BASE_URL}/${key}`);
-
-    // 10 minutes expiration
-    url.searchParams.set('X-Amz-Expires', '600');
-
-    const signed = await this.client.sign(url, {
-      method: 'PUT',
-      aws: {
-        signQuery: true,
-        allHeaders: true,
-      },
-    });
-
-    return signed.url;
-  }
-
-  private base64ToArrayBuffer(base64: string, opts?: ImageOptions) {
-    const base64Data = base64.replace(/^data:.+;base64,/, '');
-    const paddedBase64Data = base64Data.padEnd(
-      base64Data.length + ((4 - (base64Data.length % 4)) % 4),
-      '='
+/**
+ * Retrieves metadata of an object from a specified bucket.
+ *
+ * @param key - The key of the object to retrieve metadata for.
+ * @param bucket - The name of the bucket containing the object. Defaults to `env.STORAGE_UPLOAD_BUCKET`.
+ * @returns The metadata of the object if found, otherwise `null` if the object is not found.
+ * @throws Will throw an error if the operation fails for reasons other than the object not being found.
+ *
+ */
+export async function headObject(
+  key: string,
+  bucket: string = env.STORAGE_UPLOAD_BUCKET
+): Promise<HeadObjectCommandOutput> {
+  try {
+    const meta = await storageClient.send(
+      new HeadObjectCommand({ Key: key, Bucket: bucket })
     );
-
-    const binaryString = atob(paddedBase64Data);
-    const byteArray = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      byteArray[i] = binaryString.charCodeAt(i);
+    return meta;
+  } catch (error) {
+    if ((error as S3ServiceException).name === 'NotFound') {
+      return {
+        $metadata: {
+          httpStatusCode: 404, // file not exists
+          requestId: '',
+          extendedRequestId: '',
+          attempts: 0,
+          totalRetryDelay: 0,
+        },
+        AcceptRanges: '',
+        ContentLength: 0, // default to 0 when file not exists
+        ETag: '',
+        ContentType: '',
+      };
     }
-    const blobProps: { type?: string } = {};
-    if (opts?.contentType) blobProps.type = opts.contentType;
-    return new Blob([byteArray], blobProps);
-  }
-
-  private isBase64(str: string): boolean {
-    const regex = /^data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+);base64,([^\s]*)$/;
-    return regex.test(str);
-  }
-
-  private isUrl(str: string): boolean {
-    try {
-      new URL(str);
-      return true;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  private async urlToBlob(url: string, opts?: ImageOptions): Promise<Blob> {
-    let response: Response;
-    if (opts?.height || opts?.width) {
-      try {
-        const proxyUrl = new URL('https://wsrv.nl');
-        proxyUrl.searchParams.set('url', url);
-        if (opts.width) proxyUrl.searchParams.set('w', opts.width.toString());
-        if (opts.height) proxyUrl.searchParams.set('h', opts.height.toString());
-        proxyUrl.searchParams.set('fit', 'cover');
-        response = await fetchWithTimeout(proxyUrl.toString());
-      } catch (error) {
-        response = await fetch(url);
-      }
-    } else {
-      response = await fetch(url);
-    }
-    if (!response.ok) {
-      throw new Error(`Failed to fetch URL: ${response.statusText}`);
-    }
-    const blob = await response.blob();
-    if (opts?.contentType) {
-      return new Blob([blob], { type: opts.contentType });
-    }
-    return blob;
+    throw error;
   }
 }
 
-export const storage = new StorageClient();
+/**
+ * Deletes an object from a specified bucket.
+ *
+ * @param key - The key of the object to delete.
+ * @param bucket - The name of the bucket containing the object. Defaults to `env.STORAGE_UPLOAD_BUCKET`.
+ * @returns A promise that resolves to an object with a `success` property set to `true`.
+ * @throws Will throw an error if the operation fails for reasons other than the object not being found.
+ */
+export async function deleteObject(
+  key: string,
+  bucket: string = env.STORAGE_UPLOAD_BUCKET
+): Promise<{ success: boolean }> {
+  try {
+    const res = await storageClient.send(
+      new DeleteObjectCommand({ Key: key, Bucket: bucket })
+    );
+    return { success: true };
+  } catch (error) {
+    console.error('Error in deleteObject:', error);
+    throw error;
+  }
+}
 
+/**
+ * Checks if a URL is stored in the storage service.
+ *
+ * @param url - The URL to check.
+ * @returns True if the URL is stored in the storage service, false otherwise.
+ */
 export const isStored = (url: string) => {
-  return url.startsWith(env.STORAGE_BASE_URL);
+  return url.startsWith(env.STORAGE_ENDPOINT);
 };

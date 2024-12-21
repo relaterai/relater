@@ -51,6 +51,8 @@ const server: Parameters<typeof createEnv>[0]['server'] = {
   STORAGE_ACCESS_KEY_ID: z.string().min(1),
   STORAGE_SECRET_ACCESS_KEY: z.string().min(1),
   STORAGE_ENDPOINT: z.string().min(1).url(),
+  STORAGE_REGION: z.string().min(1),
+  STORAGE_UPLOAD_BUCKET: z.string().min(1),
 
   // Axiom Logger
   NEXT_PUBLIC_AXIOM_TOKEN: z.string().min(1).optional(),
@@ -115,6 +117,8 @@ export const env = createEnv({
     STORAGE_ACCESS_KEY_ID: process.env.STORAGE_ACCESS_KEY_ID,
     STORAGE_SECRET_ACCESS_KEY: process.env.STORAGE_SECRET_ACCESS_KEY,
     STORAGE_ENDPOINT: process.env.STORAGE_ENDPOINT,
+    STORAGE_REGION: process.env.STORAGE_REGION,
+    STORAGE_UPLOAD_BUCKET: process.env.STORAGE_UPLOAD_BUCKET,
 
     // Axiom Logger
     NEXT_PUBLIC_AXIOM_TOKEN: process.env.NEXT_PUBLIC_AXIOM_TOKEN,
