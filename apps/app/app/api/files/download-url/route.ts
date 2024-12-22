@@ -8,9 +8,12 @@ import { NextResponse } from 'next/server';
 
 // POST /api/files/download-url – get a signed URL to retrieve a screenshot or webpage archive
 export const POST = withSession(async ({ req, session }) => {
-  const { key } = fileDownloadPreSignedUrlSchema.parse(
-    await parseRequestBody(req)
-  );
+  const { key } = fileDownloadPreSignedUrlSchema
+    .omit({
+      ttl: true,
+      bucket: true,
+    })
+    .parse(await parseRequestBody(req));
 
   if (!key.startsWith(session.user.id)) {
     throw new LaterApiError({
