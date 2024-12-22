@@ -1,4 +1,4 @@
-model Page {
+model Snapshot {
   id            String    @id @default(cuid())
   userId        String    @map("user_id")
   /// ID reference to the page's screenshot
@@ -9,8 +9,6 @@ model Page {
   contentUrl    String    @map("content_url")
   /// Original URL of the webpage
   pageUrl       String    @map("page_url")
-  /// Reference to the parent folder
-  folderId      String    @map("folder_id")
   /// Current storage usage in megabytes for webpage snapshots and screenshots
   storageUsage  Int       @default(0) @map("storage_usage")
   /// Current AI usage in tokens
@@ -23,13 +21,11 @@ model Page {
   updatedAt     DateTime  @updatedAt @map("updated_at")
   /// Flag for showcased pages
   isShowcased   Int       @default(0) @map("is_showcased")
-  folder        Folder    @relation(fields: [folderId], references: [id])
-  tags          PageTag[]
+  tags          Tag[]
   user          User      @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([pageUrl])
-  @@index([folderId])
   @@index([isShowcased])
-  @@map("pages")
+  @@map("snapshots")
 }

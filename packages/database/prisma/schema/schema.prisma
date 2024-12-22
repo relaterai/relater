@@ -55,11 +55,10 @@ model User {
   source     String?  @map("source")
 
   // relational data
-  accounts Account[]
-  sessions Session[]
-  pages    Page[]
-  folders  Folder[]
-  tokens   Token[]
+  accounts  Account[]
+  sessions  Session[]
+  snapshots Snapshot[]
+  tokens    Token[]
 
   @@index(source)
   @@map("users")
