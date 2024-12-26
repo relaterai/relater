@@ -59,6 +59,7 @@ import {
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import Heatmap from './heatmap';
+import { signOut } from 'next-auth/react';
 
 type GlobalSidebarProperties = {
   readonly children: ReactNode;
@@ -288,7 +289,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                   <ModeToggle />
                 </DropdownMenuItem>
                 <DropdownMenuSeparator /> */}
-                <DropdownMenuItem className="text-red-600">
+                <DropdownMenuItem onClick={() => signOut()} className="text-red-600">
                   <LogOutIcon className="mr-2 h-4 w-4" />
                   <span>Log Out</span>
                 </DropdownMenuItem>
