@@ -27,6 +27,12 @@ const Heatmap = () => {
     setData(generateMockData(new Date()));
   }, []);
 
+  const stats = {
+    totalNotes: data.reduce((sum, day) => sum + day.count, 0),
+    totalTags: 15,
+    activeDays: data.filter(day => day.count > 0).length
+  };
+
   const getColor = (count: number) => {
     if (count === 0) return 'rgb(235, 237, 240)';
     if (count <= 3) return 'rgb(155, 233, 168)';
@@ -48,6 +54,21 @@ const Heatmap = () => {
 
   return (
     <div className="p-4">
+      <div className="grid grid-cols-3 gap-4 mb-4 text-sm text-gray-600">
+        <div className="text-center">
+          <div className="font-medium">{stats.totalNotes}</div>
+          <div>Notes</div>
+        </div>
+        <div className="text-center">
+          <div className="font-medium">{stats.totalTags}</div>
+          <div>Tags</div>
+        </div>
+        <div className="text-center">
+          <div className="font-medium">{stats.activeDays}</div>
+          <div>Days</div>
+        </div>
+      </div>
+
       <div className="flex gap-1">
         {weeks.map((week, weekIndex) => (
           <div key={weekIndex} className="flex flex-col gap-1">

@@ -2,6 +2,7 @@
 
 // import { OrganizationSwitcher, UserButton } from '@repo/auth/client';
 import { ModeToggle } from '@repo/design-system/components/mode-toggle';
+import { DownloadWidget } from '@repo/design-system/components/download-widget';
 import {
   Collapsible,
   CollapsibleContent,
@@ -260,6 +261,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
           </SidebarGroup> */}
         </SidebarContent>
         <SidebarFooter>
+          <DownloadWidget compact />
           <SidebarMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

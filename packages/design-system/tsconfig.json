@@ -12,6 +12,6 @@
       "@repo/design-system/*": ["./*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx", "components/download-widget.tsx"],
   "exclude": ["node_modules"]
 }
