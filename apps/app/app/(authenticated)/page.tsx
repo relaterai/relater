@@ -59,20 +59,16 @@ const App = async () => {
         <div className="flex items-center gap-2 px-4 justify-between w-full">
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbPage>
-                    Dashboard
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-                {/* <BreadcrumbSeparator className="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-              </BreadcrumbItem> */}
-              </BreadcrumbList>
-            </Breadcrumb>
+            {/* <Separator orientation="vertical" className="mr-2 h-4" />
+                  <Breadcrumb>
+                    <BreadcrumbList>
+                      <BreadcrumbItem className="hidden md:block">
+                        <BreadcrumbPage>
+                          Dashboard
+                        </BreadcrumbPage>
+                      </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb> */}
           </div>
           <div className="flex w-full max-w-sm items-center space-x-2">
             <Input
@@ -85,14 +81,14 @@ const App = async () => {
               <span className="sr-only">Search</span>
             </Button>
           </div>
-        </div>
-      </header>
+        </div >
+      </header >
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-4">
+        <div className="grid auto-rows-min gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 grid-cols-1">
           {notes.map((note) => (
             <div key={note.id} className="aspect-auto rounded-xl bg-muted/50 overflow-hidden cursor-pointer hover:bg-muted/70 hover:shadow-sm transition-all duration-300">
               <div className="flex flex-col h-full">
-                <div className="h-2/3">
+                <div className="h-7/12">
                   <img
                     src={note.cover}
                     alt={note.title}
@@ -110,7 +106,7 @@ const App = async () => {
                       ))}
                     </div>
                   </div>
-                  <p className="mt-2 text-sm text-muted-foreground">{note.content}</p>
+                  <p className="mt-5/12 text-sm text-muted-foreground">{note.content}</p>
                   <div className="mt-auto text-xs text-muted-foreground">
                     Updated at {note.updatedAt.toLocaleDateString()}
                   </div>

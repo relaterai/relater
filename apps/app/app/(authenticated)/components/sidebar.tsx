@@ -190,7 +190,9 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                   sidebar.open ? '' : '-mx-1'
                 )}
               ></div>
-              <Heatmap />
+              <div className="flex items-center justify-center">
+                <Heatmap />
+              </div>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarHeader>
