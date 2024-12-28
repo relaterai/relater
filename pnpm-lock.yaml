@@ -94,8 +94,8 @@ importers:
         specifier: ^0.37.4
         version: 0.37.4(nodemailer@6.9.16)
       '@prisma/client':
-        specifier: 6.0.1
-        version: 6.0.1(prisma@6.1.0)
+        specifier: 6.1.0
+        version: 6.1.0(prisma@6.1.0)
       '@repo/analytics':
         specifier: workspace:*
         version: link:../../packages/analytics
@@ -409,7 +409,7 @@ importers:
         version: 1.7.4(nodemailer@6.9.16)(pg@8.13.1)
       '@auth/prisma-adapter':
         specifier: ^2.7.4
-        version: 2.7.4(@prisma/client@6.0.1(prisma@6.1.0))(nodemailer@6.9.16)
+        version: 2.7.4(@prisma/client@6.1.0(prisma@6.1.0))(nodemailer@6.9.16)
       '@hookform/resolvers':
         specifier: ^3.9.1
         version: 3.9.1(react-hook-form@7.53.2(react@18.3.1))
@@ -417,8 +417,8 @@ importers:
         specifier: ^0.10.4
         version: 0.10.4
       '@prisma/client':
-        specifier: 6.0.1
-        version: 6.0.1(prisma@6.1.0)
+        specifier: 6.1.0
+        version: 6.1.0(prisma@6.1.0)
       '@repo/database':
         specifier: workspace:*
         version: link:../database
@@ -490,8 +490,8 @@ importers:
   packages/database:
     dependencies:
       '@prisma/client':
-        specifier: 6.0.1
-        version: 6.0.1(prisma@6.1.0)
+        specifier: 6.1.0
+        version: 6.1.0(prisma@6.1.0)
       '@repo/env':
         specifier: workspace:*
         version: link:../env
@@ -736,7 +736,7 @@ importers:
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.23.8)
       zod:
-        specifier: ^3.23.8
+        specifier: ^3.22.0
         version: 3.23.8
     devDependencies:
       '@repo/typescript-config':
@@ -795,8 +795,8 @@ importers:
         specifier: ^15.1.0
         version: 15.1.0(bufferutil@4.0.8)
       '@prisma/nextjs-monorepo-workaround-plugin':
-        specifier: ^6.0.1
-        version: 6.0.1
+        specifier: ^6.1.0
+        version: 6.1.0
       '@sentry/nextjs':
         specifier: ^8.40.0
         version: 8.40.0(@opentelemetry/core@1.26.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.54.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.26.0(@opentelemetry/api@1.9.0))(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.91.0(@swc/core@1.3.101(@swc/helpers@0.5.15)))
@@ -2917,8 +2917,8 @@ packages:
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
-  '@prisma/client@6.0.1':
-    resolution: {integrity: sha512-60w7kL6bUxz7M6Gs/V+OWMhwy94FshpngVmOY05TmGD0Lhk+Ac0ZgtjlL6Wll9TD4G03t4Sq1wZekNVy+Xdlbg==}
+  '@prisma/client@6.1.0':
+    resolution: {integrity: sha512-AbQYc5+EJKm1Ydfq3KxwcGiy7wIbm4/QbjCKWWoNROtvy7d6a3gmAGkKjK0iUCzh+rHV8xDhD5Cge8ke/kiy5Q==}
     engines: {node: '>=18.18'}
     peerDependencies:
       prisma: '*'
@@ -2944,8 +2944,8 @@ packages:
   '@prisma/instrumentation@5.19.1':
     resolution: {integrity: sha512-VLnzMQq7CWroL5AeaW0Py2huiNKeoMfCH3SUxstdzPrlWQi6UQ9UrfcbUkNHlVFqOMacqy8X/8YtE0kuKDpD9w==}
 
-  '@prisma/nextjs-monorepo-workaround-plugin@6.0.1':
-    resolution: {integrity: sha512-7GCiwVbIyF2mO0qL0e0BMHc1wQJEuXg61EcRXt6rWtFtxQEXQc2Hl839WQ89jrNmsEPYH9UCFyJ9hP5AhbA+9w==}
+  '@prisma/nextjs-monorepo-workaround-plugin@6.1.0':
+    resolution: {integrity: sha512-hB+yI820xSAFFVljV7CzhJaT7FJNZagGIMUjFFTcyJAjA1Qb0VQ6Y598j6g8GBKwyPiasN1ehDYDIfTJI9kA/A==}
 
   '@radix-ui/number@1.1.0':
     resolution: {integrity: sha512-V3gRzhVNU1ldS5XhAPTom1fOIo4ccrjjJgmE+LI2h/WaFpHmx0MQApT+KZHnx8abG6Avtfcz4WoEciMnpFT3HQ==}
@@ -9462,10 +9462,10 @@ snapshots:
       - '@simplewebauthn/server'
       - nodemailer
 
-  '@auth/prisma-adapter@2.7.4(@prisma/client@6.0.1(prisma@6.1.0))(nodemailer@6.9.16)':
+  '@auth/prisma-adapter@2.7.4(@prisma/client@6.1.0(prisma@6.1.0))(nodemailer@6.9.16)':
     dependencies:
       '@auth/core': 0.37.4(nodemailer@6.9.16)
-      '@prisma/client': 6.0.1(prisma@6.1.0)
+      '@prisma/client': 6.1.0(prisma@6.1.0)
     transitivePeerDependencies:
       - '@simplewebauthn/browser'
       - '@simplewebauthn/server'
@@ -11770,7 +11770,7 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
-  '@prisma/client@6.0.1(prisma@6.1.0)':
+  '@prisma/client@6.1.0(prisma@6.1.0)':
     optionalDependencies:
       prisma: 6.1.0
 
@@ -11803,7 +11803,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@prisma/nextjs-monorepo-workaround-plugin@6.0.1': {}
+  '@prisma/nextjs-monorepo-workaround-plugin@6.1.0': {}
 
   '@radix-ui/number@1.1.0': {}
 

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
-    "@prisma/client": "6.0.1",
+    "@prisma/client": "6.1.0",
     "@repo/analytics": "workspace:*",
     "@repo/auth": "workspace:*",
     "@repo/database": "workspace:*",
