@@ -3,6 +3,7 @@ import { env } from '@repo/env';
 import { allPosts } from 'content-collections';
 import { MoveRight, PhoneCall } from 'lucide-react';
 import Link from 'next/link';
+import { DownloadWidget } from '@repo/design-system/components/download-widget';
 
 export const Hero = () => (
   <div className="w-full">
@@ -25,7 +26,7 @@ export const Hero = () => (
           </p>
         </div>
         <div className="flex flex-row gap-3">
-          <Button size="lg" className="gap-4" variant="outline" asChild>
+          {/* <Button size="lg" className="gap-4" variant="outline" asChild>
             <Link href="/contact">
               Get in touch <PhoneCall className="h-4 w-4" />
             </Link>
@@ -34,7 +35,8 @@ export const Hero = () => (
             <Link href={env.NEXT_PUBLIC_APP_URL}>
               Sign up <MoveRight className="h-4 w-4" />
             </Link>
-          </Button>
+          </Button> */}
+          <DownloadWidget />
         </div>
       </div>
     </div>

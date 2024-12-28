@@ -2,11 +2,13 @@
 
 // import { OrganizationSwitcher, UserButton } from '@repo/auth/client';
 import { ModeToggle } from '@repo/design-system/components/mode-toggle';
+import { DownloadWidget } from '@repo/design-system/components/download-widget';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@repo/design-system/components/ui/collapsible';
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/design-system/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,19 +40,27 @@ import {
   BookOpenIcon,
   BotIcon,
   ChevronRightIcon,
+  ChevronsUpDownIcon,
+  ChevronUpIcon,
   FolderIcon,
   FrameIcon,
+  HashIcon,
   LifeBuoyIcon,
+  LogOutIcon,
   MapIcon,
   MoreHorizontalIcon,
   PieChartIcon,
   SendIcon,
   Settings2Icon,
+  SettingsIcon,
   ShareIcon,
   SquareTerminalIcon,
   Trash2Icon,
+  UserIcon,
 } from 'lucide-react';
 import type { ReactNode } from 'react';
+import Heatmap from './heatmap';
+import { signOut } from 'next-auth/react';
 
 type GlobalSidebarProperties = {
   readonly children: ReactNode;
@@ -64,86 +74,32 @@ const data = {
   },
   navMain: [
     {
-      title: 'Playground',
+      title: 'Tag 0',
       url: '#',
-      icon: SquareTerminalIcon,
       isActive: true,
       items: [
         {
-          title: 'History',
+          title: 'Tag 1',
+          url: '#',
+          items: [
+            {
+              title: 'Tag 2',
+              url: '#',
+              items: [
+                {
+                  title: 'Tag 3',
+                  url: '#'
+                }
+              ]
+            },
+          ],
+        },
+        {
+          title: 'Tag 4',
           url: '#',
         },
         {
-          title: 'Starred',
-          url: '#',
-        },
-        {
-          title: 'Settings',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Models',
-      url: '#',
-      icon: BotIcon,
-      items: [
-        {
-          title: 'Genesis',
-          url: '#',
-        },
-        {
-          title: 'Explorer',
-          url: '#',
-        },
-        {
-          title: 'Quantum',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Documentation',
-      url: '#',
-      icon: BookOpenIcon,
-      items: [
-        {
-          title: 'Introduction',
-          url: '#',
-        },
-        {
-          title: 'Get Started',
-          url: '#',
-        },
-        {
-          title: 'Tutorials',
-          url: '#',
-        },
-        {
-          title: 'Changelog',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Settings',
-      url: '#',
-      icon: Settings2Icon,
-      items: [
-        {
-          title: 'General',
-          url: '#',
-        },
-        {
-          title: 'Team',
-          url: '#',
-        },
-        {
-          title: 'Billing',
-          url: '#',
-        },
-        {
-          title: 'Limits',
+          title: 'Tag 5',
           url: '#',
         },
       ],
@@ -185,6 +141,40 @@ const data = {
   ],
 };
 
+const RecursiveMenuItem = ({ item }: { item: any }) => {
+  return (
+    <SidebarMenuItem key={item.title}>
+      <SidebarMenuButton asChild>
+        <a href={item.url}>
+          {
+            item.items && <HashIcon />
+          }
+          <span>{item.title}</span>
+        </a>
+      </SidebarMenuButton>
+      {item.items?.length ? (
+        <Collapsible asChild>
+          <div>
+            <CollapsibleTrigger asChild>
+              <SidebarMenuAction className="data-[state=open]:rotate-90">
+                <ChevronRightIcon />
+                <span className="sr-only">Toggle</span>
+              </SidebarMenuAction>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <SidebarMenuSub>
+                {item.items.map((subItem: any) => (
+                  <RecursiveMenuItem key={subItem.title} item={subItem} />
+                ))}
+              </SidebarMenuSub>
+            </CollapsibleContent>
+          </div>
+        </Collapsible>
+      ) : null}
+    </SidebarMenuItem>
+  );
+};
+
 export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
   const sidebar = useSidebar();
 
@@ -200,12 +190,25 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                   sidebar.open ? '' : '-mx-1'
                 )}
               ></div>
+              <div className="flex items-center justify-center">
+                <Heatmap />
+              </div>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Platform</SidebarGroupLabel>
+            <SidebarGroupLabel>Pinned Tags</SidebarGroupLabel>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <div className="text-sm text-muted-foreground px-4">
+                  Pin tags here for easy access
+                </div>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
+          <SidebarGroup>
+            <SidebarGroupLabel>Tags</SidebarGroupLabel>
             <SidebarMenu>
               {data.navMain.map((item) => (
                 <Collapsible
@@ -216,7 +219,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip={item.title}>
                       <a href={item.url}>
-                        <item.icon />
+                        <HashIcon />
                         <span>{item.title}</span>
                       </a>
                     </SidebarMenuButton>
@@ -231,13 +234,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                         <CollapsibleContent>
                           <SidebarMenuSub>
                             {item.items?.map((subItem) => (
-                              <SidebarMenuSubItem key={subItem.title}>
-                                <SidebarMenuSubButton asChild>
-                                  <a href={subItem.url}>
-                                    <span>{subItem.title}</span>
-                                  </a>
-                                </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
+                              <RecursiveMenuItem key={subItem.title} item={subItem} />
                             ))}
                           </SidebarMenuSub>
                         </CollapsibleContent>
@@ -248,55 +245,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
               ))}
             </SidebarMenu>
           </SidebarGroup>
-          <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-            <SidebarGroupLabel>Projects</SidebarGroupLabel>
-            <SidebarMenu>
-              {data.projects.map((item) => (
-                <SidebarMenuItem key={item.name}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.name}</span>
-                    </a>
-                  </SidebarMenuButton>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <SidebarMenuAction showOnHover>
-                        <MoreHorizontalIcon />
-                        <span className="sr-only">More</span>
-                      </SidebarMenuAction>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      className="w-48"
-                      side="bottom"
-                      align="end"
-                    >
-                      <DropdownMenuItem>
-                        <FolderIcon className="text-muted-foreground" />
-                        <span>View Project</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <ShareIcon className="text-muted-foreground" />
-                        <span>Share Project</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <Trash2Icon className="text-muted-foreground" />
-                        <span>Delete Project</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </SidebarMenuItem>
-              ))}
-              <SidebarMenuItem>
-                <SidebarMenuButton>
-                  <MoreHorizontalIcon />
-                  <span>More</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroup>
-          <SidebarGroup className="mt-auto">
+          {/* <SidebarGroup className="mt-auto">
             <SidebarGroupContent>
               <SidebarMenu>
                 {data.navSecondary.map((item) => (
@@ -311,13 +260,45 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>
-          </SidebarGroup>
+          </SidebarGroup> */}
         </SidebarContent>
         <SidebarFooter>
+          <DownloadWidget compact />
           <SidebarMenu>
-            <SidebarMenuItem className="flex items-center gap-2">
-              <ModeToggle />
-            </SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuItem className="flex items-center gap-2 cursor-pointer">
+                  <Avatar className="h-8 w-8 rounded-md">
+                    <AvatarImage src="https://avatars.githubusercontent.com/u/54500106" alt="Demo User" />
+                    <AvatarFallback>DU</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col flex-1 overflow-hidden">
+                    <span className="text-sm font-medium truncate">Demo User</span>
+                    <span className="text-xs text-muted-foreground truncate">demo@example.com</span>
+                  </div>
+                  <ChevronsUpDownIcon className="h-4 w-4 shrink-0 transition-transform duration-200" />
+                </SidebarMenuItem>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-[200px]" side="right">
+                <DropdownMenuItem>
+                  <UserIcon className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <SettingsIcon className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                {/* <DropdownMenuItem>
+                  <ModeToggle />
+                </DropdownMenuItem>
+                <DropdownMenuSeparator /> */}
+                <DropdownMenuItem onClick={() => signOut()} className="text-red-600">
+                  <LogOutIcon className="mr-2 h-4 w-4" />
+                  <span>Log Out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </SidebarMenu>
         </SidebarFooter>
       </Sidebar>

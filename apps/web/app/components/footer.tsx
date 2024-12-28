@@ -31,10 +31,10 @@ export const Footer = () => {
           title: 'Privacy Policy',
           href: '/legal/privacy',
         },
-        {
-          title: 'Acceptable Use',
-          href: '/legal/acceptable-use',
-        },
+        // {
+        //   title: 'Acceptable Use',
+        //   href: '/legal/acceptable-use',
+        // },
       ],
     },
   ];
