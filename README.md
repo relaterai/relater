@@ -14,14 +14,16 @@ Later goes beyond traditional bookmarking, allowing you to save any content - we
 
 Elevate your online experience with Later - your essential tool for capturing, organizing, and discovering anything on the web.
 
-## Apps
+## Project Structure
 
-- [web](apps/web) - The web portal for Later, including application introductions, blogs, and more.
-- [extension](apps/extension) - Browser extensions for Later, such as Chrome, Edge Add-on, Firefox Add-on, etc.
-- [app](apps/app) - The app for Later.
-- [api](apps/api) - Used for Stripe webhook, scheduled interfaces, and other third-party callbacks.
-- [studio](apps/studio) - Used for Prisma Studio, developing and debugging database schema.
-- [email](apps/email) - Used for React-email development and debugging of email templates.
+This repository is organized as a monorepo using pnpm workspaces, containing the following packages:
+
+- [web](apps/web) - The public website built with Next.js, containing landing pages, documentation and blog posts
+- [extension](apps/extension) - Browser extension built with React, supporting Chrome, Firefox and Edge browsers
+- [app](apps/app) - Main application built with Next.js, handling core user functionalities
+- [api](apps/api) - Backend service built with Node.js, handling webhooks and scheduled tasks
+- [studio](apps/studio) - Database management interface powered by Prisma Studio
+- [email](apps/email) - Email template development environment using React Email
 
 ## Documentation
 
