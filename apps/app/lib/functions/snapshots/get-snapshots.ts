@@ -1,6 +1,7 @@
 import prisma, { type Prisma } from '@repo/database';
 import type z from '@repo/zod';
 import type { getSnapshotsQuerySchema } from '@repo/zod/schemas/snapshots';
+import { signedFileUrl } from './signed-file-url';
 
 type GetSnapshotsParams = z.infer<typeof getSnapshotsQuerySchema> & {
   userId: string;
@@ -72,7 +73,7 @@ export async function getSnapshots({
   });
 
   return {
-    snapshots,
+    snapshots: await signedFileUrl(snapshots),
     pagination: {
       total,
       page,
