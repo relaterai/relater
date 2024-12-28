@@ -3,6 +3,7 @@ import { getSnapshots } from '@/lib/functions/snapshots/get-snapshots';
 import { parseRequestBody } from '@/lib/utils';
 import { withSession } from '@repo/auth/session';
 import prisma, { type Prisma } from '@repo/database';
+import { isStored } from '@repo/storage';
 import {
   SnapshotSchema,
   createSnapshotSchema,
@@ -46,8 +47,12 @@ export const POST = withSession(async ({ req, session }) => {
 
   const newSnapshot = await prisma.snapshot.create({
     data: {
-      screenshotFileKey: screenshotFileKey,
-      snapshotFileKey: snapshotFileKey,
+      screenshotFileKey: isStored(screenshotFileKey)
+        ? screenshotFileKey?.split('/').pop()
+        : screenshotFileKey,
+      snapshotFileKey: isStored(snapshotFileKey)
+        ? snapshotFileKey?.split('/').pop()
+        : snapshotFileKey,
       pageUrl: pageUrl,
       userId: session.user.id,
       title: title || '',

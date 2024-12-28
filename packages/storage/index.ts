@@ -153,6 +153,6 @@ export async function deleteObject(
  * @param url - The URL to check.
  * @returns True if the URL is stored in the storage service, false otherwise.
  */
-export const isStored = (url: string) => {
-  return url.startsWith(env.STORAGE_ENDPOINT);
+export const isStored = (url?: string) => {
+  return url && url.startsWith(env.STORAGE_ENDPOINT);
 };
