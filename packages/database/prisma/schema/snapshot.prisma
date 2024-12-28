@@ -1,31 +1,44 @@
 model Snapshot {
-  id            String    @id @default(cuid())
-  userId        String    @map("user_id")
-  /// ID reference to the page's screenshot
-  screenshotId  String?   @map("screenshot_id")
-  /// Title of the webpage
-  title         String    @map("title")
-  /// URL to the stored content
-  contentUrl    String    @map("content_url")
-  /// Original URL of the webpage
-  pageUrl       String    @map("page_url")
-  /// Current storage usage in megabytes for webpage snapshots and screenshots
-  storageUsage  Int       @default(0) @map("storage_usage")
+  id                String    @id @default(cuid())
+  userId            String    @map("user_id")
+  /// Title of the snapshot
+  title             String?
+  /// AI-generated summary of the snapshot content
+  summary           String?
+  /// User's custom note or comment on the snapshot
+  note              String?
+  /// Flag for pinned snapshots
+  pinned            Boolean   @default(false)
+  /// S3 KEY reference to the page's screenshot
+  screenshotFileKey String?   @map("screenshot_file_key")
+  /// S3 KEY for archived webpage content
+  snapshotFileKey   String?   @map("snapshot_file_key")
+  /// Original URL of snapshot if it's webpage 
+  pageUrl           String?   @map("page_url")
+  /// Current storage usage in megabytes for webpage snapshots and screenshots in bytes
+  storageUsage      Int       @default(0) @map("storage_usage")
   /// Current AI usage in tokens
-  aiTokensUsage Int       @default(0) @map("ai_tokens_usage")
+  aiTokensUsage     Int       @default(0) @map("ai_tokens_usage")
   /// Description of the page
-  isDeleted     Boolean   @default(false) @map("is_deleted")
+  isDeleted         Boolean   @default(false) @map("is_deleted")
   /// Timestamp when the page was deleted
-  deletedAt     DateTime? @map("deleted_at")
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-  /// Flag for showcased pages
-  isShowcased   Int       @default(0) @map("is_showcased")
-  tags          Tag[]
-  user          User      @relation(fields: [userId], references: [id])
+  deletedAt         DateTime? @map("deleted_at")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+  /// Flag for showcased pages  
+  isShowcased       Int       @default(0) @map("is_showcased")
+  tags              Tag[]
+  user              User      @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([pageUrl])
   @@index([isShowcased])
+  @@index([deletedAt])
+  @@index([createdAt])
+  @@index([pinned])
+  @@index([title])
+  @@index([summary])
+  @@index([note])
+  @@index([isDeleted])
   @@map("snapshots")
 }
