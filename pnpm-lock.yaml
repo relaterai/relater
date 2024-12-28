@@ -230,18 +230,12 @@ importers:
 
   apps/web:
     dependencies:
-      '@arcjet/next':
-        specifier: 1.0.0-alpha.31
-        version: 1.0.0-alpha.31(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@content-collections/mdx':
         specifier: ^0.2.0
         version: 0.2.0(@content-collections/core@0.7.3(typescript@5.7.2))(acorn@8.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-icons':
         specifier: ^1.3.2
         version: 1.3.2(react@18.3.1)
-      '@repo/database':
-        specifier: workspace:*
-        version: link:../../packages/database
       '@repo/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
@@ -490,7 +484,7 @@ importers:
   packages/database:
     dependencies:
       '@prisma/client':
-        specifier: 6.1.0
+        specifier: ^6.1.0
         version: 6.1.0(prisma@6.1.0)
       '@repo/env':
         specifier: workspace:*
@@ -506,7 +500,7 @@ importers:
         specifier: 22.9.4
         version: 22.9.4
       prisma:
-        specifier: 6.1.0
+        specifier: ^6.1.0
         version: 6.1.0
       typescript:
         specifier: ^5.7.2
@@ -736,7 +730,7 @@ importers:
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.23.8)
       zod:
-        specifier: ^3.22.0
+        specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
       '@repo/typescript-config':
@@ -1194,52 +1188,6 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
-
-  '@arcjet/analyze@1.0.0-alpha.31':
-    resolution: {integrity: sha512-N6ZnS2AX/p+E79nEEtAS+ESpu4BTh27nmTnB96AlGMF2CQM9q4atESWNSGs11VhTFXOzIKVoVWUfGJl1pb6N9w==}
-    engines: {node: '>=18'}
-
-  '@arcjet/duration@1.0.0-alpha.31':
-    resolution: {integrity: sha512-XbQlUdsXJ9yoL4DnJu2e+JO5Ck3tG85blAPhR8qT+BLV8Jz+kc+3UkpiGOYvab29lLoRK6UgZwEAVDqM8rb7+A==}
-    engines: {node: '>=18'}
-
-  '@arcjet/env@1.0.0-alpha.31':
-    resolution: {integrity: sha512-xZDJkHVhcBI0vb8d71kueyzBWSrvyO7Rn5mEOMP4NVwBhlKtdE4dIqoYYq7mkU6HpwAdpRQnoCkpr70hE6TY4Q==}
-    engines: {node: '>=18'}
-
-  '@arcjet/headers@1.0.0-alpha.31':
-    resolution: {integrity: sha512-VWRyC5nTS6+b++GAJz+SPo2XcEbDGdJjm0T/Q3AZJxW8XRb7lW1GLWXTsFZ1EWu1b4zoyUc1ZSPonNthpl0oaw==}
-    engines: {node: '>=18'}
-
-  '@arcjet/ip@1.0.0-alpha.31':
-    resolution: {integrity: sha512-fhUuMzEv9szvg9D2x+DW2TdCNL/+FwkpOlcIcH+Fd0Iw+0Jg84+Ivwc7yeTPlaKFUNTQVDegYN4AZNnIGtiLig==}
-    engines: {node: '>=18'}
-
-  '@arcjet/logger@1.0.0-alpha.31':
-    resolution: {integrity: sha512-eIXQIaHghSQbrjtsYYqFnpWxLJN4tcE+dfNbZYzg5vv6wMb9oKxaj22YGZGCGUtHOc/EE1k6z/7ldcI574b7jw==}
-    engines: {node: '>=18'}
-
-  '@arcjet/next@1.0.0-alpha.31':
-    resolution: {integrity: sha512-/j86EWRif/9Ro2+77GYlesPdES58Vw/uINPildQ8KY0nvnCfFMbFP55oPL9qNPxTp96D3olpCYdrwjnYHSlK8Q==}
-    engines: {node: '>=18'}
-    peerDependencies:
-      next: '>=13'
-
-  '@arcjet/protocol@1.0.0-alpha.31':
-    resolution: {integrity: sha512-/QwJDsF1stX1wrmJkiN5ELUFfLr00o8mER2u61iUvnXn2cBxHnxuVSJ1UC6X0i2pMZaXXagXdJwCw+t+f3cG7Q==}
-    engines: {node: '>=18'}
-
-  '@arcjet/runtime@1.0.0-alpha.31':
-    resolution: {integrity: sha512-6rVPRBruZYKBg++ivZJ+nIugjdrXVkPSUu56lrNWpVmQfPHHSxlXTmtyRrgnXa+jF2NPATE+FkAOFtyWzScTzQ==}
-    engines: {node: '>=18'}
-
-  '@arcjet/sprintf@1.0.0-alpha.31':
-    resolution: {integrity: sha512-uwisg5FzyNIeR+74FN8GA8fQ5mmGD/do/mauofXIf9zZDC4nHWs7ydBndF6gLUZRVyMyCdSULfD6XDXuujV4HQ==}
-    engines: {node: '>=18'}
-
-  '@arcjet/transport@1.0.0-alpha.31':
-    resolution: {integrity: sha512-6BEdzIHyWWogMhvVIatO4ge9/OrjPQ6BZQIwHqQnNX2qL1xXMt5k4hrqGN4CZ/Lg48In22GCXSzVP0GB4rRWOw==}
-    engines: {node: '>=18'}
 
   '@auth/core@0.37.2':
     resolution: {integrity: sha512-kUvzyvkcd6h1vpeMAojK2y7+PAV5H+0Cc9+ZlKYDFhDY31AlvsB+GW5vNO4qE3Y07KeQgvNO9U0QUx/fN62kBw==}
@@ -1792,9 +1740,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@bufbuild/protobuf@1.10.0':
-    resolution: {integrity: sha512-QDdVFLoN93Zjg36NoQPZfsVH9tZew7wKDKyV5qRdj8ntT4wQCOradQjRaTdwMhWUYsgKsvCINKKm87FdEk96Ag==}
-
   '@cfcs/core@0.0.6':
     resolution: {integrity: sha512-FxfJMwoLB8MEMConeXUCqtMGqxdtePQxRBOiGip9ULcYYam3WfCgoY6xdnMaSkYvRvmosp5iuG+TiPofm65+Pw==}
 
@@ -1824,24 +1769,6 @@ packages:
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
     engines: {node: '>=0.1.90'}
-
-  '@connectrpc/connect-node@1.6.1':
-    resolution: {integrity: sha512-DxcD1wsF/aX9GegjAtl7VbpiZNjVJozy87VbaFoN6AF0Ln1Q757r5dgV59Gz0wmlk5f17txUsrEr1f2inlnnAg==}
-    engines: {node: '>=16.0.0'}
-    peerDependencies:
-      '@bufbuild/protobuf': ^1.10.0
-      '@connectrpc/connect': 1.6.1
-
-  '@connectrpc/connect-web@1.6.1':
-    resolution: {integrity: sha512-GVfxQOmt3TtgTaKeXLS/EA2IHa3nHxwe2BCHT7X0Q/0hohM+nP5DDnIItGEjGrGdt3LTTqWqE4s70N4h+qIMlQ==}
-    peerDependencies:
-      '@bufbuild/protobuf': ^1.10.0
-      '@connectrpc/connect': 1.6.1
-
-  '@connectrpc/connect@1.6.1':
-    resolution: {integrity: sha512-KchMDNtU4CDTdkyf0qG7ugJ6qHTOR/aI7XebYn3OTCNagaDYWiZUVKgRgwH79yeMkpNgvEUaXSK7wKjaBK9b/Q==}
-    peerDependencies:
-      '@bufbuild/protobuf': ^1.10.0
 
   '@content-collections/cli@0.1.6':
     resolution: {integrity: sha512-1MrxENMhAOAMFoLYNmlyCgwVB3i75PMX9vNLJ+jVh7akSfDrRRDWGn4E4WXDWCs27krSN7o98OJQVNav7Ndapw==}
@@ -2190,10 +2117,6 @@ packages:
 
   '@fal-works/esbuild-plugin-global-externals@2.1.2':
     resolution: {integrity: sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==}
-
-  '@fastify/busboy@2.1.1':
-    resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
-    engines: {node: '>=14'}
 
   '@floating-ui/core@1.6.2':
     resolution: {integrity: sha512-+2XpQV9LLZeanU4ZevzRnGFg2neDeKHgFLjP6YLW+tly0IvrhqT4u8enLGjLH3qeh85g19xY5rsAusfwTdn5lg==}
@@ -5151,10 +5074,6 @@ packages:
   app-path@3.3.0:
     resolution: {integrity: sha512-EAgEXkdcxH1cgEePOSsmUtw9ItPl0KTxnh/pj9ZbhvbKbij9x0oX6PWpGnorDr0DS5AosLgoa5n3T/hZmKQpYA==}
     engines: {node: '>=8'}
-
-  arcjet@1.0.0-alpha.31:
-    resolution: {integrity: sha512-6ch4CU3IClpD9NHB07T7sxY63IVomC+G6cIsee96zX5FW9XuwhquxaiYDyYfJUtwjcdm6tUfI7+A/KW7ivdnDg==}
-    engines: {node: '>=18'}
 
   arg@4.1.3:
     resolution: {integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==}
@@ -8701,9 +8620,6 @@ packages:
     resolution: {integrity: sha512-/OxDN6OtAk5KBpGb28T+HZc2M+ADtvRxXrKKbUwtsLgdoxgX13hyy7ek6bFRl5+aBs2yZzB0c4CnQfAtVypW/g==}
     engines: {node: '>= 0.4'}
 
-  typeid-js@1.1.0:
-    resolution: {integrity: sha512-SS0GEC0/0OJ06IvGEbqc6dVa5WwQN4mDq2UG9x2D7f+CD2X/b+p2xfEPNli0DO23lmeVl45bFt/bAOQa0GB4fg==}
-
   typescript-memoize@1.1.1:
     resolution: {integrity: sha512-GQ90TcKpIH4XxYTI2F98yEQYZgjNMOGPpOgdjIBhaLaWji5HPWlRnZ4AeA1hfBxtY7bCGDJsqDDHk/KaHOl5bA==}
 
@@ -8728,10 +8644,6 @@ packages:
 
   undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
-
-  undici@5.28.4:
-    resolution: {integrity: sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==}
-    engines: {node: '>=14.0'}
 
   unicode-properties@1.4.1:
     resolution: {integrity: sha512-CLjCCLQ6UuMxWnbIylkisbRj31qxHPAurvena/0iwSVbQ2G1VY5/HjV0IRabOEbDHlzZlRdCrD4NhB0JtU40Pg==}
@@ -9382,54 +9294,6 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
-
-  '@arcjet/analyze@1.0.0-alpha.31':
-    dependencies:
-      '@arcjet/protocol': 1.0.0-alpha.31
-
-  '@arcjet/duration@1.0.0-alpha.31': {}
-
-  '@arcjet/env@1.0.0-alpha.31': {}
-
-  '@arcjet/headers@1.0.0-alpha.31': {}
-
-  '@arcjet/ip@1.0.0-alpha.31': {}
-
-  '@arcjet/logger@1.0.0-alpha.31':
-    dependencies:
-      '@arcjet/sprintf': 1.0.0-alpha.31
-
-  '@arcjet/next@1.0.0-alpha.31(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
-    dependencies:
-      '@arcjet/env': 1.0.0-alpha.31
-      '@arcjet/headers': 1.0.0-alpha.31
-      '@arcjet/ip': 1.0.0-alpha.31
-      '@arcjet/logger': 1.0.0-alpha.31
-      '@arcjet/protocol': 1.0.0-alpha.31
-      '@arcjet/transport': 1.0.0-alpha.31(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))
-      arcjet: 1.0.0-alpha.31
-      next: 15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-    transitivePeerDependencies:
-      - '@bufbuild/protobuf'
-      - '@connectrpc/connect'
-
-  '@arcjet/protocol@1.0.0-alpha.31':
-    dependencies:
-      '@bufbuild/protobuf': 1.10.0
-      '@connectrpc/connect': 1.6.1(@bufbuild/protobuf@1.10.0)
-      typeid-js: 1.1.0
-
-  '@arcjet/runtime@1.0.0-alpha.31': {}
-
-  '@arcjet/sprintf@1.0.0-alpha.31': {}
-
-  '@arcjet/transport@1.0.0-alpha.31(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))':
-    dependencies:
-      '@connectrpc/connect-node': 1.6.1(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))
-      '@connectrpc/connect-web': 1.6.1(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))
-    transitivePeerDependencies:
-      - '@bufbuild/protobuf'
-      - '@connectrpc/connect'
 
   '@auth/core@0.37.2(nodemailer@6.9.16)':
     dependencies:
@@ -10724,8 +10588,6 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
-  '@bufbuild/protobuf@1.10.0': {}
-
   '@cfcs/core@0.0.6':
     dependencies:
       '@egjs/component': 3.0.5
@@ -10764,21 +10626,6 @@ snapshots:
 
   '@colors/colors@1.5.0':
     optional: true
-
-  '@connectrpc/connect-node@1.6.1(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))':
-    dependencies:
-      '@bufbuild/protobuf': 1.10.0
-      '@connectrpc/connect': 1.6.1(@bufbuild/protobuf@1.10.0)
-      undici: 5.28.4
-
-  '@connectrpc/connect-web@1.6.1(@bufbuild/protobuf@1.10.0)(@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0))':
-    dependencies:
-      '@bufbuild/protobuf': 1.10.0
-      '@connectrpc/connect': 1.6.1(@bufbuild/protobuf@1.10.0)
-
-  '@connectrpc/connect@1.6.1(@bufbuild/protobuf@1.10.0)':
-    dependencies:
-      '@bufbuild/protobuf': 1.10.0
 
   '@content-collections/cli@0.1.6(@content-collections/core@0.7.3(typescript@5.7.2))':
     dependencies:
@@ -11010,8 +10857,6 @@ snapshots:
     optional: true
 
   '@fal-works/esbuild-plugin-global-externals@2.1.2': {}
-
-  '@fastify/busboy@2.1.1': {}
 
   '@floating-ui/core@1.6.2':
     dependencies:
@@ -14419,14 +14264,6 @@ snapshots:
   app-path@3.3.0:
     dependencies:
       execa: 1.0.0
-
-  arcjet@1.0.0-alpha.31:
-    dependencies:
-      '@arcjet/analyze': 1.0.0-alpha.31
-      '@arcjet/duration': 1.0.0-alpha.31
-      '@arcjet/headers': 1.0.0-alpha.31
-      '@arcjet/protocol': 1.0.0-alpha.31
-      '@arcjet/runtime': 1.0.0-alpha.31
 
   arg@4.1.3: {}
 
@@ -18641,10 +18478,6 @@ snapshots:
       is-typed-array: 1.1.13
       possible-typed-array-names: 1.0.0
 
-  typeid-js@1.1.0:
-    dependencies:
-      uuid: 10.0.0
-
   typescript-memoize@1.1.1: {}
 
   typescript@5.7.2: {}
@@ -18663,10 +18496,6 @@ snapshots:
   undici-types@6.19.8: {}
 
   undici-types@6.20.0: {}
-
-  undici@5.28.4:
-    dependencies:
-      '@fastify/busboy': 2.1.1
 
   unicode-properties@1.4.1:
     dependencies:
