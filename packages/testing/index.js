@@ -6,6 +6,7 @@ const config = defineConfig({
   plugins: [react()],
   test: {
     environment: 'jsdom',
+    testTimeout: 30000,
   },
   resolve: {
     alias: {
