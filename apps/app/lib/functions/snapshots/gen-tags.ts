@@ -66,7 +66,6 @@ export const genSnapshotTags = async (input: {
     role: 'user' as const,
     content: defaultPrompt,
   });
-
   const { object } = await generateObject({
     model,
     schema: z.object({

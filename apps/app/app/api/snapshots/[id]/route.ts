@@ -4,7 +4,7 @@ import { withSession } from '@repo/auth/session';
 import prisma from '@repo/database';
 import type z from '@repo/zod';
 import {
-  SnapshotSchema,
+  type SnapshotSchema,
   updateSnapshotSchema,
 } from '@repo/zod/schemas/snapshots';
 import { NextResponse } from 'next/server';
@@ -39,7 +39,8 @@ export const PATCH = withSession(async ({ session, params, req }) => {
     });
   }
 
-  return NextResponse.json(SnapshotSchema.parse(snapshot));
+  // return NextResponse.json(SnapshotSchema.parse(snapshot));
+  return NextResponse.json(snapshot);
 });
 
 // DELETE /api/snapshots/:id - permanently delete a snapshot from trash
