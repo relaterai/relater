@@ -8,7 +8,8 @@
     "test": "turbo test",
     "analyze": "turbo analyze",
     "bump-deps": "npx npm-check-updates --deep -u -x react-day-picker && pnpm install",
-    "migrate": "cd packages/database && npx prisma format && npx prisma generate && npx prisma db push"
+    "migrate": "cd packages/database && npx prisma format && npx prisma generate && npx prisma db push",
+    "script": "echo 'Run this script in apps/app'"
   },
   "devDependencies": {
     "@auto-it/all-contributors": "^11.3.0",
