@@ -59,7 +59,7 @@ export const TagSchema = z
     createdAt: z.date().describe('The creation date of the tag.'),
     updatedAt: z.date().describe('The update date of the tag.'),
     snapshots: z
-      .array(SnapshotSchema)
+      .array(z.union([z.lazy(() => SnapshotSchema), z.never()]))
       .optional()
       .describe('The snapshots of the tag.'),
   })

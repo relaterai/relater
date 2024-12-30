@@ -96,16 +96,22 @@ export const SnapshotSchema: z.ZodType = z
     snapshotFileKey: z
       .string()
       .describe('The snapshot file key of the snapshot.'),
-    screenshotUrl: z
-      .string()
-      .url()
-      .describe('The screenshot URL of the snapshot.'),
-    snapshotUrl: z.string().url().describe('The snapshot URL of the snapshot.'),
+    // screenshotUrl: z
+    //   .string()
+    //   .url()
+    //   .describe('The screenshot URL of the snapshot.'),
+    // snapshotUrl: z
+    //   .string()
+    //   .url()
+    //   .optional()
+    //   .describe('The snapshot URL of the snapshot.'),
     pageUrl: z.string().describe('The page URL of the snapshot.'),
     storageUsage: z.number().describe('The storage usage of the snapshot.'),
     createdAt: z.date().describe('The creation date of the snapshot.'),
     updatedAt: z.date().describe('The update date of the snapshot.'),
-    tags: z.array(TagSchema).optional().describe('The tags of the snapshot.'),
+    tags: z
+      .union([z.array(z.lazy(() => TagSchema)), z.array(z.unknown())])
+      .describe('The tags of the snapshot.'),
   })
   .openapi({
     title: 'Snapshot',
