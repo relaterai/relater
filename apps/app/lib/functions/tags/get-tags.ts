@@ -11,7 +11,7 @@ export async function getTags({
   search,
   name,
   ids,
-  withSnapshots = true,
+  withSnapshots = false,
   withSnapshotsCount = true,
   sort = 'createdAt',
 }: GetTagsParams) {
@@ -66,7 +66,6 @@ export async function getTags({
     },
     orderBy: [{ [sort]: 'desc' }],
   });
-
   return {
     tags,
   };
