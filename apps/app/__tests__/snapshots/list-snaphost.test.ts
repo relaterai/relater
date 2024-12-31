@@ -13,7 +13,7 @@ test('GET /snapshots', async (ctx) => {
   const newSnapshot: z.infer<typeof createSnapshotSchema> = {
     title: 'Test Snapshot',
     snippet: 'Test Snippet',
-    pageUrl: 'https://example.com',
+    pageUrl: 'https://later.run',
     screenshotFileKey: 'test-test-test.tsx',
     snapshotFileKey: 'test-test-test.tsx',
   };
