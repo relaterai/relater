@@ -1,5 +1,5 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import prisma from '@repo/database';
+import prisma from '@repo/database/edge';
 import { env } from '@repo/env';
 import type { NextAuthConfig } from "next-auth"
 import type { User } from 'next-auth';
