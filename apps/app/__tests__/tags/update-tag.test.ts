@@ -46,12 +46,13 @@ test('PATCH /api/tags/:id', async (ctx) => {
   });
 
   const firstTag = snapshotCreated.tags[0];
+  const updatedTagName = 'area/dev/prisma-starter';
   const { status, data: updatedTag } = await http.patch<
     z.infer<typeof TagSchema>
   >({
     path: `/tags/${firstTag.id}`,
     body: {
-      name: 'a/b/c',
+      name: updatedTagName,
       color: 'red',
       emoji: '🍎',
       pinned: true,
@@ -59,7 +60,7 @@ test('PATCH /api/tags/:id', async (ctx) => {
   });
 
   expect(status).toEqual(200);
-  expect(updatedTag.name).toEqual('a/b/c');
+  expect(updatedTag.name).toEqual(updatedTagName);
   expect(updatedTag.color).toEqual('red');
   expect(updatedTag.emoji).toEqual('🍎');
   expect(updatedTag.pinned).toEqual(true);
