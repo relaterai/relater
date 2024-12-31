@@ -17,7 +17,7 @@ export const PATCH = withSession(async ({ session, params, req }) => {
     await parseRequestBody(req)
   );
 
-  const tag = await prisma.snapshot.update({
+  const tag = await prisma.tag.update({
     where: {
       id: params.id,
       userId: session.user.id,
