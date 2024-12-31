@@ -84,7 +84,11 @@ export const deleteTagSchema = TagSchema.pick({
 
 export const deleteTagQuerySchema = z.object({
   deleteSnapshot: z
-    .boolean()
+    .union([z.boolean(), z.string()])
+    .transform((val) => {
+      if (typeof val === 'boolean') return val;
+      return val === 'true';
+    })
     .optional()
     .describe('Whether to delete related snapshots.'),
 });

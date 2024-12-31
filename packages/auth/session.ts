@@ -109,7 +109,7 @@ export const withSession = (handler: WithSessionHandler) =>
           });
         }}
         const searchParams = getSearchParams(req.url);
-        return await handler({ req, params, searchParams, session });
+        return await handler({ req, params: await params, searchParams, session });
       } catch (error) {
         if (error instanceof LaterApiError) {
           req.log.error(error.message ?? error);

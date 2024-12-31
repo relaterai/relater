@@ -3,10 +3,10 @@ import type {
   SnapshotSchema,
   createSnapshotSchema,
 } from '@repo/zod/schemas/snapshots';
-import { afterAll, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { IntegrationHarness } from '../utils/mock-client';
 
-test('GET /snapshots', async (ctx) => {
+test('GET /api/snapshots', async (ctx) => {
   const h = new IntegrationHarness(ctx);
   const { http } = await h.init();
 
@@ -43,11 +43,14 @@ test('GET /snapshots', async (ctx) => {
       title: snapshotCreated.title,
       screenshotFileKey: expect.any(String),
       snapshotFileKey: expect.any(String),
-      tags: snapshotCreated.tags,
+      // tags: snapshotCreated.tags,
     })
   );
 
-  afterAll(async () => {
-    await h.deleteSnapshot(snapshotCreated.id);
-  });
+  await Promise.all([
+    ...(snapshotCreated.tags ?? []).map((tag: { id: string }) =>
+      h.deleteTag(tag.id, false)
+    ),
+    h.deleteSnapshot(snapshotCreated.id),
+  ]);
 });

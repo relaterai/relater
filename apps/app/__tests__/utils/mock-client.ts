@@ -62,9 +62,9 @@ export class IntegrationHarness {
   }
 
   // Delete tag
-  public async deleteTag(id: string) {
+  public async deleteTag(id: string, deleteSnapshot = false) {
     await this.http.delete({
-      path: `/tags/${id}`,
+      path: `/tags/${id}?deleteSnapshot=${deleteSnapshot}`,
     });
   }
 }
