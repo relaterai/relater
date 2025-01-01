@@ -21,6 +21,7 @@ export async function deleteTagAndSnapshots({
             },
             data: {
               isDeleted: true,
+              deletedAt: new Date(),
             },
           },
         },

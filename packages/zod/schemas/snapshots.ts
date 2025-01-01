@@ -30,6 +30,11 @@ export const getSnapshotsQuerySchema = z
       .describe('The field to sort by.'),
     withTags: z.boolean().optional().describe('Whether to include tags.'),
     withCount: z.boolean().optional().describe('Whether to include count.'),
+    isDeleted: z
+      .union([z.boolean(), z.string()])
+      .transform((v) => (typeof v === 'boolean' ? v : v === 'true'))
+      .optional()
+      .describe('Whether to return snapshots in trash.'),
   })
   .merge(getPaginationQuerySchema({ pageSize: SNAPSHOTS_MAX_PAGE_SIZE }));
 
@@ -62,6 +67,7 @@ export const createSnapshotSchema = z
 export const updateSnapshotSchema = z.object({
   tags: z
     .array(z.string())
+    .optional()
     .describe('Tags for the snapshot (manually added by user)'),
   snapshotId: z
     .string({
@@ -109,6 +115,16 @@ export const SnapshotSchema: z.ZodType = z
     storageUsage: z.number().describe('The storage usage of the snapshot.'),
     createdAt: z.date().describe('The creation date of the snapshot.'),
     updatedAt: z.date().describe('The update date of the snapshot.'),
+    isDeleted: z
+      .boolean()
+      .optional()
+      .nullable()
+      .describe('Whether the snapshot is deleted.'),
+    deletedAt: z
+      .date()
+      .optional()
+      .nullable()
+      .describe('The deletion date of the snapshot.'),
     tags: z
       .union([z.array(z.lazy(() => TagSchema)), z.array(z.unknown())])
       .describe('The tags of the snapshot.'),

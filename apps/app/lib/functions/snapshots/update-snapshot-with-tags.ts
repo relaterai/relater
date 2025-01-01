@@ -28,6 +28,7 @@ export async function updateSnapshotWithTags({
   const snapshot = await prisma.snapshot.findUnique({
     where: {
       id: snapshotId,
+      userId,
     },
     include: {
       tags: {

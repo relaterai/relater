@@ -11,10 +11,11 @@ import { NextResponse } from 'next/server';
 
 // PATCH /api/snapshots/:id - update a specific snapshot
 export const PATCH = withSession(async ({ session, params, req }) => {
-  const { note, tags, pinned, isDeleted } = updateSnapshotSchema.parse(
-    await parseRequestBody(req)
-  );
-
+  const { note, tags, pinned, isDeleted } = updateSnapshotSchema
+    .omit({
+      snapshotId: true,
+    })
+    .parse(await parseRequestBody(req));
   let snapshot: z.infer<typeof SnapshotSchema>;
   if (tags) {
     snapshot = await updateSnapshotWithTags({
@@ -33,8 +34,9 @@ export const PATCH = withSession(async ({ session, params, req }) => {
       },
       data: {
         ...(note && { note }),
-        ...(pinned && { pinned }),
-        ...(isDeleted && { isDeleted }), // Move to trash
+        ...(pinned !== null && typeof pinned === 'boolean' && { pinned }),
+        ...(isDeleted !== null &&
+          typeof isDeleted === 'boolean' && { isDeleted }), // Move to trash or restore from trash
       },
     });
   }

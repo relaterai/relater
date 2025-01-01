@@ -14,7 +14,7 @@ import { NextResponse } from 'next/server';
 
 // GET /api/snapshots – get snapshots
 export const GET = withSession(async ({ req, session, searchParams }) => {
-  const { page, pageSize, withTags, sort, tagName, tagIds, search } =
+  const { page, pageSize, withTags, sort, tagName, tagIds, search, isDeleted } =
     getSnapshotsQuerySchema.parse(searchParams);
   const { snapshots, pagination } = await getSnapshots({
     userId: session.user.id,
@@ -26,6 +26,7 @@ export const GET = withSession(async ({ req, session, searchParams }) => {
     tagIds,
     search,
     withCount: true,
+    isDeleted,
   });
   return NextResponse.json({
     items: z.array(SnapshotSchema).parse(snapshots),

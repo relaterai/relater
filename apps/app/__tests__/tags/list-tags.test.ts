@@ -61,7 +61,7 @@ test('GET /api/tags', async (ctx) => {
     status: statusSearch,
     data: { items: tagsSearch },
   } = await http.get<{ items: z.infer<typeof TagSchema>[] }>({
-    path: `/tags?search=${prefix}`,
+    path: `/tags?tagName=${prefix}`,
   });
 
   expect(statusSearch).toEqual(200);
