@@ -17,6 +17,7 @@ export async function getTags({
 }: GetTagsParams) {
   const where: Prisma.TagWhereInput = {
     userId,
+    isDeleted: false,
     // Search conditions
     ...(search && {
       OR: [{ name: { contains: search } }],

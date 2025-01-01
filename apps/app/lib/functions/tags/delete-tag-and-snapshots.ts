@@ -26,10 +26,14 @@ export async function deleteTagAndSnapshots({
         },
       },
     });
-    return await tx.tag.delete({
+    return await tx.tag.update({
       where: {
         id,
         userId,
+      },
+      data: {
+        isDeleted: true,
+        deletedAt: new Date(),
       },
     });
   });
