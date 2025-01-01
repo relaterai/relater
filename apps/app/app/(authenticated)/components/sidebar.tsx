@@ -61,6 +61,7 @@ import {
 import type { ReactNode } from 'react';
 import Heatmap from './heatmap';
 import { signOut } from 'next-auth/react';
+import Link from 'next/link';
 
 type GlobalSidebarProperties = {
   readonly children: ReactNode;
@@ -245,22 +246,6 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
               ))}
             </SidebarMenu>
           </SidebarGroup>
-          {/* <SidebarGroup className="mt-auto">
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {data.navSecondary.map((item) => (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <a href={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </a>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup> */}
         </SidebarContent>
         <SidebarFooter>
           <DownloadWidget compact />
@@ -287,6 +272,12 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                 <DropdownMenuItem>
                   <SettingsIcon className="mr-2 h-4 w-4" />
                   <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/recycle-bin">
+                    <Trash2Icon className="mr-2 h-4 w-4" />
+                    <span>Recycle Bin</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 {/* <DropdownMenuItem>
