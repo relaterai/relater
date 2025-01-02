@@ -62,6 +62,8 @@ import type { ReactNode } from 'react';
 import Heatmap from './heatmap';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useTags } from '@/swr/use-tags';
+import { useSnapshots } from '@/swr/use-snapshots';
 
 type GlobalSidebarProperties = {
   readonly children: ReactNode;
@@ -143,6 +145,11 @@ const data = {
 };
 
 const RecursiveMenuItem = ({ item }: { item: any }) => {
+  const { tags } = useTags();
+  console.log(tags);
+  const { snapshots } = useSnapshots();
+  console.log(snapshots);
+
   return (
     <SidebarMenuItem key={item.title}>
       <SidebarMenuButton asChild>

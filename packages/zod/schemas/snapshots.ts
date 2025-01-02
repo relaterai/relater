@@ -98,9 +98,11 @@ export const SnapshotSchema: z.ZodType = z
     // tags: z.array(TagSchema).describe('The tags of the snapshot.'),
     screenshotFileKey: z
       .string()
+      .nullable()
       .describe('The screenshot file key of the snapshot.'),
     snapshotFileKey: z
       .string()
+      .nullable()
       .describe('The snapshot file key of the snapshot.'),
     // screenshotUrl: z
     //   .string()
