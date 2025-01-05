@@ -30,6 +30,9 @@
         "AWS_SECRET_ACCESS_KEY"
       ]
     },
+    "db:generate": {
+      "cache": false
+    },
     "test": {
       "dependsOn": ["^test"]
     },
@@ -40,7 +43,7 @@
       "dependsOn": ["^analyze"]
     },
     "dev": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "db:generate"],
       "cache": false,
       "persistent": true
     }

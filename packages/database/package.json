@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "db:generate": "prisma generate",
-    "analyze": "prisma generate --no-hints",
-    "build": "prisma generate"
+    "analyze": "prisma generate --no-hints"
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
