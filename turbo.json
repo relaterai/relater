@@ -8,13 +8,20 @@
       "env": [
         "AUTH_SECRET",
         "DATABASE_URL",
+        "DATABASE_DIRECT_URL",
         "STRIPE_SECRET_KEY",
         "EMAIL_FROM",
         "RESEND_TOKEN",
         "SENTRY_AUTH_TOKEN",
         "SENTRY_ORG",
         "SENTRY_PROJECT",
-        "STRIPE_WEBHOOK_SECRET"
+        "STRIPE_WEBHOOK_SECRET",
+        "AI_PROVIDER",
+        "STORAGE_ACCESS_KEY_ID",
+        "STORAGE_SECRET_ACCESS_KEY",
+        "STORAGE_UPLOAD_BUCKET",
+        "STORAGE_ENDPOINT",
+        "STORAGE_REGION"
       ]
     },
     "test": {
