@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
+  "envMode": "loose",
   "tasks": {
     "build": {
       "dependsOn": ["^build", "test"],
@@ -23,7 +24,10 @@
         "STORAGE_ENDPOINT",
         "STORAGE_REGION",
         "GOOGLE_API_KEY",
-        "EMAIL_PROVIDER"
+        "EMAIL_PROVIDER",
+        "AWS_SES_REGION",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY"
       ]
     },
     "test": {
