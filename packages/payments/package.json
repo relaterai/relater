@@ -10,8 +10,8 @@
   "dependencies": {
     "@repo/env": "workspace:*",
     "@stripe/agent-toolkit": "^0.2.0",
-    "@usque/striped": "0.0.3",
-    "stripe": "^17.4.0"
+    "@usque/striped": "0.0.4",
+    "stripe": "^17.5.0"
   },
   "peerDependencies": {
     "ai": "^3.4.7"
