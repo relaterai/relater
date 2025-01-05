@@ -1,6 +1,6 @@
 'use client';
 
-import { ModeToggle } from '@repo/design-system/components/mode-toggle';
+// import { ModeToggle } from '@repo/design-system/components/mode-toggle';
 import { Button } from '@repo/design-system/components/ui/button';
 import {
   NavigationMenu,
@@ -56,11 +56,11 @@ export const Header = () => {
       href: '/pricing',
       description: '',
     },
-    {
-      title: 'Blog',
-      href: '/blog',
-      description: '',
-    },
+    // {
+    //   title: 'Blog',
+    //   href: '/blog',
+    //   description: '',
+    // },
   ];
 
   if (env.NEXT_PUBLIC_DOCS_URL) {
@@ -135,18 +135,18 @@ export const Header = () => {
           <p className="whitespace-nowrap font-semibold">Later</p>
         </div>
         <div className="flex w-full justify-end gap-4">
-          <Button variant="ghost" className="hidden md:inline" asChild>
+          {/* <Button variant="ghost" className="hidden md:inline" asChild>
             <Link href="/contact">Contact us</Link>
-          </Button>
-          <div className="hidden border-r md:inline" />
+          </Button> */}
+          {/* <div className="hidden border-r md:inline" />
           <div className="hidden md:inline">
             <ModeToggle />
-          </div>
-          <Button variant="outline" asChild className="hidden md:inline">
+          </div> */}
+          {/* <Button variant="outline" asChild className="hidden md:inline">
             <Link href={`${env.NEXT_PUBLIC_APP_URL}/sign-in`}>Sign in</Link>
-          </Button>
+          </Button> */}
           <Button asChild>
-            <Link href={`${env.NEXT_PUBLIC_APP_URL}/sign-up`}>Get started</Link>
+            <Link href={`${env.NEXT_PUBLIC_APP_URL}/sign-in`}>Get started</Link>
           </Button>
         </div>
         <div className="flex w-12 shrink items-end justify-end lg:hidden">
