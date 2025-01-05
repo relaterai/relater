@@ -6,8 +6,8 @@ import { CTA } from './components/cta';
 import { FAQ } from './components/faq';
 import { Features } from './components/features';
 import { Hero } from './components/hero';
-import { Stats } from './components/stats';
-import { Testimonials } from './components/testimonials';
+// import { Stats } from './components/stats';
+// import { Testimonials } from './components/testimonials';
 
 const meta = {
   title: 'Capture faster, review later.',
@@ -30,8 +30,8 @@ const Home = async () => {
       <Hero />
       <Cases />
       <Features />
-      <Stats />
-      <Testimonials />
+      {/* <Stats /> */}
+      {/* <Testimonials /> */}
       <FAQ />
       <CTA />
     </>

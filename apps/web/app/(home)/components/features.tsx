@@ -10,7 +10,7 @@ export const Features = () => (
               Something new!
             </h2>
             <p className="max-w-xl text-left text-lg text-muted-foreground leading-relaxed tracking-tight lg:max-w-lg">
-              Managing a small business today is already tough.
+              Your creative journey starts here.
             </p>
           </div>
         </div>
@@ -18,20 +18,20 @@ export const Features = () => (
           <div className="flex aspect-square h-full flex-col justify-between rounded-md bg-muted p-6 lg:col-span-2 lg:aspect-auto">
             <User className="h-8 w-8 stroke-1" />
             <div className="flex flex-col">
-              <h3 className="text-xl tracking-tight">Pay supplier invoices</h3>
+              <h3 className="text-xl tracking-tight">Collect everything in one place, naturally.</h3>
               <p className="max-w-xs text-base text-muted-foreground">
-                Our goal is to streamline SMB trade, making it easier and faster
-                than ever.
+                While you browse webpages, watch YouTube videos, listen to podcasts, or upload PDFs and images,
+                Later helps you understand the content and save what matters most to you.
               </p>
             </div>
           </div>
           <div className="flex aspect-square flex-col justify-between rounded-md bg-muted p-6">
             <User className="h-8 w-8 stroke-1" />
             <div className="flex flex-col">
-              <h3 className="text-xl tracking-tight">Pay supplier invoices</h3>
+              <h3 className="text-xl tracking-tight">AI-powered multi-level tags</h3>
               <p className="max-w-xs text-base text-muted-foreground">
-                Our goal is to streamline SMB trade, making it easier and faster
-                than ever.
+                Later supports an intuitive #tag/subtag syntax,
+                making it effortless to organize and navigate through your content with a hierarchical tagging system.
               </p>
             </div>
           </div>
@@ -39,20 +39,20 @@ export const Features = () => (
           <div className="flex aspect-square flex-col justify-between rounded-md bg-muted p-6">
             <User className="h-8 w-8 stroke-1" />
             <div className="flex flex-col">
-              <h3 className="text-xl tracking-tight">Pay supplier invoices</h3>
+              <h3 className="text-xl tracking-tight">Privacy-first, always.</h3>
               <p className="max-w-xs text-base text-muted-foreground">
-                Our goal is to streamline SMB trade, making it easier and faster
-                than ever.
+                Later is your private ideas hub. We put privacy first. We will never sell your private info
+                to any third party for profit. Your subscription will encourage us to do better.
               </p>
             </div>
           </div>
           <div className="flex aspect-square h-full flex-col justify-between rounded-md bg-muted p-6 lg:col-span-2 lg:aspect-auto">
             <User className="h-8 w-8 stroke-1" />
             <div className="flex flex-col">
-              <h3 className="text-xl tracking-tight">Pay supplier invoices</h3>
+              <h3 className="text-xl tracking-tight">AI-powered vector search and smart tagging</h3>
               <p className="max-w-xs text-base text-muted-foreground">
-                Our goal is to streamline SMB trade, making it easier and faster
-                than ever.
+                Quickly find what you need with smart search that understands your content,
+                plus easy tag filtering to keep everything organized
               </p>
             </div>
           </div>
