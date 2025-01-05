@@ -34,7 +34,7 @@ export const GET = withSession(async ({ req, session, searchParams }) => {
   });
 });
 
-// POST /api/snapshots – create a new snapshots
+// POST /api/snapshots – create a new snapshot
 export const POST = withSession(async ({ req, session }) => {
   const { snapshotFileKey, title, snippet, tags, screenshotFileKey, pageUrl } =
     createSnapshotSchema.parse(await parseRequestBody(req));
