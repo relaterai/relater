@@ -21,7 +21,9 @@
         "STORAGE_SECRET_ACCESS_KEY",
         "STORAGE_UPLOAD_BUCKET",
         "STORAGE_ENDPOINT",
-        "STORAGE_REGION"
+        "STORAGE_REGION",
+        "GOOGLE_API_KEY",
+        "EMAIL_PROVIDER"
       ]
     },
     "test": {
