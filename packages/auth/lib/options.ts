@@ -6,7 +6,7 @@ import type { User } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import type { AdapterUser } from 'next-auth/adapters';
 import type { JWT } from 'next-auth/jwt';
-import type { UserProps } from '@/lib/utils';
+import type { UserProps } from './utils';
 import { sendVerificationRequest } from './authSendRequest';
 
 export const authOptions: NextAuthConfig = {
