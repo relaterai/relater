@@ -64,6 +64,10 @@ const server: Parameters<typeof createEnv>[0]['server'] = {
   // Axiom Logger
   NEXT_PUBLIC_AXIOM_TOKEN: z.string().min(1).optional(),
   NEXT_PUBLIC_AXIOM_DATASET: z.string().min(1).optional(),
+
+  // KV
+  KV_CONNECT_URL: z.string().min(1).url(),
+  KV_ACCESS_TOKEN: z.string().min(1),
 };
 
 const client: Parameters<typeof createEnv>[0]['client'] = {
@@ -138,5 +142,9 @@ export const env = createEnv({
     // Axiom Logger
     NEXT_PUBLIC_AXIOM_TOKEN: process.env.NEXT_PUBLIC_AXIOM_TOKEN,
     NEXT_PUBLIC_AXIOM_DATASET: process.env.NEXT_PUBLIC_AXIOM_DATASET,
+
+    // KV
+    KV_CONNECT_URL: process.env.KV_CONNECT_URL,
+    KV_ACCESS_TOKEN: process.env.KV_ACCESS_TOKEN,
   },
 });
