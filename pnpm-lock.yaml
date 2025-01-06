@@ -248,9 +248,6 @@ importers:
       '@repo/env':
         specifier: workspace:*
         version: link:../../packages/env
-      '@repo/feature-flags':
-        specifier: workspace:*
-        version: link:../../packages/feature-flags
       '@repo/next-config':
         specifier: workspace:*
         version: link:../../packages/next-config
