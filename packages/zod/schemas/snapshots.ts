@@ -28,8 +28,16 @@ export const getSnapshotsQuerySchema = z
       .enum(['createdAt', 'updatedAt'])
       .optional()
       .describe('The field to sort by.'),
-    withTags: z.boolean().optional().describe('Whether to include tags.'),
-    withCount: z.boolean().optional().describe('Whether to include count.'),
+    withTags: z
+      .union([z.boolean(), z.string()])
+      .transform((v) => (typeof v === 'boolean' ? v : v === 'true'))
+      .optional()
+      .describe('Whether to include tags.'),
+    withCount: z
+      .union([z.boolean(), z.string()])
+      .transform((v) => (typeof v === 'boolean' ? v : v === 'true'))
+      .optional()
+      .describe('Whether to include count.'),
     isDeleted: z
       .union([z.boolean(), z.string()])
       .transform((v) => (typeof v === 'boolean' ? v : v === 'true'))
