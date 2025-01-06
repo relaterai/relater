@@ -15,6 +15,9 @@ export const GET = withSession(async ({ req, session }) => {
         email: true,
         // avatar: true,
         createdAt: true,
+        plan: true,
+        stripeId: true,
+        stripeCurrentPeriodEnd: true,
       },
     });
     if (!user) {
