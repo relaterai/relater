@@ -14,26 +14,25 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  isMachine     Boolean   @default(false) @map("is_machine")
-
+  id                   String    @id @default(cuid())
+  name                 String?
+  email                String?   @unique
+  emailVerified        DateTime? @map("email_verified")
+  image                String?
+  isMachine            Boolean   @default(false) @map("is_machine")
   // password data
   passwordHash         String?   @map("password_hash")
   invalidLoginAttempts Int       @default(0) @map("invalid_login_attempts")
   lockedAt             DateTime? @map("locked_at")
 
-  plan              String    @default("free")
+  plan                   String    @default("free")
   /// Stripe subscription ID（aka customer ID）
-  stripeId          String?   @unique
+  stripeId               String?   @unique @map("stripe_id")
   /// day of the month when the billing cycle starts
-  billingCycleStart Int?
-  paymentFailedAt   DateTime?
-  // for Stripe Connect
-  stripeConnectId   String?   @unique
+  billingCycleStart      Int?      @map("billing_cycle_start")
+  /// date when the billing cycle ends
+  stripeCurrentPeriodEnd DateTime? @map("stripe_current_period_end")
+  paymentFailedAt        DateTime? @map("payment_failed_at")
 
   // Limits
   /// Maximum storage limit in megabytes for webpage snapshots and screenshots
