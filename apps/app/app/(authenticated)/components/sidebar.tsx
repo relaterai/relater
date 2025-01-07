@@ -63,93 +63,55 @@ import Heatmap from './heatmap';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useTags } from '@/swr/use-tags';
-import { useSnapshots } from '@/swr/use-snapshots';
+import { useStats } from '@/swr/use-stats';
 
 type GlobalSidebarProperties = {
   readonly children: ReactNode;
 };
 
-const data = {
-  user: {
-    name: 'shadcn',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
-  },
-  navMain: [
-    {
-      title: 'Tag 0',
-      url: '#',
-      isActive: true,
-      items: [
-        {
-          title: 'Tag 1',
-          url: '#',
-          items: [
-            {
-              title: 'Tag 2',
-              url: '#',
-              items: [
-                {
-                  title: 'Tag 3',
-                  url: '#'
-                }
-              ]
-            },
-          ],
-        },
-        {
-          title: 'Tag 4',
-          url: '#',
-        },
-        {
-          title: 'Tag 5',
-          url: '#',
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: 'Webhooks',
-      url: '/webhooks',
-      icon: AnchorIcon,
-    },
-    {
-      title: 'Support',
-      url: '#',
-      icon: LifeBuoyIcon,
-    },
-    {
-      title: 'Feedback',
-      url: '#',
-      icon: SendIcon,
-    },
-  ],
-  projects: [
-    {
-      name: 'Design Engineering',
-      url: '#',
-      icon: FrameIcon,
-    },
-    {
-      name: 'Sales & Marketing',
-      url: '#',
-      icon: PieChartIcon,
-    },
-    {
-      name: 'Travel',
-      url: '#',
-      icon: MapIcon,
-    },
-  ],
+type TagNode = {
+  title: string;
+  url: string;
+  id?: string;
+  items: TagNode[];
+  isActive?: boolean;
 };
 
-const RecursiveMenuItem = ({ item }: { item: any }) => {
-  const { tags } = useTags();
-  console.log(tags);
-  const { snapshots } = useSnapshots();
-  console.log(snapshots);
+const buildTagTree = (tags: Array<{ id: string, name: string }>): TagNode[] => {
+  const root: { items: TagNode[] } = {
+    items: []
+  };
 
+  const nodeMap = new Map<string, TagNode>();
+
+  tags.forEach((tag) => {
+    const parts = tag.name.substring(1).split('/');
+    let currentLevel = root;
+
+    parts.forEach((part, index) => {
+      const path = parts.slice(0, index + 1).join('/');
+
+      if (!nodeMap.has(path)) {
+        const newNode: TagNode = {
+          title: part,
+          url: `/tags/${path}`,
+          id: index === parts.length - 1 ? tag.id : undefined,
+          items: [],
+          isActive: false
+        };
+
+        nodeMap.set(path, newNode);
+        currentLevel.items.push(newNode);
+      }
+
+      currentLevel = nodeMap.get(path) as TagNode;
+    });
+  });
+
+  return root.items;
+};
+
+const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
   return (
     <SidebarMenuItem key={item.title}>
       <SidebarMenuButton asChild>
@@ -186,6 +148,12 @@ const RecursiveMenuItem = ({ item }: { item: any }) => {
 export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
   const sidebar = useSidebar();
 
+  const { tags } = useTags();
+  const tagTree = buildTagTree(tags || [])
+
+  const { stats } = useStats();
+  console.log("stats", stats)
+
   return (
     <>
       <Sidebar variant="inset">
@@ -218,7 +186,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
           <SidebarGroup>
             <SidebarGroupLabel>Tags</SidebarGroupLabel>
             <SidebarMenu>
-              {data.navMain.map((item) => (
+              {tagTree.map((item) => (
                 <Collapsible
                   key={item.title}
                   asChild

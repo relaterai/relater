@@ -15,7 +15,7 @@ import { SidebarTrigger } from '@repo/design-system/components/ui/sidebar';
 import { SearchIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Notes from './components/notes';
+import Notes from '../../components/notes';
 
 const title = 'Later';
 const description = 'My application.';
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   description,
 };
 
-const App = async () => {
+const App = async ({ params }: { params: { tag: string[] } }) => {
   const users = await prisma.user.findMany({});
   const session = await auth();
 
@@ -53,7 +53,7 @@ const App = async () => {
           </div>
         </div >
       </header >
-      <Notes />
+      <Notes tag={params.tag} />
     </>
   );
 };

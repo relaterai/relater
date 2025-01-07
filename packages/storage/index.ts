@@ -35,11 +35,14 @@ export const storageClient = new S3Client({
 export async function getPreSignedGetUrl(
   key: string,
   bucket: string = env.STORAGE_UPLOAD_BUCKET,
-  ttl = 600
+  ttl = 600,
+  contentType?: string
 ) {
   const getObjectCommand = new GetObjectCommand({
     Bucket: bucket,
     Key: key,
+    ResponseContentType: contentType,
+    ResponseContentDisposition: contentType === 'text/html' ? `inline; filename="${key}"` : undefined,
   });
 
   const signedUrl = await getSignedUrl(storageClient, getObjectCommand, {
@@ -76,7 +79,7 @@ export async function getPreSignedPutUrl(
     Bucket: bucket || process.env.STORAGE_UPLOAD_BUCKET,
     Key: key,
     ContentType: contentType,
-    ContentDisposition: `attachment; filename="${slugifiedName}"`,
+    ContentDisposition: contentType === 'text/html' ? `inline; filename="${slugifiedName}"` : `attachment; filename="${slugifiedName}"`,
   });
 
   const signedUrl = await getSignedUrl(storageClient, putObjectcommand, {

@@ -1,3 +1,4 @@
+import { signedFileUrl } from '@/lib/functions/snapshots/signed-file-url';
 import { updateSnapshotWithTags } from '@/lib/functions/snapshots/update-snapshot-with-tags';
 import { parseRequestBody } from '@/lib/utils';
 import { withSession } from '@repo/auth/session';
@@ -8,6 +9,28 @@ import {
   updateSnapshotSchema,
 } from '@repo/zod/schemas/snapshots';
 import { NextResponse } from 'next/server';
+
+// GET /api/snapshots/:id - get a specific snapshot
+export const GET = withSession(async ({ session, params }) => {
+  const snapshot = await prisma.snapshot.findUnique({
+    where: {
+      id: params.id,
+      userId: session.user.id,
+    },
+    include: {
+      tags: true
+    }
+  });
+
+  if (!snapshot) {
+    return new NextResponse('Snapshot not found', { status: 404 });
+  }
+
+  const [signedSnapshot] = await signedFileUrl([snapshot]);
+
+  return NextResponse.json(signedSnapshot);
+});
+
 
 // PATCH /api/snapshots/:id - update a specific snapshot
 export const PATCH = withSession(async ({ session, params, req }) => {

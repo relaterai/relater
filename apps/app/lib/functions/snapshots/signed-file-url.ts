@@ -8,7 +8,7 @@ export const signedFileUrl = async (
     snapshots.map(async (snapshot) => {
       const [snapshotUrl, screenshotUrl] = await Promise.all([
         snapshot.snapshotFileKey
-          ? getPreSignedGetUrl(snapshot.snapshotFileKey)
+          ? getPreSignedGetUrl(snapshot.snapshotFileKey, process.env.STORAGE_UPLOAD_BUCKET, 600, 'text/html')
           : null,
         snapshot.screenshotFileKey
           ? getPreSignedGetUrl(snapshot.screenshotFileKey)
