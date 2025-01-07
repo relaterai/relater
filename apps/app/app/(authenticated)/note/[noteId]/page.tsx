@@ -1,19 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { Button } from '@repo/design-system/components/ui/button';
 import { Input } from '@repo/design-system/components/ui/input';
 import { Textarea } from '@repo/design-system/components/ui/textarea';
 import { useSnapshot } from '@/swr/use-snapshot';
-import { useParams, useRouter } from 'next/navigation';
 import { SidebarTrigger } from '@repo/design-system/components/ui/sidebar';
 import { SaveIcon, Loader2, Plus, X } from 'lucide-react';
 import { toast } from '@repo/design-system/components/ui/use-toast';
 import { Badge } from '@repo/design-system/components/ui/badge';
 import { Separator } from '@repo/design-system/components/ui/separator';
 
-export default function NotePage() {
-  const { noteId } = useParams<{ noteId: string }>();
+export default function NotePage(props: { params: Promise<{ noteId: string }> }) {
+  const params = use(props.params);
+  const noteId = params.noteId;
 
   const { snapshot, isLoading } = useSnapshot(noteId);
   const [title, setTitle] = useState('');

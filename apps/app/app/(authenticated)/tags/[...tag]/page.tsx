@@ -25,7 +25,8 @@ export const metadata: Metadata = {
   description,
 };
 
-const App = async ({ params }: { params: { tag: string[] } }) => {
+const App = async (props: { params: Promise<{ tag: string[] }> }) => {
+  const params = await props.params;
   const users = await prisma.user.findMany({});
   const session = await auth();
 
