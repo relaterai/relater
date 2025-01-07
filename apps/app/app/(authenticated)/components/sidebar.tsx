@@ -84,7 +84,7 @@ const buildTagTree = (tags: Array<{ id: string, name: string }>): TagNode[] => {
   const nodeMap = new Map<string, TagNode>();
 
   tags.forEach((tag) => {
-    const parts = tag.name.substring(1).split('/');
+    const parts = tag.name.replace("#", "").split('/');
     let currentLevel = root;
 
     parts.forEach((part, index) => {
@@ -115,9 +115,6 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
     <SidebarMenuItem key={item.title}>
       <SidebarMenuButton asChild>
         <a href={item.url}>
-          {
-            item.items && <HashIcon />
-          }
           <span>{item.title}</span>
         </a>
       </SidebarMenuButton>
