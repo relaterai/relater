@@ -9,9 +9,10 @@ const fetcher = async (url: string) => {
 }
 
 export interface UserStats {
-  totalPosts: number
-  totalComments: number
-  totalLikes: number
+  regDays: number
+  tagsCount: number
+  snapshotsCount: number
+  dailySnapshotsCount: Record<string, number>
 }
 
 export function useStats() {

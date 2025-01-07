@@ -18,7 +18,9 @@ export const getSnapshotsDailyCount = async (
 
   let _dailySnapshots;
   if (cache) {
-    _dailySnapshots = JSON.parse(cache as string);
+    // console.log('cache', cache);
+    // _dailySnapshots = JSON.parse(cache as string);
+    _dailySnapshots = cache as { day: string; count: number }[];
   }
 
   if (!_dailySnapshots) {

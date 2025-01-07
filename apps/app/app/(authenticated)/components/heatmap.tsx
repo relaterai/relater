@@ -3,35 +3,22 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/design-system/components/ui/tooltip';
-
-const generateMockData = (baseDate: Date) => {
-  const data = [];
-
-  for (let i = 0; i < 84; i++) {
-    const date = new Date(baseDate);
-    date.setDate(date.getDate() - i);
-
-    data.unshift({
-      date: date.toISOString().split('T')[0],
-      count: Math.floor(Math.random() * 10)
-    });
-  }
-
-  return data;
-};
+import { useStats } from '@/swr/use-stats';
 
 const Heatmap = () => {
+  const { stats } = useStats();
+
   const [data, setData] = useState<Array<{ date: string, count: number }>>([]);
 
   useEffect(() => {
-    setData(generateMockData(new Date()));
-  }, []);
-
-  const stats = {
-    totalNotes: data.reduce((sum, day) => sum + day.count, 0),
-    totalTags: 15,
-    activeDays: data.filter(day => day.count > 0).length
-  };
+    if (stats?.dailySnapshotsCount) {
+      const dailyData = Object.entries(stats.dailySnapshotsCount).map(([date, count]) => ({
+        date: date.split('T')[0],
+        count
+      }));
+      setData(dailyData);
+    }
+  }, [stats]);
 
   const getColor = (count: number) => {
     if (count === 0) return 'rgb(235, 237, 240)';
@@ -56,15 +43,15 @@ const Heatmap = () => {
     <div className="p-4">
       <div className="grid grid-cols-3 gap-4 mb-4 text-sm text-gray-600">
         <div className="text-center">
-          <div className="font-medium">{stats.totalNotes}</div>
+          <div className="font-medium">{stats?.snapshotsCount || 0}</div>
           <div>Notes</div>
         </div>
         <div className="text-center">
-          <div className="font-medium">{stats.totalTags}</div>
+          <div className="font-medium">{stats?.tagsCount || 0}</div>
           <div>Tags</div>
         </div>
         <div className="text-center">
-          <div className="font-medium">{stats.activeDays}</div>
+          <div className="font-medium">{stats?.regDays || 0}</div>
           <div>Days</div>
         </div>
       </div>

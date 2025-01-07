@@ -33,7 +33,7 @@ export const GET = withSession(async ({ req, session }) => {
         getUserSnapshotsCount(user.id),
         getSnapshotsDailyCount(
           user.id,
-          dayjs().subtract(84, 'day').toDate(),
+          dayjs().subtract(90, 'day').toDate(),
           dayjs().toDate()
         ),
       ]);

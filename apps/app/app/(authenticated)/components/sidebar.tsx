@@ -63,7 +63,6 @@ import Heatmap from './heatmap';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { useTags } from '@/swr/use-tags';
-import { useStats } from '@/swr/use-stats';
 
 type GlobalSidebarProperties = {
   readonly children: ReactNode;
@@ -150,9 +149,6 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
 
   const { tags } = useTags();
   const tagTree = buildTagTree(tags || [])
-
-  const { stats } = useStats();
-  console.log("stats", stats)
 
   return (
     <>
