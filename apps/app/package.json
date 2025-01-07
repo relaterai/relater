@@ -23,6 +23,7 @@
     "@repo/zod": "workspace:*",
     "@sentry/nextjs": "^8.40.0",
     "@vercel/functions": "^1.5.2",
+    "dayjs": "^1.11.13",
     "fuse.js": "^7.0.0",
     "import-in-the-middle": "^1.11.2",
     "lucide-react": "^0.461.0",
