@@ -129,7 +129,7 @@ export default function NotePage() {
                   variant="outline"
                   onClick={() => setShowScreenshot(prev => !prev)}
                 >
-                  {showScreenshot ? '查看快照' : '查看截图'}
+                  {showScreenshot ? 'Snapshot' : 'Screenshot'}
                 </Button>
               </div>
               <div className="relative aspect-video w-full">

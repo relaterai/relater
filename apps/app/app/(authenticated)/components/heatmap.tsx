@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/design-system/components/ui/tooltip';
 import { useStats } from '@/swr/use-stats';
+import { Skeleton } from '@repo/design-system/components/ui/skeleton';
 
 const Heatmap = () => {
-  const { stats } = useStats();
+  const { stats, isLoading } = useStats();
 
   const [data, setData] = useState<Array<{ date: string, count: number }>>([]);
 
@@ -38,6 +39,51 @@ const Heatmap = () => {
       week = [];
     }
   });
+
+  if (isLoading) {
+    return (
+      <div className="p-4">
+        <div className="grid grid-cols-3 gap-4 mb-4 text-sm text-gray-600">
+          <div className="text-center">
+            <div className="font-medium">{stats?.snapshotsCount || 0}</div>
+            <div>Notes</div>
+          </div>
+          <div className="text-center">
+            <div className="font-medium">{stats?.tagsCount || 0}</div>
+            <div>Tags</div>
+          </div>
+          <div className="text-center">
+            <div className="font-medium">{stats?.regDays || 0}</div>
+            <div>Days</div>
+          </div>
+        </div>
+
+        <div className="flex gap-1">
+          {Array.from({ length: 13 }).map((_, weekIndex) => (
+            <div key={weekIndex} className="flex flex-col gap-1">
+              {Array.from({ length: 7 }).map((_, dayIndex) => (
+                <Skeleton key={dayIndex} className="w-3 h-3 rounded-sm" />
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-2 flex items-center text-xs text-gray-500 gap-2">
+          <span>Less</span>
+          <div className="flex gap-1">
+            {[0, 3, 6, 9].map((level) => (
+              <div
+                key={level}
+                className="w-3 h-3 rounded-sm"
+                style={{ backgroundColor: getColor(level) }}
+              />
+            ))}
+          </div>
+          <span>More</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4">

@@ -45,6 +45,7 @@ import {
   FolderIcon,
   FrameIcon,
   HashIcon,
+  HomeIcon,
   LifeBuoyIcon,
   LogOutIcon,
   MapIcon,
@@ -166,6 +167,18 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
           </SidebarMenu>
         </SidebarHeader>
         <SidebarContent>
+          <SidebarGroup>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="All Notes">
+                  <Link href="/">
+                    <HomeIcon />
+                    <span>All Notes</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroup>
           <SidebarGroup>
             <SidebarGroupLabel>Pinned Tags</SidebarGroupLabel>
             <SidebarMenu>
