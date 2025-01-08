@@ -107,11 +107,11 @@ const Notes = ({ tag }: { tag?: string[] }) => {
             onClick={() => router.push(`/note/${snapshot.id}`)}
           >
             <div className="flex flex-col">
-              <div className="max-h-[280px] overflow-hidden">
+              <div className="relative w-full pt-[56.25%]">
                 {imageUrls[snapshot.id] && <img
                   src={imageUrls[snapshot.id]}
                   alt={snapshot.title}
-                  className="w-full h-full object-cover"
+                  className="absolute top-0 left-0 w-full h-full object-cover object-top"
                 />}
               </div>
               <div className="flex flex-col p-4 max-h-[160px] overflow-hidden">
@@ -133,7 +133,7 @@ const Notes = ({ tag }: { tag?: string[] }) => {
                       key={tag.id}
                       className="rounded-sm bg-primary/5 px-2 py-0.5 text-xs text-primary whitespace-nowrap"
                     >
-                      {tag.name}
+                      # {tag.name}
                     </span>
                   ))}
                 </div>
