@@ -22,7 +22,7 @@ export async function updateSnapshotWithTags({
   note,
   pinned,
   isDeleted,
-  title
+  title,
 }: z.infer<typeof updateSnapshotSchema> & {
   userId: string;
 }): Promise<z.infer<typeof SnapshotSchema>> {
@@ -58,12 +58,24 @@ export async function updateSnapshotWithTags({
   );
 
   // Create new tags
-  await prisma.tag.createMany({
-    data: diffTags.map((tag) => ({
-      name: tag,
-      userId: snapshot.userId,
-      snapshotId: snapshot.id,
-    })),
+  await prisma.snapshot.update({
+    where: {
+      id: snapshot.id,
+    },
+    data: {
+      tags: {
+        connectOrCreate: diffTags.map((tag) => ({
+          where: {
+            name: tag,
+            userId: snapshot.userId,
+          },
+          create: {
+            name: tag,
+            userId: snapshot.userId,
+          },
+        })),
+      },
+    },
   });
 
   // Disconnect deleted tags
