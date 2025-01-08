@@ -5,35 +5,41 @@ import { useSnapshots } from "@/swr/use-snapshots";
 import { useInView } from "react-intersection-observer";
 import { Button } from "@repo/design-system/components/ui/button";
 import { ExternalLink } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { openDB } from 'idb';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@repo/design-system/components/ui/alert-dialog";
 
-const Notes = ({ tag }: { tag?: string[] }) => {
+const Notes = () => {
+  const searchParams = useSearchParams();
+  const tag = searchParams.get('tag');
+
   const [page, setPage] = useState(1);
   const [allSnapshots, setAllSnapshots] = useState<any[]>([]);
   const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
+  const [showRefreshDialog, setShowRefreshDialog] = useState(false);
+
   const { snapshots = [], isLoading } = useSnapshots({
     pageSize: 10,
     page,
-    tagName: tag?.join('/'),
+    tagName: tag || undefined,
   });
+
+  // const { snapshots: newestSnapshots } = useSnapshots({
+  //   pageSize: 1,
+  //   page: 1,
+  //   tagName: tag || undefined,
+  // });
 
   const router = useRouter();
   const { ref, inView } = useInView();
-
-  useEffect(() => {
-    const initDB = async () => {
-      const db = await openDB('images-db', 1, {
-        upgrade(db) {
-          if (!db.objectStoreNames.contains('images')) {
-            db.createObjectStore('images');
-          }
-        },
-      });
-      return db;
-    };
-    initDB();
-  }, []);
 
   const saveImageToIndexedDB = async (url: string, id: string) => {
     try {
@@ -74,6 +80,30 @@ const Notes = ({ tag }: { tag?: string[] }) => {
   };
 
   useEffect(() => {
+    setPage(1)
+  }, [tag]);
+
+  useEffect(() => {
+    if (page === 1) {
+      setAllSnapshots([])
+    }
+  }, [page])
+
+  useEffect(() => {
+    const initDB = async () => {
+      const db = await openDB('images-db', 1, {
+        upgrade(db) {
+          if (!db.objectStoreNames.contains('images')) {
+            db.createObjectStore('images');
+          }
+        },
+      });
+      return db;
+    };
+    initDB();
+  }, []);
+
+  useEffect(() => {
     if (snapshots.length > 0) {
       setAllSnapshots(prev => {
         const newSnapshots = snapshots.filter(
@@ -89,15 +119,41 @@ const Notes = ({ tag }: { tag?: string[] }) => {
     }
   }, [snapshots]);
 
+  // useEffect(() => {
+  //   if (newestSnapshots?.[0]?.id && allSnapshots.length > 0 && !allSnapshots.some(s => s.id === newestSnapshots[0].id)) {
+
+  //     console.log(newestSnapshots, allSnapshots)
+  //     setShowRefreshDialog(true)
+  //   }
+  // }, [newestSnapshots, allSnapshots])
+
   useEffect(() => {
-    const shouldLoadMore = inView && !isLoading && snapshots.length > 0;
+    const shouldLoadMore = inView && allSnapshots.length > 0 && snapshots.length > 0 && !isLoading;
     if (shouldLoadMore) {
       setPage(prev => prev + 1);
     }
-  }, [inView, isLoading, snapshots.length]);
+  }, [inView, allSnapshots, isLoading]);
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <AlertDialog open={showRefreshDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>内容已更新</AlertDialogTitle>
+            <AlertDialogDescription>
+              笔记内容已经更新，需要刷新页面以查看最新内容。
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={handleRefresh}>刷新页面</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <div className="grid auto-rows-min gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 grid-cols-1">
         {allSnapshots.map((snapshot, index) => (
           <div

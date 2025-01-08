@@ -224,7 +224,7 @@ export default function NotePage(props: { noteId: string }) {
                 </div>
                 <TabsContent value="screenshot" className="relative aspect-video w-full">
                   {screenshotUrl && (
-                    <div className="h-[calc(100%)] lg:h-[calc(100vh-10rem)] w-full overflow-y-scroll">
+                    <div className="h-[calc(100%)] lg:h-[calc(100vh-10rem)] w-full overflow-y-auto">
                       <img
                         src={screenshotUrl}
                         alt="Screenshot preview"

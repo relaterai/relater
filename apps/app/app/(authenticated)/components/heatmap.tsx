@@ -110,7 +110,7 @@ const Heatmap = () => {
                 <TooltipTrigger asChild>
                   <Link
                     key={day.date}
-                    href={`#/notes/${day.date}`}
+                    href={`/?date=${day.date}`}
                     className="block"
                   >
                     <div

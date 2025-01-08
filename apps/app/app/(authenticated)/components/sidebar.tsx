@@ -61,9 +61,10 @@ import {
 } from 'lucide-react';
 import type { ReactNode } from 'react';
 import Heatmap from './heatmap';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useTags } from '@/swr/use-tags';
+import { useUser } from '@/swr/use-user';
 
 type GlobalSidebarProperties = {
   readonly children: ReactNode;
@@ -94,7 +95,7 @@ const buildTagTree = (tags: Array<{ id: string, name: string }>): TagNode[] => {
       if (!nodeMap.has(path)) {
         const newNode: TagNode = {
           title: part,
-          url: `/tags/${path}`,
+          url: `/?tag=${path}`,
           id: index === parts.length - 1 ? tag.id : undefined,
           items: [],
           isActive: false
@@ -115,9 +116,9 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
   return (
     <SidebarMenuItem key={item.title}>
       <SidebarMenuButton asChild>
-        <a href={item.url}>
+        <Link href={item.url}>
           <span>{item.title}</span>
-        </a>
+        </Link>
       </SidebarMenuButton>
       {item.items?.length ? (
         <Collapsible asChild>
@@ -144,6 +145,8 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
 
 export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
   const sidebar = useSidebar();
+
+  const { user } = useUser();
 
   const { tags } = useTags();
   const tagTree = buildTagTree(tags || [])
@@ -200,10 +203,10 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                 >
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild tooltip={item.title}>
-                      <a href={item.url}>
+                      <Link href={item.url}>
                         <HashIcon />
                         <span>{item.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                     {item.items?.length ? (
                       <>
@@ -239,8 +242,8 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                     <AvatarFallback>DU</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col flex-1 overflow-hidden">
-                    <span className="text-sm font-medium truncate">Demo User</span>
-                    <span className="text-xs text-muted-foreground truncate">demo@example.com</span>
+                    <span className="text-sm font-medium truncate">{user?.name || 'User'}</span>
+                    <span className="text-xs text-muted-foreground truncate">{user?.email}</span>
                   </div>
                   <ChevronsUpDownIcon className="h-4 w-4 shrink-0 transition-transform duration-200" />
                 </SidebarMenuItem>
