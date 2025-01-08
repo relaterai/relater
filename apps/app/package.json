@@ -25,6 +25,7 @@
     "@vercel/functions": "^1.5.2",
     "dayjs": "^1.11.13",
     "fuse.js": "^7.0.0",
+    "idb": "^8.0.1",
     "import-in-the-middle": "^1.11.2",
     "lucide-react": "^0.461.0",
     "next": "15.1.0",

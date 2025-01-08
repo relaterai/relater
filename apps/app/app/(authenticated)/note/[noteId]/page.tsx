@@ -10,6 +10,8 @@ import { SaveIcon, Loader2, Plus, X } from 'lucide-react';
 import { toast } from '@repo/design-system/components/ui/use-toast';
 import { Badge } from '@repo/design-system/components/ui/badge';
 import { Separator } from '@repo/design-system/components/ui/separator';
+import { openDB } from 'idb';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/design-system/components/ui/tabs';
 
 export default function NotePage(props: { params: Promise<{ noteId: string }> }) {
   const params = use(props.params);
@@ -24,7 +26,8 @@ export default function NotePage(props: { params: Promise<{ noteId: string }> })
   const [editingTagValue, setEditingTagValue] = useState('');
   const [isAddingTag, setIsAddingTag] = useState(false);
 
-  const [showScreenshot, setShowScreenshot] = useState(false);
+  const [screenshotUrl, setScreenshotUrl] = useState('');
+  const [snapshotUrl, setSnapshotUrl] = useState('');
 
   const [firstLoad, setFirstLoad] = useState(true);
 
@@ -37,6 +40,46 @@ export default function NotePage(props: { params: Promise<{ noteId: string }> })
         setTags(newTags);
       }
       setFirstLoad(false);
+
+      const initDB = async () => {
+        const db = await openDB('snapshots', 1, {
+          upgrade(db) {
+            if (!db.objectStoreNames.contains('files')) {
+              db.createObjectStore('files');
+            }
+          },
+        });
+        return db;
+      };
+
+      const downloadAndStoreFile = async (url: string, key: string) => {
+        const db = await initDB();
+        const storedFile = await db.get('files', key);
+
+        if (!storedFile) {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          await db.put('files', blob, key);
+          return URL.createObjectURL(blob);
+        }
+
+        return URL.createObjectURL(storedFile);
+      };
+
+      const loadFiles = async () => {
+        if (snapshot) {
+          if (snapshot.screenshotFileKey) {
+            const url = await downloadAndStoreFile(snapshot.screenshotFileKey, `screenshot-${noteId}`);
+            setScreenshotUrl(url);
+          }
+          if (snapshot.snapshotFileKey) {
+            const url = await downloadAndStoreFile(snapshot.snapshotFileKey, `snapshot-${noteId}`);
+            setSnapshotUrl(url);
+          }
+        }
+      };
+
+      loadFiles();
     }
   }, [snapshot]);
 
@@ -120,33 +163,39 @@ export default function NotePage(props: { params: Promise<{ noteId: string }> })
       </header>
 
       <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
-        {snapshot?.screenshotFileKey && (
+        {(snapshot?.screenshotFileKey || snapshot?.snapshotFileKey) && (
           <div className="w-full lg:w-2/3 border-b lg:border-b-0 lg:border-r overflow-auto p-4">
-            <div className="flex flex-col gap-4">
-              <div className="flex justify-end">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => setShowScreenshot(prev => !prev)}
-                >
-                  {showScreenshot ? 'Snapshot' : 'Screenshot'}
-                </Button>
-              </div>
-              <div className="relative aspect-video w-full">
-                {showScreenshot ? (
-                  <img
-                    src={snapshot.screenshotFileKey}
-                    alt="Screenshot preview"
-                    className="object-contain"
-                  />
-                ) : (
-                  <iframe
-                    src={snapshot.snapshotFileKey}
-                    className="w-full h-full border-0"
-                    title="Snapshot preview"
-                  />
-                )}
-              </div>
+            <div className="flex flex-col gap-4 h-full">
+              {(screenshotUrl && snapshotUrl) && (
+                <Tabs defaultValue="screenshot" className="w-full">
+                  <div className="flex justify-end">
+                    <TabsList>
+                      <TabsTrigger value="screenshot">Screenshot</TabsTrigger>
+                      <TabsTrigger value="snapshot">Snapshot</TabsTrigger>
+                    </TabsList>
+                  </div>
+                  <TabsContent value="screenshot" className="relative aspect-video w-full">
+                    {screenshotUrl && (
+                      <div className="h-[calc(100%)] lg:h-[calc(100vh-10rem)] w-full overflow-y-scroll">
+                        <img
+                          src={screenshotUrl}
+                          alt="Screenshot preview"
+                          className="object-contain"
+                        />
+                      </div>
+                    )}
+                  </TabsContent>
+                  <TabsContent value="snapshot" className="relative aspect-video w-full">
+                    {snapshotUrl && (
+                      <iframe
+                        src={snapshotUrl}
+                        className="w-full h-[calc(100%)] lg:h-[calc(100vh-10rem)] border-0"
+                        title="Snapshot preview"
+                      />
+                    )}
+                  </TabsContent>
+                </Tabs>
+              )}
             </div>
           </div>
         )}

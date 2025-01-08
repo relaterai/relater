@@ -6,20 +6,72 @@ import { useInView } from "react-intersection-observer";
 import { Button } from "@repo/design-system/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { openDB } from 'idb';
 
 const Notes = ({ tag }: { tag?: string[] }) => {
   const [page, setPage] = useState(1);
   const [allSnapshots, setAllSnapshots] = useState<any[]>([]);
+  const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
   const { snapshots = [], isLoading } = useSnapshots({
     pageSize: 10,
     page,
     tagName: tag?.join('/'),
-    // withTags: tag ? true : false,
   });
 
   const router = useRouter();
-
   const { ref, inView } = useInView();
+
+  useEffect(() => {
+    const initDB = async () => {
+      const db = await openDB('images-db', 1, {
+        upgrade(db) {
+          if (!db.objectStoreNames.contains('images')) {
+            db.createObjectStore('images');
+          }
+        },
+      });
+      return db;
+    };
+    initDB();
+  }, []);
+
+  const saveImageToIndexedDB = async (url: string, id: string) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const db = await openDB('images-db', 1);
+      await db.put('images', blob, id);
+      const objectUrl = URL.createObjectURL(blob);
+      setImageUrls(prev => ({ ...prev, [id]: objectUrl }));
+    } catch (error) {
+      console.error('Error saving image to IndexedDB:', error);
+    }
+  };
+
+  const getImageFromIndexedDB = async (id: string) => {
+    try {
+      const db = await openDB('images-db', 1);
+      const blob = await db.get('images', id);
+      if (blob) {
+        const objectUrl = URL.createObjectURL(blob);
+        setImageUrls(prev => ({ ...prev, [id]: objectUrl }));
+        return objectUrl;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error getting image from IndexedDB:', error);
+      return null;
+    }
+  };
+
+  const loadImages = async (snapshots: any[]) => {
+    for (const snapshot of snapshots) {
+      const cachedImage = await getImageFromIndexedDB(snapshot.id);
+      if (!cachedImage && snapshot.screenshotFileKey) {
+        await saveImageToIndexedDB(snapshot.screenshotFileKey, snapshot.id);
+      }
+    }
+  };
 
   useEffect(() => {
     if (snapshots.length > 0) {
@@ -29,6 +81,7 @@ const Notes = ({ tag }: { tag?: string[] }) => {
         );
 
         if (newSnapshots.length > 0) {
+          loadImages(newSnapshots);
           return [...prev, ...newSnapshots];
         }
         return prev;
@@ -55,11 +108,11 @@ const Notes = ({ tag }: { tag?: string[] }) => {
           >
             <div className="flex flex-col">
               <div className="max-h-[280px] overflow-hidden">
-                <img
-                  src={snapshot.screenshotFileKey}
+                {imageUrls[snapshot.id] && <img
+                  src={imageUrls[snapshot.id]}
                   alt={snapshot.title}
                   className="w-full h-full object-cover"
-                />
+                />}
               </div>
               <div className="flex flex-col p-4 max-h-[160px] overflow-hidden">
                 <div className="flex items-center justify-between gap-2">

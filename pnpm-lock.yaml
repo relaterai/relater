@@ -135,6 +135,9 @@ importers:
       fuse.js:
         specifier: ^7.0.0
         version: 7.0.0
+      idb:
+        specifier: ^8.0.1
+        version: 8.0.1
       import-in-the-middle:
         specifier: ^1.11.2
         version: 1.11.3
@@ -11464,6 +11467,10 @@ packages:
     dependencies:
       safer-buffer: 2.1.2
     dev: true
+
+  /idb@8.0.1:
+    resolution: {integrity: sha512-EkBCzUZSdhJV8PxMSbeEV//xguVKZu9hZZulM+2gHXI0t2hGVU3eYE6/XnH77DS6FM2FY8wl17aDcu9vXpvLWQ==}
+    dev: false
 
   /ieee754@1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
