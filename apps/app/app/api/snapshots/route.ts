@@ -1,5 +1,7 @@
 import { genSnapshotTags } from '@/lib/functions/snapshots/gen-tags';
 import { getSnapshots } from '@/lib/functions/snapshots/get-snapshots';
+import { cleanUserSnapshotsCount } from '@/lib/functions/users/get-user-snapshots-count';
+import { cleanUserTagsCount } from '@/lib/functions/users/get-user-tags-count';
 import { parseRequestBody } from '@/lib/utils';
 import { withSession } from '@repo/auth/session';
 import prisma, { type Prisma } from '@repo/database';
@@ -10,6 +12,7 @@ import {
   createSnapshotSchema,
   getSnapshotsQuerySchema,
 } from '@repo/zod/schemas/snapshots';
+import { waitUntil } from '@vercel/functions';
 import { NextResponse } from 'next/server';
 
 // GET /api/snapshots – get snapshots
@@ -108,7 +111,8 @@ export const POST = withSession(async ({ req, session }) => {
       });
     })
   );
-
+  waitUntil(cleanUserTagsCount(session.user.id));
+  waitUntil(cleanUserSnapshotsCount(session.user.id));
   return NextResponse.json({
     ...newSnapshot,
     tags: createdTags,

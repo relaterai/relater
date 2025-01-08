@@ -1,5 +1,6 @@
 import { signedFileUrl } from '@/lib/functions/snapshots/signed-file-url';
 import { updateSnapshotWithTags } from '@/lib/functions/snapshots/update-snapshot-with-tags';
+import { cleanUserSnapshotsCount } from '@/lib/functions/users/get-user-snapshots-count';
 import { parseRequestBody } from '@/lib/utils';
 import { withSession } from '@repo/auth/session';
 import prisma from '@repo/database';
@@ -8,6 +9,7 @@ import {
   type SnapshotSchema,
   updateSnapshotSchema,
 } from '@repo/zod/schemas/snapshots';
+import { waitUntil } from '@vercel/functions';
 import { NextResponse } from 'next/server';
 
 // GET /api/snapshots/:id - get a specific snapshot
@@ -18,8 +20,8 @@ export const GET = withSession(async ({ session, params }) => {
       userId: session.user.id,
     },
     include: {
-      tags: true
-    }
+      tags: true,
+    },
   });
 
   if (!snapshot) {
@@ -30,7 +32,6 @@ export const GET = withSession(async ({ session, params }) => {
 
   return NextResponse.json(signedSnapshot);
 });
-
 
 // PATCH /api/snapshots/:id - update a specific snapshot
 export const PATCH = withSession(async ({ session, params, req }) => {
@@ -86,6 +87,7 @@ export const DELETE = withSession(async ({ session, params }) => {
       },
     },
   });
+  waitUntil(cleanUserSnapshotsCount(snapshot.user.id));
 
   return NextResponse.json({
     id: snapshot.id,

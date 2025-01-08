@@ -1,5 +1,6 @@
 import { deleteTagAndSnapshots } from '@/lib/functions/tags/delete-tag-and-snapshots';
 import { disconnectTags } from '@/lib/functions/tags/disconnect-tags';
+import { cleanUserTagsCount } from '@/lib/functions/users/get-user-tags-count';
 import { parseRequestBody } from '@/lib/utils';
 import { withSession } from '@repo/auth/session';
 import prisma from '@repo/database';
@@ -9,6 +10,7 @@ import {
   deleteTagQuerySchema,
   updateTagSchema,
 } from '@repo/zod/schemas/tags';
+import { waitUntil } from '@vercel/functions';
 import { NextResponse } from 'next/server';
 
 // PATCH /api/tags/:id - update a specific tag
@@ -48,6 +50,7 @@ export const DELETE = withSession(async ({ session, params, searchParams }) => {
       userId: session.user.id,
     });
   }
+  waitUntil(cleanUserTagsCount(session.user.id));
 
   return NextResponse.json(TagSchema.parse(res.tag));
 });
