@@ -22,6 +22,7 @@ export async function updateSnapshotWithTags({
   note,
   pinned,
   isDeleted,
+  title
 }: z.infer<typeof updateSnapshotSchema> & {
   userId: string;
 }): Promise<z.infer<typeof SnapshotSchema>> {
@@ -72,6 +73,7 @@ export async function updateSnapshotWithTags({
       userId: snapshot.userId,
     },
     data: {
+      ...(title && { title }),
       ...(note && { note }),
       ...(pinned && { pinned }),
       ...(isDeleted && { isDeleted }), // Move to trash

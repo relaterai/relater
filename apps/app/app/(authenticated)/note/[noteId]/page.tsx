@@ -34,7 +34,7 @@ export default function NotePage(props: { params: Promise<{ noteId: string }> })
   useEffect(() => {
     if (snapshot && firstLoad) {
       setTitle(snapshot.title || '');
-      setContent(snapshot.content || '');
+      setContent(snapshot.note || '');
       const newTags = snapshot.tags?.map((tag: { name: string }) => tag.name) || [];
       if (JSON.stringify(newTags) !== JSON.stringify(tags)) {
         setTags(newTags);
@@ -93,15 +93,17 @@ export default function NotePage(props: { params: Promise<{ noteId: string }> })
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`/api/notes/${noteId}`, {
-        method: 'PUT',
+      const response = await fetch(`/api/snapshots/${noteId}`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          note: content,
+          tags,
           title,
-          content,
-          tags
+          pinned: false,
+          isDeleted: false
         }),
       });
 

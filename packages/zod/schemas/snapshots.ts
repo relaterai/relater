@@ -73,6 +73,7 @@ export const createSnapshotSchema = z
 
 // Schema to validate the request body when updating a snapshot
 export const updateSnapshotSchema = z.object({
+  title: z.string().optional().describe('Title of the snapshot'),
   tags: z
     .array(z.string())
     .optional()
@@ -138,6 +139,7 @@ export const SnapshotSchema: z.ZodType = z
     tags: z
       .union([z.array(z.lazy(() => TagSchema)), z.array(z.unknown())])
       .describe('The tags of the snapshot.'),
+    note: z.string().nullable().describe('The note of the snapshot.'),
   })
   .openapi({
     title: 'Snapshot',

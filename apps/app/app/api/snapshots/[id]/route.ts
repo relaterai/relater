@@ -34,7 +34,7 @@ export const GET = withSession(async ({ session, params }) => {
 
 // PATCH /api/snapshots/:id - update a specific snapshot
 export const PATCH = withSession(async ({ session, params, req }) => {
-  const { note, tags, pinned, isDeleted } = updateSnapshotSchema
+  const { note, tags, pinned, isDeleted, title } = updateSnapshotSchema
     .omit({
       snapshotId: true,
     })
@@ -48,6 +48,7 @@ export const PATCH = withSession(async ({ session, params, req }) => {
       note,
       pinned,
       isDeleted,
+      title,
     });
   } else {
     snapshot = await prisma.snapshot.update({
@@ -56,6 +57,7 @@ export const PATCH = withSession(async ({ session, params, req }) => {
         userId: session.user.id,
       },
       data: {
+        ...(title && { title }),
         ...(note && { note }),
         ...(pinned !== null && typeof pinned === 'boolean' && { pinned }),
         ...(isDeleted !== null &&
