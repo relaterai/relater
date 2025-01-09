@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSnapshots } from "@/swr/use-snapshots";
 import { useInView } from "react-intersection-observer";
 import { Button } from "@repo/design-system/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { openDB } from 'idb';
 import {
@@ -137,6 +137,14 @@ const Notes = () => {
   const handleRefresh = () => {
     window.location.reload();
   };
+
+  if (isLoading && allSnapshots.length === 0) {
+    return <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <div className="flex justify-center items-center h-full">
+        <Loader2 className="h-4 w-4 animate-spin" />
+      </div>
+    </div>
+  }
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
