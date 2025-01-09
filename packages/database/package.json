@@ -6,14 +6,14 @@
     "analyze": "prisma generate --no-hints"
   },
   "dependencies": {
-    "@prisma/client": "^6.1.0",
+    "@prisma/client": "6.1.0",
     "@repo/env": "workspace:*",
+    "prisma": "6.1.0",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
     "@types/node": "22.9.4",
-    "prisma": "^6.1.0",
     "typescript": "^5.7.2"
   }
 }

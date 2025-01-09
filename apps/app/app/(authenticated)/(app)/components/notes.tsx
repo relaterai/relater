@@ -20,6 +20,7 @@ import {
 const Notes = () => {
   const searchParams = useSearchParams();
   const tag = searchParams.get('tag');
+  const search = searchParams.get('search');
 
   const [page, setPage] = useState(1);
   const [allSnapshots, setAllSnapshots] = useState<any[]>([]);
@@ -30,6 +31,7 @@ const Notes = () => {
     pageSize: 10,
     page,
     tagName: tag || undefined,
+    search: search || undefined,
   });
 
   // const { snapshots: newestSnapshots } = useSnapshots({
@@ -81,7 +83,7 @@ const Notes = () => {
 
   useEffect(() => {
     setPage(1)
-  }, [tag]);
+  }, [tag, search]);
 
   useEffect(() => {
     if (page === 1) {
@@ -148,20 +150,6 @@ const Notes = () => {
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <AlertDialog open={showRefreshDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>内容已更新</AlertDialogTitle>
-            <AlertDialogDescription>
-              笔记内容已经更新，需要刷新页面以查看最新内容。
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogAction onClick={handleRefresh}>刷新页面</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
       <div className="grid auto-rows-min gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 grid-cols-1">
         {allSnapshots.map((snapshot, index) => (
           <div
@@ -197,7 +185,7 @@ const Notes = () => {
                       key={tag.id}
                       className="rounded-sm bg-primary/5 px-2 py-0.5 text-xs text-primary whitespace-nowrap"
                     >
-                      # {tag.name}
+                      {tag.emoji} {tag.name}
                     </span>
                   ))}
                 </div>

@@ -19,7 +19,7 @@ export default function NotePage(props: { noteId: string }) {
   const { snapshot, isLoading } = useSnapshot(noteId);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<Array<{ name: string, emoji: string }>>([]);
   const [newTag, setNewTag] = useState('');
   const [editingTagIndex, setEditingTagIndex] = useState<number | null>(null);
   const [editingTagValue, setEditingTagValue] = useState('');
@@ -29,7 +29,7 @@ export default function NotePage(props: { noteId: string }) {
   const [snapshotUrl, setSnapshotUrl] = useState('');
 
   const [firstLoad, setFirstLoad] = useState(true);
-  const [lastSavedState, setLastSavedState] = useState({ title: '', content: '', tags: [] as string[] });
+  const [lastSavedState, setLastSavedState] = useState({ title: '', content: '', tags: [] as Array<{ name: string, emoji: string }> });
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved'>('saved');
   const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
 
@@ -37,7 +37,7 @@ export default function NotePage(props: { noteId: string }) {
     if (snapshot && firstLoad) {
       const initialTitle = snapshot.title || '';
       const initialContent = snapshot.note || '';
-      const initialTags = snapshot.tags?.map((tag: { name: string }) => tag.name) || [];
+      const initialTags = snapshot.tags || [];
 
       setTitle(initialTitle);
       setContent(initialContent);
@@ -150,32 +150,33 @@ export default function NotePage(props: { noteId: string }) {
   }
 
   const handleAddTag = () => {
-    if (newTag && !tags.includes(newTag)) {
-      const newTags = [...tags, newTag];
+    if (newTag && !tags.some(tag => tag.name === newTag)) {
+      const newTagObj = { name: newTag, emoji: "#" };
+      const newTags = [...tags, newTagObj];
       setTags(newTags);
       setNewTag('');
-      handleSave({ tags: newTags });
+      handleSave({ tags: newTags.map(tag => tag.name) });
     }
     setIsAddingTag(false);
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    const newTags = tags.filter(tag => tag !== tagToRemove);
+    const newTags = tags.filter(tag => tag.name !== tagToRemove);
     setTags(newTags);
-    handleSave({ tags: newTags });
+    handleSave({ tags: newTags.map(tag => tag.name) });
   };
 
   const handleTagClick = (index: number) => {
     setEditingTagIndex(index);
-    setEditingTagValue(tags[index]);
+    setEditingTagValue(tags[index].name);
   };
 
   const handleTagEdit = (index: number) => {
-    if (editingTagValue && !tags.includes(editingTagValue)) {
+    if (editingTagValue && !tags.some(tag => tag.name === editingTagValue)) {
       const newTags = [...tags];
-      newTags[index] = editingTagValue;
+      newTags[index] = { ...newTags[index], name: editingTagValue };
       setTags(newTags);
-      handleSave({ tags: newTags });
+      handleSave({ tags: newTags.map(tag => tag.name) });
     }
     setEditingTagIndex(null);
   };
@@ -295,8 +296,8 @@ export default function NotePage(props: { noteId: string }) {
                     variant="secondary"
                     className="cursor-pointer hover:bg-secondary/80 group flex justify-between items-center gap-2 py-1.5"
                   >
-                    <span onClick={() => handleTagClick(index)}># {tag}</span>
-                    <div className="hover:text-destructive" onClick={() => handleRemoveTag(tag)}>
+                    <span onClick={() => handleTagClick(index)}>{tag.emoji} {tag.name}</span>
+                    <div className="hover:text-destructive" onClick={() => handleRemoveTag(tag.name)}>
                       <X className="h-4 w-4 scale-[85%]" />
                     </div>
                   </Badge>
