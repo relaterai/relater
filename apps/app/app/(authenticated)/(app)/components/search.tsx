@@ -25,7 +25,9 @@ export const Search = () => {
     const formData = new FormData(e.currentTarget);
     const search = formData.get('search') as string;
 
-    router.push('?' + createQueryString('search', search));
+    const params = new URLSearchParams();
+    params.set('search', search);
+    router.push('?' + params.toString());
   };
 
   return (
@@ -39,7 +41,7 @@ export const Search = () => {
       />
       <Button type="submit" size="sm" variant="ghost">
         <SearchIcon className="h-4 w-4" />
-        <span className="sr-only">搜索</span>
+        <span className="sr-only">Search</span>
       </Button>
     </form>
   );

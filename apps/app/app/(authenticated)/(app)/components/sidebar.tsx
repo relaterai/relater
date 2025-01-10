@@ -75,9 +75,10 @@ type TagNode = {
   items: TagNode[];
   isActive?: boolean;
   emoji?: string;
+  pinned?: boolean;
 };
 
-const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string }>): TagNode[] => {
+const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string, pinned?: boolean }>): TagNode[] => {
   const root: { items: TagNode[] } = {
     items: []
   };
@@ -98,7 +99,8 @@ const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string }>)
           id: tag.id,
           items: [],
           isActive: false,
-          emoji: tag.emoji
+          emoji: tag.emoji,
+          pinned: tag.pinned || false
         };
 
         nodeMap.set(path, newNode);
@@ -118,11 +120,19 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
   const [newName, setNewName] = useState(item.title);
   const [newIcon, setNewIcon] = useState(item.emoji || '');
 
+  const { mutate } = useTags()
+
   const handlePin = async () => {
     try {
-      await fetch(`/api/tags/${item.id}/pin`, {
-        method: 'POST'
+      await fetch(`/api/tags/${item.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ pinned: true })
       });
+
+      mutate()
     } catch (error) {
       console.error('Failed to pin tag:', error);
     }
@@ -309,6 +319,8 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
   const { tags } = useTags();
 
   const tagTree = buildTagTree(tags || [])
+  const pinnedTags = tagTree.filter(tag => tag.pinned)
+  const unpinnedTags = tagTree.filter(tag => !tag.pinned)
 
   return (
     <>
@@ -344,17 +356,23 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
           <SidebarGroup>
             <SidebarGroupLabel>Pinned Tags</SidebarGroupLabel>
             <SidebarMenu>
-              <SidebarMenuItem>
-                <div className="text-sm text-muted-foreground px-4">
-                  Pin tags here for easy access
-                </div>
-              </SidebarMenuItem>
+              {pinnedTags.length > 0 ? (
+                pinnedTags.map((item) => (
+                  <RecursiveMenuItem key={item.title} item={item} />
+                ))
+              ) : (
+                <SidebarMenuItem>
+                  <div className="text-sm text-muted-foreground px-4">
+                    Pin tags here for easy access
+                  </div>
+                </SidebarMenuItem>
+              )}
             </SidebarMenu>
           </SidebarGroup>
           <SidebarGroup>
             <SidebarGroupLabel>Tags</SidebarGroupLabel>
             <SidebarMenu>
-              {tagTree.map((item) => (
+              {unpinnedTags.map((item) => (
                 <RecursiveMenuItem key={item.title} item={item} />
               ))}
             </SidebarMenu>

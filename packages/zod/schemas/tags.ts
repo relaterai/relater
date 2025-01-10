@@ -48,6 +48,14 @@ export const getTagsQuerySchema = z
       })
       .optional()
       .describe('Whether to include all tags.'),
+    pinned: z
+      .union([z.boolean(), z.string()])
+      .transform((val) => {
+        if (typeof val === 'boolean') return val;
+        return val === 'true';
+      })
+      .optional()
+      .describe('Whether to include pinned tags.'),
   })
   .merge(getPaginationQuerySchema({ pageSize: SNAPSHOTS_MAX_PAGE_SIZE }));
 

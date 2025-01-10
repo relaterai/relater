@@ -32,7 +32,8 @@ export function useTags(params?: z.infer<typeof getTagsQuerySchema>) {
     tags: data ? z.array(z.object({
       id: z.string(),
       name: z.string(),
-      emoji: z.string().optional()
+      emoji: z.string().optional(),
+      pinned: z.boolean().optional()
     })).parse(data.items) : undefined,
     total: data?.total,
     error,
