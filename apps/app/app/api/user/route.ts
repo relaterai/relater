@@ -1,6 +1,8 @@
+import { parseRequestBody } from '@/lib/utils';
 import { withSession } from '@repo/auth/session';
 import prisma from '@repo/database';
 import { LaterApiError, handleAndReturnErrorResponse } from '@repo/error';
+import { updateUserSchema } from '@repo/zod/schemas/users';
 import { NextResponse } from 'next/server';
 
 export const GET = withSession(async ({ req, session }) => {
@@ -13,11 +15,8 @@ export const GET = withSession(async ({ req, session }) => {
         id: true,
         name: true,
         email: true,
-        // avatar: true,
+        image: true,
         createdAt: true,
-        plan: true,
-        stripeId: true,
-        stripeCurrentPeriodEnd: true,
       },
     });
     if (!user) {
@@ -31,6 +30,22 @@ export const GET = withSession(async ({ req, session }) => {
     req.log.error(error as string);
     return handleAndReturnErrorResponse(error);
   }
+});
+
+// PATCH /api/user
+export const PATCH = withSession(async ({ req, session }) => {
+  const { name, email, image } = updateUserSchema.parse(
+    await parseRequestBody(req)
+  );
+  const user = await prisma.user.update({
+    where: { id: session.user?.id },
+    data: {
+      name: name ?? undefined,
+      email: email ?? undefined,
+      image: image ?? undefined,
+    },
+  });
+  return NextResponse.json(user);
 });
 
 export const dynamic = 'force-dynamic';
