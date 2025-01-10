@@ -2,6 +2,7 @@ import { parseRequestBody } from '@/lib/utils';
 import { withSession } from '@repo/auth/session';
 import prisma from '@repo/database';
 import { LaterApiError, handleAndReturnErrorResponse } from '@repo/error';
+import { getPreSignedGetUrl } from '@repo/storage';
 import { updateUserSchema } from '@repo/zod/schemas/users';
 import { NextResponse } from 'next/server';
 
@@ -25,7 +26,10 @@ export const GET = withSession(async ({ req, session }) => {
         message: 'User not found',
       });
     }
-    return NextResponse.json(user);
+    return NextResponse.json({
+      ...user,
+      image: await getPreSignedGetUrl(user.image || "")
+    });
   } catch (error) {
     req.log.error(error as string);
     return handleAndReturnErrorResponse(error);

@@ -71,6 +71,7 @@ export async function getPreSignedPutUrl(
   const { name, ext } = path.parse(fileName);
 
   const slugifiedName = slugify(name) + ext;
+  console.log('slugifiedName', slugifiedName)
   const key = `${userId}/${nanoid(16)}/${slugifiedName}`;
   const putObjectcommand = new PutObjectCommand({
     Bucket: bucket || process.env.STORAGE_UPLOAD_BUCKET,

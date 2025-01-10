@@ -385,8 +385,8 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuItem className="flex items-center gap-2 cursor-pointer">
                   <Avatar className="h-8 w-8 rounded-md">
-                    <AvatarImage src="https://avatars.githubusercontent.com/u/54500106" alt="Demo User" />
-                    <AvatarFallback>DU</AvatarFallback>
+                    <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
+                    <AvatarFallback>{user?.name?.slice(0, 2) || 'DU'}</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col flex-1 overflow-hidden">
                     <span className="text-sm font-medium truncate">{user?.name || 'User'}</span>
