@@ -4,36 +4,44 @@ import { useEffect, useState } from "react";
 import { useSnapshots } from "@/swr/use-snapshots";
 import { useInView } from "react-intersection-observer";
 import { Button } from "@repo/design-system/components/ui/button";
-import { ExternalLink } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ExternalLink, Loader2 } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { openDB } from 'idb';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@repo/design-system/components/ui/alert-dialog";
 
-const Notes = ({ tag }: { tag?: string[] }) => {
+const Notes = () => {
+  const searchParams = useSearchParams();
+  const tag = searchParams.get('tag');
+  const search = searchParams.get('search');
+
   const [page, setPage] = useState(1);
   const [allSnapshots, setAllSnapshots] = useState<any[]>([]);
   const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
+  const [showRefreshDialog, setShowRefreshDialog] = useState(false);
+
   const { snapshots = [], isLoading } = useSnapshots({
     pageSize: 10,
     page,
-    tagName: tag?.join('/'),
+    tagName: tag || undefined,
+    search: search || undefined,
   });
+
+  // const { snapshots: newestSnapshots } = useSnapshots({
+  //   pageSize: 1,
+  //   page: 1,
+  //   tagName: tag || undefined,
+  // });
 
   const router = useRouter();
   const { ref, inView } = useInView();
-
-  useEffect(() => {
-    const initDB = async () => {
-      const db = await openDB('images-db', 1, {
-        upgrade(db) {
-          if (!db.objectStoreNames.contains('images')) {
-            db.createObjectStore('images');
-          }
-        },
-      });
-      return db;
-    };
-    initDB();
-  }, []);
 
   const saveImageToIndexedDB = async (url: string, id: string) => {
     try {
@@ -74,6 +82,30 @@ const Notes = ({ tag }: { tag?: string[] }) => {
   };
 
   useEffect(() => {
+    setPage(1)
+  }, [tag, search]);
+
+  useEffect(() => {
+    if (page === 1) {
+      setAllSnapshots([])
+    }
+  }, [page])
+
+  useEffect(() => {
+    const initDB = async () => {
+      const db = await openDB('images-db', 1, {
+        upgrade(db) {
+          if (!db.objectStoreNames.contains('images')) {
+            db.createObjectStore('images');
+          }
+        },
+      });
+      return db;
+    };
+    initDB();
+  }, []);
+
+  useEffect(() => {
     if (snapshots.length > 0) {
       setAllSnapshots(prev => {
         const newSnapshots = snapshots.filter(
@@ -89,12 +121,32 @@ const Notes = ({ tag }: { tag?: string[] }) => {
     }
   }, [snapshots]);
 
+  // useEffect(() => {
+  //   if (newestSnapshots?.[0]?.id && allSnapshots.length > 0 && !allSnapshots.some(s => s.id === newestSnapshots[0].id)) {
+
+  //     console.log(newestSnapshots, allSnapshots)
+  //     setShowRefreshDialog(true)
+  //   }
+  // }, [newestSnapshots, allSnapshots])
+
   useEffect(() => {
-    const shouldLoadMore = inView && !isLoading && snapshots.length > 0;
+    const shouldLoadMore = inView && allSnapshots.length > 0 && snapshots.length > 0 && !isLoading;
     if (shouldLoadMore) {
       setPage(prev => prev + 1);
     }
-  }, [inView, isLoading, snapshots.length]);
+  }, [inView, allSnapshots, isLoading]);
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
+  if (isLoading && allSnapshots.length === 0) {
+    return <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <div className="flex justify-center items-center h-full">
+        <Loader2 className="h-4 w-4 animate-spin" />
+      </div>
+    </div>
+  }
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
@@ -107,11 +159,11 @@ const Notes = ({ tag }: { tag?: string[] }) => {
             onClick={() => router.push(`/note/${snapshot.id}`)}
           >
             <div className="flex flex-col">
-              <div className="max-h-[280px] overflow-hidden">
+              <div className="relative w-full pt-[56.25%]">
                 {imageUrls[snapshot.id] && <img
                   src={imageUrls[snapshot.id]}
                   alt={snapshot.title}
-                  className="w-full h-full object-cover"
+                  className="absolute top-0 left-0 w-full h-full object-cover object-top"
                 />}
               </div>
               <div className="flex flex-col p-4 max-h-[160px] overflow-hidden">
@@ -133,7 +185,7 @@ const Notes = ({ tag }: { tag?: string[] }) => {
                       key={tag.id}
                       className="rounded-sm bg-primary/5 px-2 py-0.5 text-xs text-primary whitespace-nowrap"
                     >
-                      {tag.name}
+                      {tag.emoji} {tag.name}
                     </span>
                   ))}
                 </div>

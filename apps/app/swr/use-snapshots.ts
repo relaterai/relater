@@ -11,7 +11,7 @@ const fetcher = async (url: string, { params }: { params?: Record<string, any> }
       }
     });
   }
-  const urlWithParams = `${url}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`;
+  const urlWithParams = `${url}${searchParams.toString() ? `?${decodeURIComponent(searchParams.toString())}` : ''}`;
   const res = await fetch(urlWithParams);
   if (!res.ok) {
     throw new Error('Failed to fetch snapshots');

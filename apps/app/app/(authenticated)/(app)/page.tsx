@@ -15,7 +15,8 @@ import { SidebarTrigger } from '@repo/design-system/components/ui/sidebar';
 import { SearchIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Notes from '../../components/notes';
+import Notes from './components/notes';
+import Search from './components/search';
 
 const title = 'Later';
 const description = 'My application.';
@@ -25,8 +26,7 @@ export const metadata: Metadata = {
   description,
 };
 
-const App = async (props: { params: Promise<{ tag: string[] }> }) => {
-  const params = await props.params;
+const App = async () => {
   const users = await prisma.user.findMany({});
   const session = await auth();
 
@@ -41,20 +41,10 @@ const App = async (props: { params: Promise<{ tag: string[] }> }) => {
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
           </div>
-          <div className="flex w-full max-w-sm items-center space-x-2">
-            <Input
-              type="search"
-              placeholder="Search notes..."
-              className="h-9"
-            />
-            <Button type="submit" size="sm" variant="ghost">
-              <SearchIcon className="h-4 w-4" />
-              <span className="sr-only">Search</span>
-            </Button>
-          </div>
+          <Search />
         </div >
       </header >
-      <Notes tag={params.tag} />
+      <Notes />
     </>
   );
 };
