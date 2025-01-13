@@ -10,7 +10,7 @@ export const Features = () => (
               Something new!
             </h2>
             <p className="max-w-xl text-left text-lg text-muted-foreground leading-relaxed tracking-tight lg:max-w-lg">
-              Your creative journey starts here.
+              Your AI pair creator.
             </p>
           </div>
         </div>
@@ -21,7 +21,7 @@ export const Features = () => (
               <h3 className="text-xl tracking-tight">Collect everything in one place, naturally.</h3>
               <p className="max-w-xs text-base text-muted-foreground">
                 While you browse webpages, watch YouTube videos, listen to podcasts, or upload PDFs and images,
-                Later helps you understand the content and save what matters most to you.
+                Relater helps you understand the content and save what matters most to you.
               </p>
             </div>
           </div>
@@ -30,7 +30,7 @@ export const Features = () => (
             <div className="flex flex-col">
               <h3 className="text-xl tracking-tight">AI-powered multi-level tags</h3>
               <p className="max-w-xs text-base text-muted-foreground">
-                Later supports an intuitive #tag/subtag syntax,
+                Relater supports an intuitive #tag/subtag syntax,
                 making it effortless to organize and navigate through your content with a hierarchical tagging system.
               </p>
             </div>
@@ -41,7 +41,7 @@ export const Features = () => (
             <div className="flex flex-col">
               <h3 className="text-xl tracking-tight">Privacy-first, always.</h3>
               <p className="max-w-xs text-base text-muted-foreground">
-                Later is your private ideas hub. We put privacy first. We will never sell your private info
+                Relater is your private ideas hub. We put privacy first. We will never sell your private info
                 to any third party for profit. Your subscription will encourage us to do better.
               </p>
             </div>

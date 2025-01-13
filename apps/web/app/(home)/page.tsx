@@ -9,9 +9,9 @@ import { Hero } from './components/hero';
 // import { Testimonials } from './components/testimonials';
 
 const meta = {
-  title: 'Capture faster, review later.',
+  title: 'Your AI pair creator.',
   description:
-    'Later is a tool that helps you capture and review content from anywhere.',
+    'Relater is a tool that helps you capture and review content from anywhere.',
 };
 
 export const metadata: Metadata = createMetadata(meta);

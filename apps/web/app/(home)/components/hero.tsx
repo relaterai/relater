@@ -1,9 +1,8 @@
-import { Button } from '@repo/design-system/components/ui/button';
-import { env } from '@repo/env';
-import { allPosts } from 'content-collections';
-import { MoveRight, PhoneCall } from 'lucide-react';
-import Link from 'next/link';
 import { DownloadWidget } from '@repo/design-system/components/download-widget';
+import { Button } from '@repo/design-system/components/ui/button';
+import { allPosts } from 'content-collections';
+import { MoveRight, } from 'lucide-react';
+import Link from 'next/link';
 
 export const Hero = () => (
   <div className="w-full">
@@ -21,7 +20,7 @@ export const Hero = () => (
             Capture faster, review later.
           </h1>
           <p className="max-w-2xl text-center text-lg text-muted-foreground leading-relaxed tracking-tight md:text-xl">
-            Later is an open-source AI tool that helps shape your way of
+            Relater is an open-source AI tool that helps shape your way of
             thinking by capturing and reviewing content from anywhere.
           </p>
         </div>

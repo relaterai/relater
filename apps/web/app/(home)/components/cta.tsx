@@ -11,10 +11,10 @@ export const CTA = () => (
       <div className="flex flex-col items-center gap-8 rounded-md bg-muted p-4 text-center lg:p-14">
         <div className="flex flex-col gap-2">
           <h3 className="max-w-xl font-regular text-3xl tracking-tighter md:text-5xl">
-            Get started with Later
+            Get started with Relater
           </h3>
           <p className="max-w-xl text-lg text-muted-foreground leading-relaxed tracking-tight">
-            Later is an open-source AI tool that helps shape your way of thinking by capturing and reviewing content from anywhere.
+            Relater is an open-source AI tool that helps shape your way of thinking by capturing and reviewing content from anywhere.
           </p>
         </div>
         <div className="flex flex-row gap-4">
