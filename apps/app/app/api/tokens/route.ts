@@ -59,7 +59,7 @@ export const POST = withSession(async ({ req, session }) => {
   waitUntil(
     sendEmail({
       email: session.user.email,
-      subject: `A new API key has been created for you on Later`,
+      subject: `A new API key has been created for you on Relater`,
       react: apiKeyCreated({
         email: session.user.email,
         token: {

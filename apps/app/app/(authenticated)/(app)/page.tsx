@@ -18,7 +18,7 @@ import { notFound } from 'next/navigation';
 import Notes from './components/notes';
 import Search from './components/search';
 
-const title = 'Later';
+const title = 'Relater';
 const description = 'My application.';
 
 export const metadata: Metadata = {

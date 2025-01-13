@@ -27,6 +27,7 @@ import {
   SidebarInset,
   SidebarMenu,
   SidebarMenuAction,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -76,9 +77,10 @@ type TagNode = {
   isActive?: boolean;
   emoji?: string;
   pinned?: boolean;
+  snapshotsCount?: number;
 };
 
-const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string, pinned?: boolean }>): TagNode[] => {
+const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string, pinned?: boolean, snapshotsCount?: number }>): TagNode[] => {
   const root: { items: TagNode[] } = {
     items: []
   };
@@ -86,7 +88,7 @@ const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string, pi
   const nodeMap = new Map<string, TagNode>();
 
   tags.forEach((tag) => {
-    const parts = tag.name.replace("#", "").split('/');
+    const parts = tag.name.split('/');
     let currentLevel = root;
 
     parts.forEach((part, index) => {
@@ -100,21 +102,38 @@ const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string, pi
           items: [],
           isActive: false,
           emoji: tag.emoji,
-          pinned: tag.pinned || false
+          pinned: tag.pinned || false,
+          snapshotsCount: index === parts.length - 1 ? tag.snapshotsCount || 0 : 0
         };
 
         nodeMap.set(path, newNode);
         currentLevel.items.push(newNode);
+      } else {
+        nodeMap.get(path)!.snapshotsCount = index === parts.length - 1 ? tag.snapshotsCount || 0 : 0
       }
 
       currentLevel = nodeMap.get(path) as TagNode;
     });
   });
 
+  const paths = Array.from(nodeMap.keys()).sort((a, b) => b.split('/').length - a.split('/').length);
+
+  paths.forEach(path => {
+    const parentPath = path.split('/').slice(0, -1).join('/');
+    const node = nodeMap.get(path)!;
+
+    console.log(path, node.snapshotsCount)
+
+    if (parentPath && nodeMap.has(parentPath)) {
+      const parentNode = nodeMap.get(parentPath)!;
+      parentNode.snapshotsCount = (parentNode.snapshotsCount || 0) + (node.snapshotsCount || 0);
+    }
+  });
+
   return root.items;
 };
 
-const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
+const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode, pinned?: boolean, level?: number }) => {
   const [isRenameOpen, setIsRenameOpen] = useState(false);
   const [isIconOpen, setIsIconOpen] = useState(false);
   const [newName, setNewName] = useState(item.title);
@@ -122,14 +141,14 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
 
   const { mutate } = useTags()
 
-  const handlePin = async () => {
+  const togglePin = async () => {
     try {
       await fetch(`/api/tags/${item.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ pinned: true })
+        body: JSON.stringify({ pinned: !pinned })
       });
 
       mutate()
@@ -138,22 +157,11 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
     }
   };
 
-  const handleRemoveTag = async () => {
+  const handleDeleteTag = async (deleteSnapshot: boolean) => {
     try {
       await fetch(`/api/tags/${item.id}`, {
         method: 'DELETE',
-        body: JSON.stringify({ removeNotesAlso: false })
-      });
-    } catch (error) {
-      console.error('Failed to remove tag:', error);
-    }
-  };
-
-  const handleDeleteTag = async () => {
-    try {
-      await fetch(`/api/tags/${item.id}`, {
-        method: 'DELETE',
-        body: JSON.stringify({ removeNotesAlso: true })
+        // body: JSON.stringify({ deleteSnapshot })
       });
     } catch (error) {
       console.error('Failed to delete tag:', error);
@@ -193,28 +201,35 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
           <span className='w-3 h-3 flex items-center justify-center'>{item.emoji}</span>
           <span>{item.title}</span>
         </SidebarMenuButton>
+        {/* <SidebarMenuBadge>
+          {item.snapshotsCount ? (item.snapshotsCount > 99 ? '99+' : item.snapshotsCount) : '0'}
+        </SidebarMenuBadge> */}
       </Link>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <SidebarMenuAction className={`opacity-0 hover:opacity-100 ${item.items?.length ? 'mr-6' : ''}`}>
+          <SidebarMenuAction className={`opacity-0 hover:opacity-100 ${item.items?.length ? 'mr-6' : 'mr-0'}`}>
             <MoreHorizontalIcon className="h-4 w-4" />
           </SidebarMenuAction>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" side="right">
-          <DropdownMenuItem onClick={handlePin}>
-            <span>Pin</span>
-          </DropdownMenuItem>
+          {!pinned ?
+            <DropdownMenuItem onClick={togglePin}>
+              <span>Pin</span>
+            </DropdownMenuItem> : <DropdownMenuItem onClick={togglePin}>
+              <span>Unpin</span>
+            </DropdownMenuItem>
+          }
           <DropdownMenuItem onClick={() => setIsRenameOpen(true)}>
             <span>Rename</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setIsIconOpen(true)}>
+          {level === 0 && <DropdownMenuItem onClick={() => setIsIconOpen(true)}>
             <span>Change Icon</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem>}
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleRemoveTag} className="text-red-600">
+          <DropdownMenuItem onClick={() => handleDeleteTag(false)} className="text-red-600">
             <span>Remove Tag Only</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleDeleteTag} className="text-red-600">
+          <DropdownMenuItem onClick={() => handleDeleteTag(true)} className="text-red-600">
             <span>Delete Tag and Notes</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -289,12 +304,11 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
       {item.items?.length ? (
         <Collapsible asChild>
           <div>
             <CollapsibleTrigger asChild>
-              <SidebarMenuAction className="data-[state=open]:rotate-90">
+              <SidebarMenuAction className="data-[state=open]:rotate-90 mr-0">
                 <ChevronRightIcon />
                 <span className="sr-only">Toggle</span>
               </SidebarMenuAction>
@@ -302,7 +316,7 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
             <CollapsibleContent>
               <SidebarMenuSub>
                 {item.items.map((subItem: any) => (
-                  <RecursiveMenuItem key={subItem.title} item={subItem} />
+                  <RecursiveMenuItem key={subItem.title} item={subItem} pinned={pinned} level={level + 1} />
                 ))}
               </SidebarMenuSub>
             </CollapsibleContent>
@@ -316,7 +330,9 @@ const RecursiveMenuItem = ({ item }: { item: TagNode }) => {
 export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
   const sidebar = useSidebar();
   const { user } = useUser();
-  const { tags } = useTags();
+  const { tags } = useTags({
+    withSnapshotsCount: true
+  });
 
   const tagTree = buildTagTree(tags || [])
   const pinnedTags = tagTree.filter(tag => tag.pinned)
@@ -358,7 +374,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
             <SidebarMenu>
               {pinnedTags.length > 0 ? (
                 pinnedTags.map((item) => (
-                  <RecursiveMenuItem key={item.title} item={item} />
+                  <RecursiveMenuItem key={item.title} item={item} pinned />
                 ))
               ) : (
                 <SidebarMenuItem>

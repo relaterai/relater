@@ -19,7 +19,7 @@ const fetcher = async (url: string, { params }: { params?: Record<string, any> }
   return res.json();
 };
 
-export function useTags(params?: z.infer<typeof getTagsQuerySchema>) {
+export function useTags(params?: Partial<z.infer<typeof getTagsQuerySchema>>) {
   const { data, error, isLoading, mutate } = useSWR(
     ['/api/tags', params],
     ([url, queryParams]) => fetcher(url, { params: queryParams }),
@@ -33,7 +33,8 @@ export function useTags(params?: z.infer<typeof getTagsQuerySchema>) {
       id: z.string(),
       name: z.string(),
       emoji: z.string().optional(),
-      pinned: z.boolean().optional()
+      pinned: z.boolean().optional(),
+      snapshotsCount: z.number().optional()
     })).parse(data.items) : undefined,
     total: data?.total,
     error,

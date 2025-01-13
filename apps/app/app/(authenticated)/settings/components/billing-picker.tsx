@@ -58,7 +58,7 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
                 <Button
                   variant="outline"
                   className="w-full"
-                  disabled={currentPlan === 'free'}
+                  disabled={currentPlan !== "pro"}
                 >
                   Current plan
                 </Button>
@@ -102,7 +102,7 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
                 )}
                 disabled={currentPlan === 'pro'}
               >
-                {currentPlan === 'pro' ? 'Current plan' : 'Try it →'}
+                {currentPlan === 'pro' ? 'Current plan' : 'Upgrade →'}
               </Button>
             </div>
           </div>

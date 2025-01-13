@@ -56,12 +56,6 @@ export default function ProfilePage() {
       newErrors.name = "Name cannot exceed 30 characters.";
     }
 
-    if (!formData.email) {
-      newErrors.email = "Please enter an email address.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address.";
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -163,8 +157,6 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto">
       {/* <h1 className="text-2xl font-semibold">Profile</h1> */}
-      <Label >Plan</Label>
-      <BillingPicker currentPlan={user?.plan} />
       <div className="py-4">
         <form onSubmit={handleSubmit} className="space-y-8">
           <div>
@@ -215,9 +207,9 @@ export default function ProfilePage() {
               name="email"
               type="email"
               value={formData.email}
-              onChange={handleChange}
+              disabled
+              className="bg-gray-50"
             />
-            {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
             <p className="text-sm text-muted-foreground">
               This is your primary contact email.
             </p>
@@ -230,7 +222,9 @@ export default function ProfilePage() {
           </div>
         </form>
       </div>
-
+      <Separator />
+      <Label className="block mt-4">Plan</Label>
+      <BillingPicker currentPlan={user?.plan} />
       {/* <Separator />
 
       <div className="py-8 mt-6">

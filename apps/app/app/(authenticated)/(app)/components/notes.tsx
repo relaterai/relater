@@ -21,6 +21,7 @@ const Notes = () => {
   const searchParams = useSearchParams();
   const tag = searchParams.get('tag');
   const search = searchParams.get('search');
+  const date = searchParams.get('date');
 
   const [page, setPage] = useState(1);
   const [allSnapshots, setAllSnapshots] = useState<any[]>([]);
@@ -32,6 +33,7 @@ const Notes = () => {
     page,
     tagName: tag || undefined,
     search: search || undefined,
+    // date: date ? new Date(date) : undefined,
   });
 
   // const { snapshots: newestSnapshots } = useSnapshots({

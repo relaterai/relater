@@ -18,7 +18,7 @@ export async function getSnapshots({
   pageSize = 10,
   withCount = true,
   sort = 'createdAt',
-  isDeleted = false,
+  isDeleted = false
 }: GetSnapshotsParams) {
   const skip = (page - 1) * pageSize;
 
