@@ -161,11 +161,13 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
     try {
       await fetch(`/api/tags/${item.id}`, {
         method: 'DELETE',
-        // body: JSON.stringify({ deleteSnapshot })
+        body: JSON.stringify({ deleteSnapshot })
       });
     } catch (error) {
       console.error('Failed to delete tag:', error);
     }
+
+    mutate()
   };
 
   const handleRenameTag = async () => {
