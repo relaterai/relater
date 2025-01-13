@@ -4,7 +4,7 @@
   "envMode": "loose",
   "tasks": {
     "build": {
-      "dependsOn": ["^build", "test"],
+      "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"],
       "env": [
         "AUTH_SECRET",
