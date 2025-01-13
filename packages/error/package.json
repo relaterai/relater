@@ -1,6 +1,6 @@
 {
   "name": "@repo/error",
-  "description": "Error utilities for Later.run",
+  "description": "Error utilities for Relater.ai",
   "version": "0.0.0",
   "sideEffects": false,
   "dependencies": {

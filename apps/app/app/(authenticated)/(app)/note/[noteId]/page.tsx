@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-import Editor from "./editor";
+import type { Metadata } from "next";
 import { use } from "react";
+import Editor from "./editor";
 
-const title = 'Later';
-const description = 'My application.';
+const title = 'Relater';
+const description = 'Your AI pair creator.';
 
 export const metadata: Metadata = {
   title,

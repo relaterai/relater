@@ -1,9 +1,8 @@
 import Profile from "./profile";
 
 export const metadata = {
-  title: 'Profile - Later',
-  description: 'Profile page',
-
+  title: 'Profile - Relater',
+  description: 'Your AI pair creator.',
 }
 
 export default function ProfilePage() {

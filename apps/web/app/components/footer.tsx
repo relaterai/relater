@@ -56,13 +56,13 @@ export const Footer = () => {
                 <div className="flex items-center gap-2">
                   <Icons.logoClip className="h-10 w-10" />
                   <h2 className="max-w-xl text-left font-regular text-3xl tracking-tighter md:text-4xl">
-                    Later
+                    Relater
                   </h2>
                 </div>
                 <p className="max-w-lg text-left text-foreground/75 text-lg leading-relaxed tracking-tight">
-                  Capture faster, review later.
+                  Your AI pair creator.
                 </p>
-                <p className="text-foreground/75 text-sm leading-relaxed tracking-tight text-muted-foreground">
+                <p className='text-foreground/75 text-muted-foreground text-sm leading-relaxed tracking-tight'>
                   © {new Date().getFullYear()} USQUE, Inc.
                 </p>
               </div>

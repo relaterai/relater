@@ -10,7 +10,7 @@ export const sendEmail = async ({
   react,
   // marketing, // TODO: add marketing email support
   test,
-  from = 'CEO from Later <tsui@later.run>',
+  from = 'CEO from Relater <tsui@relater.ai>',
 }: {
   email: string;
   subject: string;

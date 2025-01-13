@@ -14,15 +14,15 @@ const AuthLayout = ({ children }: AuthLayoutProps) => (
       <div className="absolute inset-0 bg-zinc-900" />
       <div className="relative z-20 flex items-center font-medium text-lg">
         <Icons.logoClip className="mr-2 h-6 w-6" />
-        Later
+        Relater
       </div>
       <div className="absolute top-4 right-4">
         <ModeToggle />
       </div>
       <div className="relative z-20 mt-auto">
         <blockquote className="space-y-2">
-          <p className="text-lg">&ldquo;Capture faster, review later.&rdquo;</p>
-          <footer className="text-sm">Later Labs</footer>
+          <p className="text-lg">&ldquo;Your AI pair creator.&rdquo;</p>
+          <footer className="text-sm">Relater AI</footer>
         </blockquote>
       </div>
     </div>

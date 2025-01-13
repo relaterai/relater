@@ -15,7 +15,7 @@ export async function sendVerificationRequest({
   } else {
     await sendEmail({
       email: identifier,
-      subject: 'Your Later Login Link',
+      subject: 'Your Relater Login Link',
       react: LoginLink({
         url,
         email: identifier,

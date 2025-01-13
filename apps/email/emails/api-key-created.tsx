@@ -4,7 +4,7 @@ const ExampleAPIKeyCreatedEmail = () => (
   <ApiKeyCreatedTemplate
     email="no-reply@later.run"
     token={{
-      name: 'Later API Key',
+      name: 'Relater API Key',
       type: 'All access',
       permissions: 'full access to all resources',
     }}

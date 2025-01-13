@@ -2,9 +2,9 @@ import { ContactTemplate } from '@repo/email/templates';
 
 const ExampleContactEmail = () => (
   <ContactTemplate
-    name="Later Labs"
-    email="hello@later.run"
-    message="Capture faster, review better."
+    name="Relater AI"
+    email="hello@relater.ai"
+    message="Your AI pair creator."
   />
 );
 

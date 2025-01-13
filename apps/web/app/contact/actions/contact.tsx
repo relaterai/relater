@@ -15,7 +15,7 @@ export const contact = async (
     await sendEmail({
       from: env.EMAIL_FROM,
       email: env.EMAIL_FROM,
-      subject: 'Contact form Later.run',
+      subject: 'Contact form relater.ai',
       // replyTo: email,
       react: <ContactTemplate name={name} email={email} message={message} />,
     });
