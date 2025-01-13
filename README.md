@@ -1,18 +1,21 @@
-# Later
+# Relater
 
-## About Later
+## About Relater
 
-Articles, social media posts, images, videos - Capture faster, review later.
+Your AI pair creator.
 
-Later goes beyond traditional bookmarking, allowing you to save any content - web pages, articles, images, online videos, social media posts, and even selected text. Never miss valuable content again.
+🚀 Transform how you interact with web content using the Relater browser extension. Save, organize, and create with the content that matters most to you.
 
-✔ One-Click Save: With the Later extension, instantly save any content including articles, posts, images, and videos.
+📥 Capture everything instantly - from articles and social posts to images and videos - and review when you're ready.
 
-✔ Full-Text Search: Later enables comprehensive search across all your saved content, including articles, metadata, and AI-generated tags. Our advanced image recognition technology lets you search based on image content.
+🏷 Multi-level tags & full-text search: Relater allows you to search across all saved content, including articles, metadata, and multi-level tags.
 
-✔ AI Summaries: Get instant insights with our AI summarization feature, quickly understanding the essence of any saved content.
+🔍 AI Summaries: Get instant insights with our AI summarization feature, quickly understanding the essence of any saved content.
 
-Elevate your online experience with Later - your essential tool for capturing, organizing, and discovering anything on the web.
+🔗 API Integrations: Seamlessly connect Relater to your workflows and AI agents through our powerful API - access all your saved content and metadata with ease.
+
+🔒 Privacy-first & Open Source
+Your privacy is our priority. All your data stays under your control, and we never use it for AI training. As an open-source project, our commitment to privacy is transparent and verifiable.
 
 ## Project Structure
 
@@ -27,7 +30,7 @@ This repository is organized as a monorepo using pnpm workspaces, containing the
 
 ## Documentation
 
-Visit [https://later.run/docs](https://later.run/docs) to view the documentation.
+Visit [https://relater.ai/docs](https://relater.ai/docs) to view the documentation.
 
 ## Contributing
 
