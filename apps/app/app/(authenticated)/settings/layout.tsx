@@ -15,10 +15,10 @@ const sidebarNavItems = [
     title: "Profile",
     href: "/settings/profile",
   },
-  {
-    title: "Billing",
-    href: "/settings/billing",
-  }
+  // {
+  //   title: "Billing",
+  //   href: "/settings/billing",
+  // }
 ]
 
 interface SettingsLayoutProps {

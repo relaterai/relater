@@ -227,13 +227,15 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
           {level === 0 && <DropdownMenuItem onClick={() => setIsIconOpen(true)}>
             <span>Change Icon</span>
           </DropdownMenuItem>}
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => handleDeleteTag(false)} className="text-red-600">
-            <span>Remove Tag Only</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleDeleteTag(true)} className="text-red-600">
-            <span>Delete Tag and Notes</span>
-          </DropdownMenuItem>
+          {
+            !item.items?.length ? <><DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => handleDeleteTag(false)} className="text-red-600">
+                <span>Remove Tag Only</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleDeleteTag(true)} className="text-red-600">
+                <span>Delete Tag and Notes</span>
+              </DropdownMenuItem></> : null
+          }
         </DropdownMenuContent>
       </DropdownMenu>
 
