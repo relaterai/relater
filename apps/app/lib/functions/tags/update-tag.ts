@@ -24,7 +24,7 @@ export async function updateTag({
       ...(name && { name }),
       ...(color && { color }),
       ...(emoji && { emoji }), // TODO: This change requires membership
-      ...(pinned && { pinned }),
+      ...(pinned !== undefined && { pinned }),
     },
   });
 
