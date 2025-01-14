@@ -43,6 +43,11 @@ export const getSnapshotsQuerySchema = z
       .transform((v) => (typeof v === 'boolean' ? v : v === 'true'))
       .optional()
       .describe('Whether to return snapshots in trash.'),
+    heatmapDate: z
+      .string()
+      .datetime()
+      .optional()
+      .describe('The date to filter by.'),
   })
   .merge(getPaginationQuerySchema({ pageSize: SNAPSHOTS_MAX_PAGE_SIZE }));
 
