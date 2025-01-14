@@ -7,46 +7,27 @@ export async function disconnectTags({
   id,
   userId,
 }: z.infer<typeof disconnectTagsSchema> & { userId: string }) {
-  // const tag = await prisma.$transaction(async (tx) => {
-  //   await tx.tag.update({
-  //     where: {
-  //       id,
-  //       userId,
-  //     },
-  //     data: {
-  //       snapshots: {
-  //         set: [],
-  //       },
-  //     },
-  //     include: {
-  //       snapshots: true,
-  //     },
-  //   });
-  //   return await tx.tag.delete({
-  //     where: {
-  //       id,
-  //       userId,
-  //     },
-  //   });
-  // });
-
-  const tag = await prisma.tag.update({
-    where: {
-      id,
-      userId,
-    },
-    data: {
-      snapshots: {
-        set: [],
+  const tag = await prisma.$transaction(async (tx) => {
+    await tx.tag.update({
+      where: {
+        id,
+        userId,
       },
-    },
-  });
-
-  await prisma.tag.delete({
-    where: {
-      id,
-      userId,
-    },
+      data: {
+        snapshots: {
+          set: [],
+        },
+      },
+      include: {
+        snapshots: true,
+      },
+    });
+    return await tx.tag.delete({
+      where: {
+        id,
+        userId,
+      },
+    });
   });
 
   return {
