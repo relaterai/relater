@@ -126,6 +126,9 @@ importers:
       '@sentry/nextjs':
         specifier: ^8.40.0
         version: 8.45.1(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.97.1)
+      '@t3-oss/env-nextjs':
+        specifier: ^0.11.1
+        version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
       '@vercel/functions':
         specifier: ^1.5.2
         version: 1.5.2(@aws-sdk/credential-provider-web-identity@3.716.0(@aws-sdk/client-sts@3.716.0))
@@ -354,9 +357,6 @@ importers:
       '@ai-sdk/openai':
         specifier: ^1.0.4
         version: 1.0.8(zod@3.24.1)
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@t3-oss/env-nextjs':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
@@ -379,9 +379,6 @@ importers:
       '@next/third-parties':
         specifier: ^15.0.3
         version: 15.1.0(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@t3-oss/env-nextjs':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
@@ -446,9 +443,6 @@ importers:
       '@repo/email':
         specifier: workspace:*
         version: link:../email
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@repo/error':
         specifier: workspace:*
         version: link:../error
@@ -513,9 +507,6 @@ importers:
       '@prisma/client':
         specifier: 6.1.0
         version: 6.1.0(prisma@6.1.0)
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@t3-oss/env-nextjs':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
@@ -725,9 +716,6 @@ importers:
       '@react-email/render':
         specifier: ^1.0.3
         version: 1.0.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@repo/utils':
         specifier: workspace:*
         version: link:../utils
@@ -821,9 +809,6 @@ importers:
 
   packages/kv:
     dependencies:
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@t3-oss/env-nextjs':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
@@ -865,12 +850,12 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0
     devDependencies:
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@t3-oss/env-core':
+        specifier: ^0.11.1
+        version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
       '@t3-oss/env-nextjs':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
@@ -883,9 +868,6 @@ importers:
 
   packages/observability:
     dependencies:
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@sentry/nextjs':
         specifier: ^8.40.0
         version: 8.45.1(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.97.1)
@@ -920,9 +902,6 @@ importers:
 
   packages/payments:
     dependencies:
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@stripe/agent-toolkit':
         specifier: ^0.2.0
         version: 0.2.0(@langchain/core@0.3.23)(ai@3.4.33(react@18.3.1)(sswr@2.1.0(svelte@5.14.0))(svelte@5.14.0)(vue@3.5.13(typescript@5.7.2))(zod@3.24.1))
@@ -988,9 +967,6 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.716.0
         version: 3.717.0
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@repo/utils':
         specifier: workspace:*
         version: link:../utils

@@ -1,3 +1,4 @@
+import { env } from '@/env';
 import { type CoreMessage, generateObject } from '@repo/ai';
 import { genSnapshotTagsDefaultPrompt } from '@repo/ai/prompts/gen-snapshot-tags';
 import {
@@ -8,7 +9,6 @@ import {
   model as openaiModel,
   provider as openaiProvider,
 } from '@repo/ai/providers/openai';
-import { env } from '@repo/env';
 import z from '@repo/zod';
 
 const PROVIDER_MAP = {

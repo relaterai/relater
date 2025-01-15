@@ -1,4 +1,4 @@
-import { TagColor } from '@repo/database';
+import { TagColor } from '@repo/database/client';
 import z from '../index';
 import { getPaginationQuerySchema } from './misc';
 
