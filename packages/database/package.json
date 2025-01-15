@@ -2,7 +2,7 @@
   "name": "@repo/database",
   "version": "0.0.0",
   "scripts": {
-    "db:generate": "prisma generate",
+    "db:generate": "prisma generate --sql",
     "analyze": "prisma generate --no-hints"
   },
   "dependencies": {
