@@ -1,6 +1,6 @@
+import { env } from '@/env';
 import { analytics } from '@repo/analytics/posthog/server';
 import prisma from '@repo/database';
-import { env } from '@repo/env';
 import { stripe } from '@repo/payments';
 import type { Stripe } from '@repo/payments';
 import { headers } from 'next/headers';
