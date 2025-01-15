@@ -27,11 +27,6 @@ export async function getSnapshots({
   const where: Prisma.SnapshotWhereInput = {
     userId,
     ...(isDeleted !== undefined && { isDeleted }),
-    ...(heatmapDate && {
-      heatmap: {
-        date: heatmapDate,
-      },
-    }),
     // Search conditions
     ...(search && {
       OR: [
