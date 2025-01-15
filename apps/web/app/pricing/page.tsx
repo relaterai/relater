@@ -1,8 +1,8 @@
 'use client';
 
+import { env } from '@/env';
 import { Button } from '@repo/design-system/components/ui/button';
 import { Switch } from '@repo/design-system/components/ui/switch';
-import { env } from '@repo/env';
 import { config } from '@repo/payments/striped.config';
 import { Check, Minus, MoveRight, } from 'lucide-react';
 import Link from 'next/link';
@@ -22,7 +22,7 @@ const Pricing = () => {
             <p className="max-w-xl text-center text-lg text-muted-foreground leading-relaxed tracking-tight">
               Just a cup of coffee ☕️ per month.
             </p>
-            <div className="flex items-center justify-center gap-2 mt-4">
+            <div className='mt-4 flex items-center justify-center gap-2'>
               <Switch
                 checked={isAnnual}
                 onCheckedChange={setIsAnnual}

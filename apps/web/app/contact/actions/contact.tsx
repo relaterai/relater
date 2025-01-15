@@ -1,8 +1,8 @@
 'use server';
 
+import { env } from '@/env';
 import { sendEmail } from '@repo/email';
 import { ContactTemplate } from '@repo/email/templates/contact';
-import { env } from '@repo/env';
 
 export const contact = async (
   name: string,

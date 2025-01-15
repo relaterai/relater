@@ -1,5 +1,5 @@
+import { env } from '@/env';
 import { Button } from '@repo/design-system/components/ui/button';
-import { env } from '@repo/env';
 import { GITHUB_URL } from '@repo/utils';
 import { Icons } from '@repo/utils/constants/icon';
 import { MoveRight } from 'lucide-react';

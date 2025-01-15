@@ -1,7 +1,7 @@
 import { Mdx } from '@/components/mdx';
 import { Sidebar } from '@/components/sidebar';
+import { env } from '@/env';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
-import { env } from '@repo/env';
 import { type BlogPosting, JsonLd, type WithContext } from '@repo/seo/json-ld';
 import { createMetadata } from '@repo/seo/metadata';
 import { allPosts } from 'content-collections';

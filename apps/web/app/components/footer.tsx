@@ -1,4 +1,4 @@
-import { env } from '@repo/env';
+import { env } from '@/env';
 import { Icons } from '@repo/utils';
 import Link from 'next/link';
 
