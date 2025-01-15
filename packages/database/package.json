@@ -7,8 +7,9 @@
   },
   "dependencies": {
     "@prisma/client": "6.1.0",
-    "@repo/env": "workspace:*",
     "prisma": "6.1.0",
+    "@t3-oss/env-nextjs": "^0.11.1",
+    "zod": "^3.23.8",
     "server-only": "^0.0.1"
   },
   "devDependencies": {

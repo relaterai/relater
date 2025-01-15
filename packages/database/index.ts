@@ -1,8 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import { keys } from './keys';
+
+const { DATABASE_DIRECT_URL } = keys();
 
 const prismaClientSingleton = () => {
   return new PrismaClient({
-    datasourceUrl: process.env.DATABASE_DIRECT_URL,
+    datasourceUrl: DATABASE_DIRECT_URL,
     log:
       process.env.NODE_ENV === 'production'
         ? []
