@@ -9,15 +9,23 @@ import {
   type S3ServiceException,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { env } from '@repo/env';
 import { nanoid } from '@repo/utils';
+import { keys } from './keys';
+
+const {
+  STORAGE_ENDPOINT,
+  STORAGE_REGION,
+  STORAGE_ACCESS_KEY_ID,
+  STORAGE_SECRET_ACCESS_KEY,
+  STORAGE_UPLOAD_BUCKET,
+} = keys();
 
 export const storageClient = new S3Client({
-  endpoint: env.STORAGE_ENDPOINT,
-  region: env.STORAGE_REGION,
+  endpoint: STORAGE_ENDPOINT,
+  region: STORAGE_REGION,
   credentials: {
-    accessKeyId: env.STORAGE_ACCESS_KEY_ID,
-    secretAccessKey: env.STORAGE_SECRET_ACCESS_KEY,
+    accessKeyId: STORAGE_ACCESS_KEY_ID,
+    secretAccessKey: STORAGE_SECRET_ACCESS_KEY,
   },
   forcePathStyle: false,
   maxAttempts: 3,
@@ -34,7 +42,7 @@ export const storageClient = new S3Client({
  */
 export async function getPreSignedGetUrl(
   key: string,
-  bucket: string = env.STORAGE_UPLOAD_BUCKET,
+  bucket: string = STORAGE_UPLOAD_BUCKET,
   ttl = 600
 ) {
   const getObjectCommand = new GetObjectCommand({
@@ -62,7 +70,7 @@ export async function getPreSignedPutUrl(
   fileName: string,
   userId: string,
   contentType: string,
-  bucket: string = env.STORAGE_UPLOAD_BUCKET,
+  bucket: string = STORAGE_UPLOAD_BUCKET,
   ttl = 600
 ) {
   const slugify = await import('@sindresorhus/slugify').then(
@@ -74,7 +82,7 @@ export async function getPreSignedPutUrl(
   console.log('slugifiedName', slugifiedName)
   const key = `${userId}/${nanoid(16)}/${slugifiedName}`;
   const putObjectcommand = new PutObjectCommand({
-    Bucket: bucket || process.env.STORAGE_UPLOAD_BUCKET,
+    Bucket: bucket || STORAGE_UPLOAD_BUCKET,
     Key: key,
     ContentType: contentType,
     ContentDisposition: `attachment; filename="${slugifiedName}"`,
@@ -98,7 +106,7 @@ export async function getPreSignedPutUrl(
  */
 export async function headObject(
   key: string,
-  bucket: string = env.STORAGE_UPLOAD_BUCKET
+  bucket: string = STORAGE_UPLOAD_BUCKET
 ): Promise<HeadObjectCommandOutput> {
   try {
     const meta = await storageClient.send(
@@ -135,7 +143,7 @@ export async function headObject(
  */
 export async function deleteObject(
   key: string,
-  bucket: string = env.STORAGE_UPLOAD_BUCKET
+  bucket: string = STORAGE_UPLOAD_BUCKET
 ): Promise<{ success: boolean }> {
   try {
     const res = await storageClient.send(
@@ -155,5 +163,5 @@ export async function deleteObject(
  * @returns True if the URL is stored in the storage service, false otherwise.
  */
 export const isStored = (url?: string) => {
-  return url && url.startsWith(env.STORAGE_ENDPOINT);
+  return url && url.startsWith(STORAGE_ENDPOINT);
 };
