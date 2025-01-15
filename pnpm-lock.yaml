@@ -44,9 +44,6 @@ importers:
       '@repo/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../../packages/env
       '@repo/next-config':
         specifier: workspace:*
         version: link:../../packages/next-config
@@ -56,6 +53,9 @@ importers:
       '@sentry/nextjs':
         specifier: ^8.40.0
         version: 8.45.1(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.97.1)
+      '@t3-oss/env-nextjs':
+        specifier: ^0.11.1
+        version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
       next:
         specifier: 15.1.0
         version: 15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -108,9 +108,6 @@ importers:
       '@repo/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../../packages/env
       '@repo/feature-flags':
         specifier: workspace:*
         version: link:../../packages/feature-flags
@@ -257,9 +254,6 @@ importers:
       '@repo/email':
         specifier: workspace:*
         version: link:../../packages/email
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../../packages/env
       '@repo/next-config':
         specifier: workspace:*
         version: link:../../packages/next-config
@@ -272,6 +266,9 @@ importers:
       '@sentry/nextjs':
         specifier: ^8.40.0
         version: 8.45.1(@opentelemetry/core@1.29.0(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.56.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.29.0(@opentelemetry/api@1.9.0))(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(webpack@5.97.1(esbuild@0.21.5))
+      '@t3-oss/env-nextjs':
+        specifier: ^0.11.1
+        version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -619,9 +616,6 @@ importers:
       '@repo/analytics':
         specifier: workspace:*
         version: link:../analytics
-      '@repo/env':
-        specifier: workspace:*
-        version: link:../env
       '@vercel/toolbar':
         specifier: ^0.1.27
         version: 0.1.28(next@15.1.0(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(vite@6.0.3(@types/node@22.10.2)(jiti@1.21.6)(terser@5.37.0)(tsx@4.19.2)(yaml@2.6.1))
