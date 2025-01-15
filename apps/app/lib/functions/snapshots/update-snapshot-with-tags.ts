@@ -64,16 +64,23 @@ export async function updateSnapshotWithTags({
     },
     data: {
       tags: {
-        connectOrCreate: diffTags.map((tag) => ({
-          where: {
-            name: tag,
-            userId: snapshot.userId,
-          },
-          create: {
-            name: tag,
-            userId: snapshot.userId,
-          },
-        })),
+        connectOrCreate: diffTags.map((tag) => {
+          const tagsSplit = tag.split('/');
+          return {
+            where: {
+              name: tag,
+              userId: snapshot.userId,
+            },
+            create: {
+              name: tag,
+              userId: snapshot.userId,
+              firstPath: tagsSplit[0],
+              pathSegments: tagsSplit.map((_, index) => {
+                return tagsSplit.slice(0, index + 1).join('/');
+              }),
+            },
+          };
+        }),
       },
     },
   });

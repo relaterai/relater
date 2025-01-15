@@ -1,7 +1,7 @@
 import prisma, { type Prisma } from '@repo/database';
+import { getTagSnapshotsCounts } from '@repo/database/sql';
 import type z from '@repo/zod';
 import type { getTagsQuerySchema } from '@repo/zod/schemas/tags';
-
 type GetTagsParams = z.infer<typeof getTagsQuerySchema> & {
   userId: string;
 };
@@ -25,49 +25,40 @@ export async function getTags({
     // Tag filtering conditions
     ...(name || ids
       ? {
-          tags: {
-            some: {
-              OR: [
-                // TODO: Evaluate startsWith performance, consider using raw SQL start_with function if Prisma startsWith performance is suboptimal
-                ...(name ? [{ name: { startsWith: name } }] : []),
-                ...(ids ? [{ id: { in: ids } }] : []),
-              ],
-            },
+        tags: {
+          some: {
+            OR: [
+              // TODO: Evaluate startsWith performance, consider using raw SQL start_with function if Prisma startsWith performance is suboptimal
+              ...(name ? [{ name: { startsWith: name } }] : []),
+              ...(ids ? [{ id: { in: ids } }] : []),
+            ],
           },
-        }
+        },
+      }
       : {}),
   };
-
   // Get paginated data
   const tags = await prisma.tag.findMany({
     where,
     include: {
-      _count: withSnapshotsCount
-        ? {
-            select: {
-              snapshots: {
-                where: {
-                  isDeleted: false,
-                },
-              },
-            },
-          }
-        : false,
       snapshots: withSnapshots
         ? {
-            select: {
-              id: true,
-              title: true,
-              summary: true,
-              note: true,
-              createdAt: true,
-            },
-          }
+          select: {
+            id: true,
+            title: true,
+            summary: true,
+            note: true,
+            createdAt: true,
+          },
+        }
         : false,
     },
     orderBy: [{ [sort]: 'desc' }],
   });
   return {
     tags,
+    counts: withSnapshotsCount
+      ? await prisma.$queryRawTyped(getTagSnapshotsCounts(userId))
+      : [],
   };
 }

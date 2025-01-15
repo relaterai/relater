@@ -21,7 +21,13 @@ export async function updateTag({
       userId,
     },
     data: {
-      ...(name && { name }),
+      ...(name && {
+        name: name.trim(),
+        firstPath: name.split('/')[0],
+        pathSegments: name.trim().split('/').map((_, index) => {
+          return name.split('/').slice(0, index + 1).join('/');
+        }),
+      }),
       ...(color && { color }),
       ...(emoji && { emoji }), // TODO: This change requires membership
       ...(pinned !== undefined && { pinned }),
