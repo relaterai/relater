@@ -1,6 +1,6 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import prisma from '@repo/database/edge';
-import { env } from '@repo/env';
+import { keys } from '../keys';
 import type { NextAuthConfig } from "next-auth"
 import type { User } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
@@ -8,6 +8,8 @@ import type { AdapterUser } from 'next-auth/adapters';
 import type { JWT } from 'next-auth/jwt';
 import type { UserProps } from './utils';
 import { sendVerificationRequest } from './authSendRequest';
+
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = keys();
 
 export const authOptions: NextAuthConfig = {
   adapter: PrismaAdapter(prisma),
@@ -21,8 +23,8 @@ export const authOptions: NextAuthConfig = {
   },
   providers: [
     GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
+      clientId: GOOGLE_CLIENT_ID,
+      clientSecret: GOOGLE_CLIENT_SECRET,
     }),
     {
       id: 'email',
