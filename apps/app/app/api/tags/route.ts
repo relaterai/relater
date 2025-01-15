@@ -7,7 +7,7 @@ import { NextResponse } from 'next/server';
 export const GET = withSession(async ({ req, session, searchParams }) => {
   const { page, pageSize, withSnapshots, sort, name, ids, search, all } =
     getTagsQuerySchema.parse(searchParams);
-  const { tags } = await getTags({
+  const { tags, counts } = await getTags({
     userId: session.user.id,
     page,
     pageSize,
@@ -22,5 +22,6 @@ export const GET = withSession(async ({ req, session, searchParams }) => {
 
   return NextResponse.json({
     items: ResponseTagSchema.array().parse(tags),
+    counts: counts,
   });
 });
