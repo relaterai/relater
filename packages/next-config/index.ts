@@ -2,12 +2,13 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 
 // @ts-expect-error No declaration file
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
-import { env } from '@repo/env';
 import { withSentryConfig } from '@sentry/nextjs';
 import withVercelToolbar from '@vercel/toolbar/plugins/next';
 import type { NextConfig } from 'next';
 import { createSecureHeaders } from 'next-secure-headers';
+import { keys } from './keys';
 
+const { SENTRY_ORG, SENTRY_PROJECT } = keys();
 export const config: NextConfig = withVercelToolbar()({
   // biome-ignore lint/suspicious/useAwait: rewrites is async
   async rewrites() {
@@ -58,8 +59,8 @@ export const config: NextConfig = withVercelToolbar()({
 });
 
 export const sentryConfig: Parameters<typeof withSentryConfig>[1] = {
-  org: env.SENTRY_ORG,
-  project: env.SENTRY_PROJECT,
+  org: SENTRY_ORG,
+  project: SENTRY_PROJECT,
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
