@@ -1,8 +1,16 @@
 import { SES } from '@aws-sdk/client-ses';
 import { render } from '@react-email/render';
-import { env } from '@repo/env';
 import type { JSXElementConstructor, ReactElement } from 'react';
 import { Resend } from 'resend';
+import { keys } from './keys';
+
+const {
+  EMAIL_PROVIDER,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
+  RESEND_TOKEN,
+  AWS_SES_REGION,
+} = keys();
 
 export const sendEmail = async ({
   email,
@@ -22,7 +30,7 @@ export const sendEmail = async ({
   const params = {
     Source: from,
     Destination: {
-      ToAddresses: [test ? 'no-reply@later.run' : email],
+      ToAddresses: [test ? 'no-reply@relater.ai' : email],
     },
     Message: {
       Body: {
@@ -42,17 +50,17 @@ export const sendEmail = async ({
     console.log('Rendered email content:', params.Message.Body.Html.Data);
   }
 
-  if (env.EMAIL_PROVIDER === 'SES') {
+  if (EMAIL_PROVIDER === 'SES') {
     const ses = new SES({
-      region: process.env.AWS_SES_REGION,
+      region: AWS_SES_REGION!,
       credentials: {
-        accessKeyId: env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+        accessKeyId: AWS_ACCESS_KEY_ID!,
+        secretAccessKey: AWS_SECRET_ACCESS_KEY!,
       },
     });
     await ses.sendEmail(params);
   } else {
-    const resend = new Resend(env.RESEND_TOKEN);
+    const resend = new Resend(RESEND_TOKEN);
     await resend.emails.send({
       from,
       to: email,
