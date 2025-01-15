@@ -1,8 +1,10 @@
-import { env } from '@repo/env';
 import { Logger } from 'next-axiom';
+import { keys } from './keys';
+
+const { NEXT_PUBLIC_AXIOM_TOKEN, NEXT_PUBLIC_AXIOM_DATASET } = keys();
 
 let logger: Console = console;
-if (env.NEXT_PUBLIC_AXIOM_TOKEN && env.NEXT_PUBLIC_AXIOM_DATASET) {
+if (NEXT_PUBLIC_AXIOM_TOKEN && NEXT_PUBLIC_AXIOM_DATASET) {
   logger = new Logger() as unknown as Console;
 }
 
