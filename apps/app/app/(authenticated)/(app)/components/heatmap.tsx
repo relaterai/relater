@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/design-system/components/ui/tooltip';
 import { useStats } from '@/swr/use-stats';
 import { Skeleton } from '@repo/design-system/components/ui/skeleton';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/design-system/components/ui/tooltip';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const Heatmap = () => {
   const { stats, isLoading } = useStats();
@@ -43,7 +43,7 @@ const Heatmap = () => {
   if (isLoading) {
     return (
       <div className="p-4">
-        <div className="grid grid-cols-3 gap-4 mb-4 text-sm text-gray-600">
+        <div className='mb-4 grid grid-cols-3 gap-4 text-gray-600 text-sm'>
           <div className="text-center">
             <div className="font-medium">{stats?.snapshotsCount || 0}</div>
             <div>Notes</div>
@@ -62,19 +62,19 @@ const Heatmap = () => {
           {Array.from({ length: 13 }).map((_, weekIndex) => (
             <div key={weekIndex} className="flex flex-col gap-1">
               {Array.from({ length: 7 }).map((_, dayIndex) => (
-                <Skeleton key={dayIndex} className="w-3 h-3 rounded-sm" />
+                <Skeleton key={dayIndex} className='h-3 w-3 rounded-sm' />
               ))}
             </div>
           ))}
         </div>
 
-        <div className="mt-2 flex items-center text-xs text-gray-500 gap-2">
+        <div className='mt-2 flex items-center gap-2 text-gray-500 text-xs'>
           <span>Less</span>
           <div className="flex gap-1">
             {[0, 3, 6, 9].map((level) => (
               <div
                 key={level}
-                className="w-3 h-3 rounded-sm"
+                className='h-3 w-3 rounded-sm'
                 style={{ backgroundColor: getColor(level) }}
               />
             ))}
@@ -87,18 +87,18 @@ const Heatmap = () => {
 
   return (
     <div className="p-4">
-      <div className="grid grid-cols-3 gap-4 mb-4 text-sm text-gray-600">
+      <div className='mb-4 grid grid-cols-3 gap-4 text-gray-600 text-sm'>
         <div className="text-center">
-          <div className="font-medium">{stats?.snapshotsCount || 0}</div>
-          <div>Notes</div>
+          <div className="font-bold text-2xl text-muted-foreground">{stats?.snapshotsCount || 0}</div>
+          <div className='text-muted-foreground text-xs'>NOTE</div>
         </div>
         <div className="text-center">
-          <div className="font-medium">{stats?.tagsCount || 0}</div>
-          <div>Tags</div>
+          <div className="font-bold text-2xl text-muted-foreground">{stats?.tagsCount || 0}</div>
+          <div className='text-muted-foreground text-xs'>TAG</div>
         </div>
         <div className="text-center">
-          <div className="font-medium">{stats?.regDays || 0}</div>
-          <div>Days</div>
+          <div className="font-bold text-2xl text-muted-foreground">{stats?.regDays || 0}</div>
+          <div className='text-muted-foreground text-xs'>DAY</div>
         </div>
       </div>
 
@@ -114,7 +114,7 @@ const Heatmap = () => {
                     className="block"
                   >
                     <div
-                      className="w-3 h-3 rounded-sm hover:ring-2 hover:ring-blue-400 transition-all"
+                      className='h-3 w-3 rounded-sm transition-all hover:ring-2 hover:ring-blue-400'
                       style={{ backgroundColor: getColor(day.count) }}
                     />
                   </Link>
@@ -128,13 +128,13 @@ const Heatmap = () => {
         ))}
       </div>
 
-      <div className="mt-2 flex items-center text-xs text-gray-500 gap-2">
+      <div className='mt-2 flex items-center gap-2 text-gray-500 text-xs'>
         <span>Less</span>
         <div className="flex gap-1">
           {[0, 3, 6, 9].map((level) => (
             <div
               key={level}
-              className="w-3 h-3 rounded-sm"
+              className='h-3 w-3 rounded-sm'
               style={{ backgroundColor: getColor(level) }}
             />
           ))}
