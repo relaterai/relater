@@ -1,5 +1,6 @@
 import { env } from '@/env';
 import { withSession } from '@repo/auth/session';
+import prisma from '@repo/database';
 import { stripe } from '@repo/payments';
 import { NextResponse } from 'next/server';
 
@@ -52,6 +53,12 @@ export const POST = withSession(async ({ req, session }) => {
     const customer = await stripe.customers.create({
       email: session.user?.email!,
     });
+    if (!session.user?.stripeId) {
+      await prisma.user.update({
+        where: { id: session.user?.id },
+        data: { stripeId: customer.id },
+      });
+    }
     // For both new users and users with canceled subscriptions
     const stripeSession = await stripe.checkout.sessions.create({
       ...(session.user?.stripeId
