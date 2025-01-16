@@ -880,12 +880,15 @@ importers:
       '@stripe/agent-toolkit':
         specifier: ^0.2.0
         version: 0.2.0(@langchain/core@0.3.23)(ai@3.4.33(react@18.3.1)(sswr@2.1.0(svelte@5.14.0))(svelte@5.14.0)(vue@3.5.13(typescript@5.7.2))(zod@3.24.1))
+      '@stripe/stripe-js':
+        specifier: ^5.5.0
+        version: 5.5.0
       '@t3-oss/env-nextjs':
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
       '@usque/striped':
-        specifier: 0.0.4
-        version: 0.0.4
+        specifier: 0.0.5
+        version: 0.0.5
       ai:
         specifier: ^3.4.7
         version: 3.4.33(react@18.3.1)(sswr@2.1.0(svelte@5.14.0))(svelte@5.14.0)(vue@3.5.13(typescript@5.7.2))(zod@3.24.1)
@@ -4447,6 +4450,10 @@ packages:
       '@langchain/core': ^0.3.6
       ai: ^3.4.7
 
+  '@stripe/stripe-js@5.5.0':
+    resolution: {integrity: sha512-lkfjyAd34aeMpTKKcEVfy8IUyEsjuAT3t9EXr5yZDtdIUncnZpedl/xLV16Dkd4z+fQwixScsCCDxSMNtBOgpQ==}
+    engines: {node: '>=12.16'}
+
   '@svgdotjs/svg.js@3.2.4':
     resolution: {integrity: sha512-BjJ/7vWNowlX3Z8O4ywT58DqbNRyYlkk6Yz/D13aB7hGmfQTvGX4Tkgtm/ApYlu9M7lCQi15xUEidqMUmdMYwg==}
 
@@ -4745,8 +4752,8 @@ packages:
   '@upstash/redis@1.34.3':
     resolution: {integrity: sha512-VT25TyODGy/8ljl7GADnJoMmtmJ1F8d84UXfGonRRF8fWYJz7+2J6GzW+a6ETGtk4OyuRTt7FRSvFG5GvrfSdQ==}
 
-  '@usque/striped@0.0.4':
-    resolution: {integrity: sha512-SzcfcrlmzWPJxNpyDwTCrHfGZ7qd8L60lTIAxlcUCV470H5xqkS4jM6ciCfSSHEbg0+arg/BoggarBB+/dCYGg==}
+  '@usque/striped@0.0.5':
+    resolution: {integrity: sha512-ZtNDCSLyKfpVZIJre6cDAJD5+wH+K4Fni6PMKq+qZdzjgv9JgXbwG774YOEF97TfefjBC1n84oLK/WFYTuZATQ==}
 
   '@vercel/analytics@1.4.1':
     resolution: {integrity: sha512-ekpL4ReX2TH3LnrRZTUKjHHNpNy9S1I7QmS+g/RQXoSUQ8ienzosuX7T9djZ/s8zPhBx1mpHP/Rw5875N+zQIQ==}
@@ -13394,6 +13401,8 @@ snapshots:
       stripe: 17.5.0
       zod: 3.24.1
 
+  '@stripe/stripe-js@5.5.0': {}
+
   '@svgdotjs/svg.js@3.2.4': {}
 
   '@swc/counter@0.1.3': {}
@@ -13709,7 +13718,7 @@ snapshots:
     dependencies:
       crypto-js: 4.2.0
 
-  '@usque/striped@0.0.4':
+  '@usque/striped@0.0.5':
     dependencies:
       dotenv: 16.4.7
       stripe: 17.5.0

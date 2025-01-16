@@ -1,24 +1,30 @@
 'use client';
 
+import { env } from "@/env";
 import { Button } from "@repo/design-system/components/ui/button";
 import { Card } from "@repo/design-system/components/ui/card";
-import { cn } from "@repo/design-system/lib/utils";
 import { Switch } from "@repo/design-system/components/ui/switch";
+import { cn } from "@repo/design-system/lib/utils";
+import { getStripe } from "@repo/payments/client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+// import { config as stripeConfig } from "@repo/payments/striped.config";
 
 interface BillingPickerProps {
   currentPlan?: string;
 }
 
 export function BillingPicker({ currentPlan }: BillingPickerProps) {
+  const router = useRouter();
   const [isAnnual, setIsAnnual] = useState(true);
   const monthlyPrice = 9.99;
   const annualPrice = monthlyPrice * 12 * 0.5;
+  const [clicked, setClicked] = useState(false);
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-end space-x-2">
-        <span className="text-sm text-muted-foreground">Annual discount</span>
+        <span className='text-muted-foreground text-sm'>Annual discount</span>
         <Switch
           checked={isAnnual}
           onCheckedChange={setIsAnnual}
@@ -27,16 +33,16 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
 
       <div className="grid grid-cols-2 gap-6">
         <Card className="p-6">
-          <div className="flex flex-col h-full">
+          <div className='flex h-full flex-col'>
             <div>
-              <h3 className="text-lg font-medium">Starter</h3>
-              <div className="mt-2 text-3xl font-bold">Free</div>
-              <p className="text-sm text-muted-foreground">Forever</p>
+              <h3 className='font-medium text-lg'>Starter</h3>
+              <div className='mt-2 font-bold text-3xl'>Free</div>
+              <p className='text-muted-foreground text-sm'>Forever</p>
             </div>
 
             <div className="mt-6">
-              <p className="text-sm font-medium">Features:</p>
-              <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
+              <p className='font-medium text-sm'>Features:</p>
+              <ul className='mt-2 space-y-2 text-muted-foreground text-sm'>
                 <li>• AI Tag System</li>
                 <li>• Heat Map</li>
                 <li>• All platforms sync</li>
@@ -67,25 +73,25 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
           </div>
         </Card>
 
-        <Card className="p-6 bg-primary/5">
-          <div className="flex flex-col h-full">
+        <Card className='bg-primary/5 p-6'>
+          <div className='flex h-full flex-col'>
             <div>
               <div className="flex items-center">
-                <h3 className="text-lg font-medium">Pro</h3>
+                <h3 className='font-medium text-lg'>Pro</h3>
                 <span className={cn("ml-2 rounded-full bg-green-500/10 px-2 py-1 text-xs", isAnnual ? "bg-green-500/10 text-green-500" : "bg-primary/10 text-muted-foreground")}>50% off</span>
               </div>
               <div className="mt-2 flex items-baseline">
-                <span className="text-3xl font-bold">${isAnnual ? 4.99 : 9.99}</span>
-                <span className="text-sm text-muted-foreground">/month</span>
+                <span className='font-bold text-3xl'>${isAnnual ? 4.99 : 9.99}</span>
+                <span className='text-muted-foreground text-sm'>/month</span>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className='text-muted-foreground text-sm'>
                 {isAnnual ? `Billed annually at $${annualPrice.toFixed(2)}` : 'Annual discount available'}
               </p>
             </div>
 
             <div className="mt-6">
-              <p className="text-sm font-medium">Everything in Free, plus:</p>
-              <ul className="mt-2 space-y-2 text-sm text-muted-foreground">
+              <p className='font-medium text-sm'>Everything in Free, plus:</p>
+              <ul className='mt-2 space-y-2 text-muted-foreground text-sm'>
                 <li>• 10GB Storage</li>
                 <li>• Uncompressed Image</li>
                 <li>• Tag Icon</li>
@@ -101,6 +107,39 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
                   currentPlan === 'pro' && "bg-muted text-muted-foreground hover:bg-muted hover:text-muted-foreground"
                 )}
                 disabled={currentPlan === 'pro'}
+                onClick={() => {
+                  setClicked(true);
+                  console.log('clicked, currentPlan', currentPlan);
+                  fetch(`/api/billing/upgrade`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      plan: 'pro',
+                      period: isAnnual ? "yearly" : "monthly",
+                      baseUrl: `${env.NEXT_PUBLIC_API_URL}/settings/billing`,
+                      onboarding: false,
+                    }),
+                  })
+                    .then(async (res) => {
+                      if (currentPlan === "free") {
+                        const data = await res.json();
+                        const { id: sessionId } = data;
+                        const stripe = await getStripe();
+                        stripe?.redirectToCheckout({ sessionId });
+                      } else {
+                        const { url } = await res.json();
+                        router.push(url);
+                      }
+                    })
+                    .catch((err) => {
+                      alert(err);
+                    })
+                    .finally(() => {
+                      setClicked(false);
+                    });
+                }}
               >
                 {currentPlan === 'pro' ? 'Current plan' : 'Upgrade →'}
               </Button>

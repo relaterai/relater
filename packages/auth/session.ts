@@ -22,10 +22,10 @@ type WithSessionHandler = ({
 }) => Promise<Response>;
 
 export const withSession = (handler: WithSessionHandler) =>
-    withAxiom(
-      async (
-        req: AxiomRequest,
-        { params = {} }: { params: Record<string, string> | undefined }
+  withAxiom(
+    async (
+      req: AxiomRequest,
+      { params = {} }: { params: Record<string, string> | undefined }
     ) => {
       try {
         let session: Session | null = null;
@@ -54,6 +54,7 @@ export const withSession = (handler: WithSessionHandler) =>
               id: true,
               name: true,
               email: true,
+              stripeId: true,
             },
           });
           if (!user) {
@@ -98,6 +99,7 @@ export const withSession = (handler: WithSessionHandler) =>
               id: user.id,
               name: user.name || "",
               email: user.email || "",
+              stripeId: user.stripeId || "",
             },
           };
         } else {
@@ -105,9 +107,10 @@ export const withSession = (handler: WithSessionHandler) =>
           if (!session || !session?.user || !session?.user?.id) {
             throw new LaterApiError({
               code: 'unauthorized',
-            message: 'Unauthorized: Login required.',
-          });
-        }}
+              message: 'Unauthorized: Login required.',
+            });
+          }
+        }
         const searchParams = getSearchParams(req.url);
         return await handler({ req, params: await params, searchParams, session });
       } catch (error) {

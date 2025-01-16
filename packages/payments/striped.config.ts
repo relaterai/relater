@@ -68,12 +68,14 @@ export const config = {
           currency: 'usd',
           interval: 'month',
           type: 'recurring',
+          lookupKey: 'free_monthly',
         },
         yearly: {
           amount: 0,
           currency: 'usd',
           interval: 'year',
           type: 'recurring',
+          lookupKey: 'free_yearly',
         },
       },
       features: [
@@ -109,6 +111,7 @@ export const config = {
           interval: 'month',
           type: 'recurring',
           trialPeriodDays: 3,
+          lookupKey: 'pro_monthly',
         },
         yearly: {
           amount: 7188,
@@ -116,6 +119,7 @@ export const config = {
           interval: 'year',
           type: 'recurring',
           trialPeriodDays: 3,
+          lookupKey: 'pro_yearly',
         },
       },
     },
