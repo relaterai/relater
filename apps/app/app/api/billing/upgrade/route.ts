@@ -6,7 +6,6 @@ import { NextResponse } from 'next/server';
 
 export const POST = withSession(async ({ req, session }) => {
   let { plan, period, baseUrl, onboarding } = await req.json();
-  console.log('plan', plan, period);
   if (!plan || !period) {
     return new Response("Invalid plan or period", { status: 400 });
   }
@@ -16,8 +15,6 @@ export const POST = withSession(async ({ req, session }) => {
   const prices = await stripe.prices.list({
     lookup_keys: [`${plan}_${period}`],
   });
-
-  console.log('prices', prices);
 
   const activeSubscription = session.user.stripeId
     ? await stripe.subscriptions

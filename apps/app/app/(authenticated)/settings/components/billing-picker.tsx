@@ -109,7 +109,6 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
                 disabled={currentPlan === 'pro'}
                 onClick={() => {
                   setClicked(true);
-                  console.log('clicked, currentPlan', currentPlan);
                   fetch(`/api/billing/upgrade`, {
                     method: "POST",
                     headers: {

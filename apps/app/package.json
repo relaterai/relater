@@ -21,6 +21,7 @@
     "@repo/tailwind-config": "workspace:*",
     "@repo/zod": "workspace:*",
     "@sentry/nextjs": "^8.40.0",
+    "@t3-oss/env-nextjs": "^0.11.1",
     "@vercel/functions": "^1.5.2",
     "dayjs": "^1.11.13",
     "fuse.js": "^7.0.0",
@@ -34,9 +35,9 @@
     "react-dom": "18.3.1",
     "react-intersection-observer": "^9.14.1",
     "require-in-the-middle": "^7.4.0",
+    "sonner": "^1.7.0",
     "swr": "^2.2.5",
-    "unique-names-generator": "^4.7.1",
-    "@t3-oss/env-nextjs": "^0.11.1"
+    "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {
     "@repo/testing": "workspace:*",

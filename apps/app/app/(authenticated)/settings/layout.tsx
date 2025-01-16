@@ -1,13 +1,11 @@
-import { Separator } from "@repo/design-system/components/ui/separator"
-import { Metadata } from "next"
-import Image from "next/image"
-import { SidebarNav } from "./sidebar-nav"
 import { Button } from "@repo/design-system/components/ui/button"
+import { Separator } from "@repo/design-system/components/ui/separator"
+import type { Metadata } from "next"
 import Link from "next/link"
-
+import { SidebarNav } from "./sidebar-nav"
 export const metadata: Metadata = {
-  title: "Forms",
-  description: "Advanced form example using react-hook-form and Zod.",
+  title: "Billing - Relater",
+  description: "Manage your billing information and subscription.",
 }
 
 const sidebarNavItems = [
@@ -15,10 +13,10 @@ const sidebarNavItems = [
     title: "Profile",
     href: "/settings/profile",
   },
-  // {
-  //   title: "Billing",
-  //   href: "/settings/billing",
-  // }
+  {
+    title: "Billing",
+    href: "/settings/billing",
+  }
 ]
 
 interface SettingsLayoutProps {
@@ -31,7 +29,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       <div className="space-y-6 p-10 pb-16">
         <div className="space-y-0.5">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
+            <h2 className='font-bold text-2xl tracking-tight'>Settings</h2>
             <Link href="/">
               <Button variant="outline">Home</Button>
             </Link>
