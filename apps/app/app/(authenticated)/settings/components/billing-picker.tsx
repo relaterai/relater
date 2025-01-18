@@ -80,11 +80,11 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
                 <span className={cn("ml-2 rounded-full bg-green-500/10 px-2 py-1 text-xs", isAnnual ? "bg-green-500/10 text-green-500" : "bg-primary/10 text-muted-foreground")}>50% off</span>
               </div>
               <div className="mt-2 flex items-baseline">
-                <span className='font-bold text-3xl'>${isAnnual ? 4.99 : 9.99}</span>
+                <span className='font-bold text-3xl'>${isAnnual ? (stripeConfig.products.pro.prices.yearly.amount / 100 / 12).toFixed(2) : stripeConfig.products.pro.prices.monthly.amount / 100}</span>
                 <span className='text-muted-foreground text-sm'>/month</span>
               </div>
               <p className='text-muted-foreground text-sm'>
-                {isAnnual ? `Billed annually at $${annualPrice.toFixed(2)}` : 'Annual discount available'}
+                {isAnnual ? `Billed annually at $${stripeConfig.products.pro.prices.yearly.amount / 100}` : 'Annual discount available'}
               </p>
             </div>
 
