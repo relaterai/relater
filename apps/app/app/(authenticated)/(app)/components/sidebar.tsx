@@ -80,12 +80,17 @@ type TagNode = {
   snapshotsCount?: number;
 };
 
-const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string, pinned?: boolean, snapshotsCount?: number }>): TagNode[] => {
+const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string, pinned?: boolean, snapshotsCount?: number }>, counts: Array<{ path_segment: string, snapshot_count: number }>): TagNode[] => {
   const root: { items: TagNode[] } = {
     items: []
   };
 
   const nodeMap = new Map<string, TagNode>();
+  const countMap = new Map<string, number>();
+
+  counts.forEach(count => {
+    countMap.set(count.path_segment, count.snapshot_count);
+  });
 
   tags.forEach((tag) => {
     const parts = tag.name.split('/');
@@ -103,31 +108,17 @@ const buildTagTree = (tags: Array<{ id: string, name: string, emoji?: string, pi
           isActive: false,
           emoji: tag.emoji,
           pinned: tag.pinned || false,
-          snapshotsCount: index === parts.length - 1 ? tag.snapshotsCount || 0 : 0
+          snapshotsCount: countMap.get(path) || 0
         };
 
         nodeMap.set(path, newNode);
         currentLevel.items.push(newNode);
       } else {
-        nodeMap.get(path)!.snapshotsCount = index === parts.length - 1 ? tag.snapshotsCount || 0 : 0
+        nodeMap.get(path)!.snapshotsCount = countMap.get(path) || 0;
       }
 
       currentLevel = nodeMap.get(path) as TagNode;
     });
-  });
-
-  const paths = Array.from(nodeMap.keys()).sort((a, b) => b.split('/').length - a.split('/').length);
-
-  paths.forEach(path => {
-    const parentPath = path.split('/').slice(0, -1).join('/');
-    const node = nodeMap.get(path)!;
-
-    console.log(path, node.snapshotsCount)
-
-    if (parentPath && nodeMap.has(parentPath)) {
-      const parentNode = nodeMap.get(parentPath)!;
-      parentNode.snapshotsCount = (parentNode.snapshotsCount || 0) + (node.snapshotsCount || 0);
-    }
   });
 
   return root.items;
@@ -138,8 +129,10 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
   const [isIconOpen, setIsIconOpen] = useState(false);
   const [newName, setNewName] = useState(item.title);
   const [newIcon, setNewIcon] = useState(item.emoji || '');
-
-  const { mutate } = useTags()
+  const [isLoading, setIsLoading] = useState(false);
+  const { mutate } = useTags({
+    withSnapshotsCount: true
+  })
 
   const togglePin = async () => {
     try {
@@ -170,46 +163,51 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
     mutate()
   };
 
-  const handleRenameTag = async () => {
-    try {
-      await fetch(`/api/tags/${item.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ name: newName })
-      });
-      setIsRenameOpen(false);
-    } catch (error) {
-      console.error('Failed to rename tag:', error);
-    }
-  };
+  // const handleRenameTag = async () => {
+  //   try {
+  //     await fetch(`/api/tags/${item.id}`, {
+  //       method: 'PATCH',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({ name: newName })
+  //     });
+  //     setIsRenameOpen(false);
+  //   } catch (error) {
+  //     console.error('Failed to rename tag:', error);
+  //   }
+  // };
 
   const handleChangeIcon = async () => {
+    setIsLoading(true)
     try {
       await fetch(`/api/tags/${item.id}`, {
         method: 'PATCH',
         body: JSON.stringify({ emoji: newIcon })
       });
+
+      setIsIconOpen(false)
+      mutate()
     } catch (error) {
       console.error('Failed to change icon:', error);
     }
+    setIsLoading(false)
   };
 
   return (
     <SidebarMenuItem key={item.title}>
       <Link href={item.url}>
         <SidebarMenuButton>
-          <span className='w-3 h-3 flex items-center justify-center'>{item.emoji}</span>
+          {level === 0 && <span className='w-3 h-3 flex items-center justify-center'>{item.emoji}</span>}
           <span>{item.title}</span>
         </SidebarMenuButton>
-        {/* <SidebarMenuBadge>
+        <SidebarMenuBadge>
           {item.snapshotsCount ? (item.snapshotsCount > 99 ? '99+' : item.snapshotsCount) : '0'}
-        </SidebarMenuBadge> */}
+        </SidebarMenuBadge>
       </Link>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <SidebarMenuAction className={`opacity-0 hover:opacity-100 ${item.items?.length ? 'mr-6' : 'mr-0'}`}>
+          <SidebarMenuAction className={`opacity-0 hover:opacity-100 ${item.items?.length ? 'mr-10' : 'mr-4'}`}>
             <MoreHorizontalIcon className="h-4 w-4" />
           </SidebarMenuAction>
         </DropdownMenuTrigger>
@@ -221,9 +219,9 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
               <span>Unpin</span>
             </DropdownMenuItem>
           }
-          <DropdownMenuItem onClick={() => setIsRenameOpen(true)}>
+          {/* <DropdownMenuItem onClick={() => setIsRenameOpen(true)}>
             <span>Rename</span>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           {level === 0 && <DropdownMenuItem onClick={() => setIsIconOpen(true)}>
             <span>Change Icon</span>
           </DropdownMenuItem>}
@@ -239,7 +237,7 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <Dialog open={isRenameOpen} onOpenChange={setIsRenameOpen}>
+      {/* <Dialog open={isRenameOpen} onOpenChange={setIsRenameOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Rename Tag</DialogTitle>
@@ -262,7 +260,7 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
             <Button onClick={handleRenameTag}>Save</Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
 
       <Dialog open={isIconOpen} onOpenChange={setIsIconOpen}>
         <DialogContent>
@@ -304,7 +302,7 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
           </div>
           <DialogFooter>
             <Button onClick={() => setIsIconOpen(false)}>Cancel</Button>
-            <Button onClick={handleChangeIcon}>Save</Button>
+            <Button onClick={handleChangeIcon} disabled={isLoading}>{isLoading ? 'Saving...' : 'Save'}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -312,7 +310,7 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
         <Collapsible asChild>
           <div>
             <CollapsibleTrigger asChild>
-              <SidebarMenuAction className="data-[state=open]:rotate-90 mr-0">
+              <SidebarMenuAction className="data-[state=open]:rotate-90 mr-4">
                 <ChevronRightIcon />
                 <span className="sr-only">Toggle</span>
               </SidebarMenuAction>
@@ -334,11 +332,11 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
 export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
   const sidebar = useSidebar();
   const { user } = useUser();
-  const { tags } = useTags({
+  const { tags, counts } = useTags({
     withSnapshotsCount: true
   });
 
-  const tagTree = buildTagTree(tags || [])
+  const tagTree = buildTagTree(tags || [], counts || [])
   const pinnedTags = tagTree.filter(tag => tag.pinned)
   const unpinnedTags = tagTree.filter(tag => !tag.pinned)
 
@@ -368,6 +366,16 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                   <Link href="/">
                     <HomeIcon />
                     <span>All Notes</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="Recycle Bin">
+                  <Link href="/recycle-bin">
+                    <Trash2Icon />
+                    <span>Recycle Bin</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -422,7 +430,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                     <span>Profile</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                {/* <DropdownMenuItem>
                   <Link href="/settings/billing" className="flex items-center gap-2">
                     <SettingsIcon className="mr-2 h-4 w-4" />
                     <span>Billing</span>
@@ -433,7 +441,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                     <Trash2Icon className="mr-2 h-4 w-4" />
                     <span>Recycle Bin</span>
                   </Link>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => signOut()} className="text-red-600">
                   <LogOutIcon className="mr-2 h-4 w-4" />

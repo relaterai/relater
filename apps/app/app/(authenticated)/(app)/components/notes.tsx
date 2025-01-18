@@ -7,15 +7,6 @@ import { Button } from "@repo/design-system/components/ui/button";
 import { ExternalLink, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { openDB } from 'idb';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@repo/design-system/components/ui/alert-dialog";
 
 const Notes = () => {
   const searchParams = useSearchParams();
@@ -23,17 +14,16 @@ const Notes = () => {
   const search = searchParams.get('search');
   const date = searchParams.get('date');
 
+  const [searchValue, setSearchValue] = useState({});
+
   const [page, setPage] = useState(1);
   const [allSnapshots, setAllSnapshots] = useState<any[]>([]);
   const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
-  const [showRefreshDialog, setShowRefreshDialog] = useState(false);
 
-  const { snapshots = [], isLoading } = useSnapshots({
+  const { snapshots = [], isLoading, error } = useSnapshots({
     pageSize: 10,
     page,
-    tagName: tag || undefined,
-    search: search || undefined,
-    // date: date ? new Date(date) : undefined,
+    ...searchValue,
   });
 
   // const { snapshots: newestSnapshots } = useSnapshots({
@@ -85,7 +75,12 @@ const Notes = () => {
 
   useEffect(() => {
     setPage(1)
-  }, [tag, search]);
+    setSearchValue({
+      tagName: tag || undefined,
+      search: search || undefined,
+      heatmapDate: date ? new Date(date).toISOString() : undefined,
+    })
+  }, [tag, search, date]);
 
   useEffect(() => {
     if (page === 1) {
@@ -132,7 +127,7 @@ const Notes = () => {
   // }, [newestSnapshots, allSnapshots])
 
   useEffect(() => {
-    const shouldLoadMore = inView && allSnapshots.length > 0 && snapshots.length > 0 && !isLoading;
+    const shouldLoadMore = inView && allSnapshots.length > 0 && snapshots.length > 0 && !isLoading && !error;
     if (shouldLoadMore) {
       setPage(prev => prev + 1);
     }

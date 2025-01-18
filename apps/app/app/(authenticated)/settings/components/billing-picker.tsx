@@ -8,7 +8,7 @@ import { cn } from "@repo/design-system/lib/utils";
 import { getStripe } from "@repo/payments/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-// import { config as stripeConfig } from "@repo/payments/striped.config";
+import { config as stripeConfig } from "@repo/payments/striped.config";
 
 interface BillingPickerProps {
   currentPlan?: string;
@@ -43,12 +43,11 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
             <div className="mt-6">
               <p className='font-medium text-sm'>Features:</p>
               <ul className='mt-2 space-y-2 text-muted-foreground text-sm'>
-                <li>• AI Tag System</li>
-                <li>• Heat Map</li>
-                <li>• All platforms sync</li>
-                <li>• Unlimited Text</li>
-                <li>• 500MB Storage</li>
-                <li>• Export</li>
+                {Object.entries(stripeConfig.features)
+                  .filter(([_, feature]) => feature.free)
+                  .map(([key, feature]) => (
+                    <li key={key}>• {feature.name}{feature.free !== true ? ` (${feature.free})` : ''}</li>
+                  ))}
               </ul>
             </div>
 
@@ -92,11 +91,11 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
             <div className="mt-6">
               <p className='font-medium text-sm'>Everything in Free, plus:</p>
               <ul className='mt-2 space-y-2 text-muted-foreground text-sm'>
-                <li>• 10GB Storage</li>
-                <li>• Uncompressed Image</li>
-                <li>• Tag Icon</li>
-                <li>• API Access</li>
-                <li>• Vector Search</li>
+                {Object.entries(stripeConfig.features)
+                  .filter(([_, feature]) => feature.pro && !feature.free)
+                  .map(([key, feature]) => (
+                    <li key={key}>• {feature.name}{feature.pro !== true ? ` (${feature.pro})` : ''}</li>
+                  ))}
               </ul>
             </div>
 

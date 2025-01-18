@@ -37,6 +37,7 @@ export function useTags(params?: Partial<z.infer<typeof getTagsQuerySchema>>) {
       snapshotsCount: z.number().optional()
     })).parse(data.items) : undefined,
     total: data?.total,
+    counts: data?.counts,
     error,
     isLoading,
     mutate,
