@@ -196,7 +196,7 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
 
   return (
     <SidebarMenuItem key={item.title}>
-      <Link href={item.url}>
+      <Link href={`${item.url}${item.items?.length ? '/' : ''}`}>
         <SidebarMenuButton>
           {level === 0 && <span className='w-3 h-3 flex items-center justify-center'>{item.emoji}</span>}
           <span>{item.title}</span>

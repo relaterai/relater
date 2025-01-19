@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, type ButtonProps } from "@repo/design-system/components/ui/button";
+import { Label } from "@repo/design-system/components/ui/label";
 import { cn } from "@repo/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -14,7 +15,7 @@ export default function ManageSubscriptionButton(props: ButtonProps) {
     <Button
       {...props}
       variant={props.variant || "secondary"}
-      className={cn(props.className, "h-9")}
+      className={cn(props.className, "h-9 w-fit px-6")}
       onClick={() => {
         setClicked(true);
         fetch(`/api/billing/manage`, {
