@@ -8,16 +8,7 @@ import { ExternalLink, Loader2, Trash2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@repo/design-system/components/ui/alert-dialog";
+import { Empty } from "./empty";
 
 const Notes = () => {
   const searchParams = useSearchParams();
@@ -26,8 +17,6 @@ const Notes = () => {
   const date = searchParams.get('date');
 
   const [searchValue, setSearchValue] = useState({});
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const [page, setPage] = useState(1);
   const [allSnapshots, setAllSnapshots] = useState<any[]>([]);
@@ -148,23 +137,17 @@ const Notes = () => {
 
   const handleDelete = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setDeleteId(id);
-    setDeleteDialogOpen(true);
-  };
-
-  const confirmDelete = async () => {
-    if (!deleteId) return;
-
     try {
-      await fetch(`/api/snapshots/${deleteId}`, {
-        method: 'DELETE'
+      await fetch(`/api/snapshots/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          isDeleted: true,
+        }),
       });
-      setAllSnapshots(prev => prev.filter(snapshot => snapshot.id !== deleteId));
+      setAllSnapshots(prev => prev.filter(snapshot => snapshot.id !== id));
     } catch (error) {
       console.error('Error deleting snapshot:', error);
     }
-    setDeleteDialogOpen(false);
-    setDeleteId(null);
   };
 
   if (isLoading && allSnapshots.length === 0) {
@@ -175,23 +158,12 @@ const Notes = () => {
     </div>
   }
 
+  if (allSnapshots.length === 0) {
+    return <Empty />
+  }
+
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
-            <AlertDialogDescription>
-              Are you sure you want to delete this note? This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
       <div className='grid auto-rows-min grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
         {allSnapshots.map((snapshot, index) => (
           <div
