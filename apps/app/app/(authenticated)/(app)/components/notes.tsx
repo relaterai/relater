@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from "react";
 import { useSnapshots } from "@/swr/use-snapshots";
-import { useInView } from "react-intersection-observer";
 import { Button } from "@repo/design-system/components/ui/button";
+import { openDB } from 'idb';
 import { ExternalLink, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { openDB } from 'idb';
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 const Notes = () => {
   const searchParams = useSearchParams();
@@ -135,7 +135,7 @@ const Notes = () => {
 
   if (isLoading && allSnapshots.length === 0) {
     return <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <div className="flex justify-center items-center h-full">
+      <div className='flex h-full items-center justify-center'>
         <Loader2 className="h-4 w-4 animate-spin" />
       </div>
     </div>
@@ -143,12 +143,12 @@ const Notes = () => {
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-      <div className="grid auto-rows-min gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 grid-cols-1">
+      <div className='grid auto-rows-min grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
         {allSnapshots.map((snapshot, index) => (
           <div
             key={snapshot.id}
             ref={index === allSnapshots.length - 1 ? ref : undefined}
-            className="rounded-xl bg-muted/50 overflow-hidden cursor-pointer hover:bg-muted/70 hover:shadow-sm transition-all duration-300"
+            className='cursor-pointer overflow-hidden rounded-xl bg-muted/70 transition-all duration-300 hover:bg-muted hover:shadow-sm'
             onClick={() => router.push(`/note/${snapshot.id}`)}
           >
             <div className="flex flex-col">
@@ -156,12 +156,12 @@ const Notes = () => {
                 {imageUrls[snapshot.id] && <img
                   src={imageUrls[snapshot.id]}
                   alt={snapshot.title}
-                  className="absolute top-0 left-0 w-full h-full object-cover object-top"
+                  className='absolute top-0 left-0 h-full w-full object-cover object-top'
                 />}
               </div>
-              <div className="flex flex-col p-4 max-h-[160px] overflow-hidden">
+              <div className='flex max-h-[160px] flex-col overflow-hidden p-4'>
                 <div className="flex items-center justify-between gap-2">
-                  <h3 className="font-medium truncate max-w-[200px]">{snapshot.title}</h3>
+                  <h3 className='max-w-[200px] truncate font-medium'>{snapshot.title}</h3>
                   <Button
                     variant="ghost"
                     size="icon"
@@ -171,18 +171,18 @@ const Notes = () => {
                     <ExternalLink className="h-4 w-4" />
                   </Button>
                 </div>
-                <p className="mt-1 text-sm text-muted-foreground truncate">{snapshot.pageUrl}</p>
-                <div className="mt-2 flex gap-1 flex-wrap max-h-[60px] overflow-y-auto">
+                <p className='mt-1 truncate text-muted-foreground text-sm'>{snapshot.pageUrl}</p>
+                <div className='mt-2 flex max-h-[60px] flex-wrap gap-1 overflow-y-auto'>
                   {snapshot.tags.map((tag: any) => (
                     <span
                       key={tag.id}
-                      className="rounded-sm bg-primary/5 px-2 py-0.5 text-xs text-primary whitespace-nowrap"
+                      className='whitespace-nowrap rounded-sm bg-primary/5 px-2 py-0.5 text-primary text-xs'
                     >
                       {tag.emoji} {tag.name}
                     </span>
                   ))}
                 </div>
-                <div className="mt-2 text-xs text-muted-foreground">
+                <div className='mt-2 text-muted-foreground text-xs'>
                   Updated at {snapshot.updatedAt.toLocaleDateString()}
                 </div>
               </div>
