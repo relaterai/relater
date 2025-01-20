@@ -2,6 +2,7 @@
 
 import { useSnapshots } from "@/swr/use-snapshots";
 import { Button } from "@repo/design-system/components/ui/button";
+import { timeAgo } from "@repo/utils";
 import { openDB } from 'idb';
 import { ExternalLink, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -183,7 +184,7 @@ const Notes = () => {
                   ))}
                 </div>
                 <div className='mt-2 text-muted-foreground text-xs'>
-                  Updated at {snapshot.updatedAt.toLocaleDateString()}
+                  {timeAgo(snapshot.createdAt, { withAgo: true })}
                 </div>
               </div>
             </div>
