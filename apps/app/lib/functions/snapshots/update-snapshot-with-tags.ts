@@ -1,5 +1,6 @@
 import prisma from '@repo/database';
 import { LaterApiError } from '@repo/error';
+import { isBoolean } from '@repo/utils';
 import type z from '@repo/zod';
 import type {
   SnapshotSchema,
@@ -94,8 +95,8 @@ export async function updateSnapshotWithTags({
     data: {
       ...(title && { title }),
       ...(note && { note }),
-      ...(pinned && { pinned }),
-      ...(isDeleted && { isDeleted }), // Move to trash
+      ...(isBoolean(pinned) && { pinned }),
+      ...(isBoolean(isDeleted) && { isDeleted }), // Move to trash
       tags: {
         disconnect: deletedTags.map((tag) => ({ id: tag.id })),
       },

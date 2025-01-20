@@ -4,6 +4,7 @@ import { cleanUserTagsCount } from '@/lib/functions/users/get-user-tags-count';
 import { parseRequestBody } from '@/lib/utils';
 import { withSession } from '@repo/auth/session';
 import prisma from '@repo/database';
+import { isBoolean } from '@repo/utils';
 import type z from '@repo/zod';
 import {
   TagSchema,
@@ -28,7 +29,7 @@ export const PATCH = withSession(async ({ session, params, req }) => {
       ...(name && { name }),
       ...(color && { color }),
       ...(emoji && { emoji }),
-      ...(pinned && { pinned }),
+      ...(isBoolean(pinned) && { pinned }),
     },
   });
 

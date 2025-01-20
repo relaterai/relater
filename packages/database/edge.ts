@@ -1,11 +1,7 @@
 import { PrismaClient } from '@prisma/client/edge';
-import { keys } from './keys';
-
-const { DATABASE_URL } = keys();
 
 const prismaClientSingleton = () => {
   return new PrismaClient({
-    datasourceUrl: DATABASE_URL,
     log:
       process.env.NODE_ENV === 'production'
         ? []

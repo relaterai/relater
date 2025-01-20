@@ -1,4 +1,5 @@
 import prisma from '@repo/database';
+import { isBoolean } from '@repo/utils';
 import type z from '@repo/zod';
 import type { updateTagSchema } from '@repo/zod/schemas/tags';
 
@@ -30,7 +31,7 @@ export async function updateTag({
       }),
       ...(color && { color }),
       ...(emoji && { emoji }), // TODO: This change requires membership
-      ...(pinned !== undefined && { pinned }),
+      ...(isBoolean(pinned) && { pinned }),
     },
   });
 
