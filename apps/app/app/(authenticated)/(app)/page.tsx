@@ -27,7 +27,7 @@ const App = async () => {
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
           </div>
-          <Search />'w-full justify-between '
+          <Search />
         </div >
       </header >
       <Notes />
