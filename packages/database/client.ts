@@ -1,5 +1,11 @@
-export * from "@prisma/client";
+import {
+  SnapshotType,
+  TagColor,
+} from '@prisma/client';
+
+export * from '@prisma/client';
 
 export {
-  TagColor
-} from "@prisma/client";
+  TagColor,
+  SnapshotType,
+};

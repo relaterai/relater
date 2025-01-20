@@ -27,6 +27,7 @@ export const GET = withSession(async ({ req, session, searchParams }) => {
     search,
     isDeleted,
     heatmapDate,
+    type,
   } = getSnapshotsQuerySchema.parse(searchParams);
   const { snapshots, pagination } = await getSnapshots({
     userId: session.user.id,
@@ -40,6 +41,7 @@ export const GET = withSession(async ({ req, session, searchParams }) => {
     withCount: true,
     isDeleted,
     heatmapDate,
+    type,
   });
   return NextResponse.json({
     items: z.array(SnapshotSchema).parse(snapshots),
@@ -49,7 +51,7 @@ export const GET = withSession(async ({ req, session, searchParams }) => {
 
 // POST /api/snapshots – create a new snapshot
 export const POST = withSession(async ({ req, session }) => {
-  const { snapshotFileKey, title, snippet, tags, screenshotFileKey, pageUrl } =
+  const { snapshotFileKey, title, snippet, tags, screenshotFileKey, pageUrl, type } =
     createSnapshotSchema.parse(await parseRequestBody(req));
   const newTags = await genSnapshotTags({
     title,
@@ -71,6 +73,7 @@ export const POST = withSession(async ({ req, session }) => {
       title: title || '',
       storageUsage: 0, // TODO: calculate storage usage
       aiTokensUsage: 0, // TODO: calculate ai tokens usage
+      type,
     },
   });
   const createManyTagsData: Prisma.TagCreateInput[] = newTags.tags.allTags.map(

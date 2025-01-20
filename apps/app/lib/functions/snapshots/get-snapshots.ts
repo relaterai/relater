@@ -15,6 +15,7 @@ export async function getSnapshots({
   tagName,
   tagIds,
   heatmapDate,
+  type,
   withTags = true,
   page = 1,
   pageSize = 10,
@@ -27,6 +28,7 @@ export async function getSnapshots({
   const where: Prisma.SnapshotWhereInput = {
     userId,
     ...(isDeleted !== undefined && { isDeleted }),
+    ...(type && { type }),
     // Search conditions
     ...(search && {
       OR: [

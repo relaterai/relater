@@ -1,3 +1,4 @@
+import { SnapshotType } from '@repo/database/client';
 import z from '../index';
 import { getPaginationQuerySchema } from './misc';
 import { TagSchema } from './tags';
@@ -43,6 +44,7 @@ export const getSnapshotsQuerySchema = z
       .transform((v) => (typeof v === 'boolean' ? v : v === 'true'))
       .optional()
       .describe('Whether to return snapshots in trash.'),
+    type: z.nativeEnum(SnapshotType).optional().describe('Type of the snapshot'),
     heatmapDate: z
       .string()
       .datetime()
@@ -57,6 +59,7 @@ export const createSnapshotSchema = z
     snapshotFileKey: z.string().optional(),
     screenshotFileKey: z.string().optional().describe('Screenshot of the page'),
     title: z.string().optional().describe('Title of the snapshot'),
+    type: z.nativeEnum(SnapshotType).optional().describe('Type of the snapshot'),
     snippet: z
       .string()
       .optional()
@@ -127,6 +130,7 @@ export const SnapshotSchema: z.ZodType = z
     //   .url()
     //   .optional()
     //   .describe('The snapshot URL of the snapshot.'),
+    type: z.nativeEnum(SnapshotType).optional().describe('Type of the snapshot'),
     pageUrl: z.string().describe('The page URL of the snapshot.'),
     storageUsage: z.number().describe('The storage usage of the snapshot.'),
     createdAt: z.date().describe('The creation date of the snapshot.'),
