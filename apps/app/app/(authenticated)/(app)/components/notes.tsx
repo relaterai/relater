@@ -4,10 +4,20 @@ import { useSnapshots } from "@/swr/use-snapshots";
 import { Button } from "@repo/design-system/components/ui/button";
 import { timeAgo } from "@repo/utils";
 import { openDB } from 'idb';
-import { ExternalLink, Loader2 } from "lucide-react";
+import { ExternalLink, Loader2, Trash2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@repo/design-system/components/ui/alert-dialog";
 
 const Notes = () => {
   const searchParams = useSearchParams();
@@ -16,6 +26,8 @@ const Notes = () => {
   const date = searchParams.get('date');
 
   const [searchValue, setSearchValue] = useState({});
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const [page, setPage] = useState(1);
   const [allSnapshots, setAllSnapshots] = useState<any[]>([]);
@@ -134,6 +146,27 @@ const Notes = () => {
     }
   }, [inView, allSnapshots, isLoading]);
 
+  const handleDelete = async (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDeleteId(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+
+    try {
+      await fetch(`/api/snapshots/${deleteId}`, {
+        method: 'DELETE'
+      });
+      setAllSnapshots(prev => prev.filter(snapshot => snapshot.id !== deleteId));
+    } catch (error) {
+      console.error('Error deleting snapshot:', error);
+    }
+    setDeleteDialogOpen(false);
+    setDeleteId(null);
+  };
+
   if (isLoading && allSnapshots.length === 0) {
     return <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
       <div className='flex h-full items-center justify-center'>
@@ -144,6 +177,21 @@ const Notes = () => {
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Delete</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this note? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <div className='grid auto-rows-min grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
         {allSnapshots.map((snapshot, index) => (
           <div
@@ -153,12 +201,20 @@ const Notes = () => {
             onClick={() => router.push(`/note/${snapshot.id}`)}
           >
             <div className="flex flex-col">
-              <div className="relative w-full pt-[56.25%]">
+              <div className="relative w-full pt-[56.25%] group">
                 {imageUrls[snapshot.id] && <img
                   src={imageUrls[snapshot.id]}
                   alt={snapshot.title}
                   className='absolute top-0 left-0 h-full w-full object-cover object-top'
                 />}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute rounded-full top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-200"
+                  onClick={(e) => handleDelete(snapshot.id, e)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
               </div>
               <div className='flex max-h-[160px] flex-col overflow-hidden p-4'>
                 <div className="flex items-center justify-between gap-2">
@@ -166,7 +222,10 @@ const Notes = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => window.open(snapshot.pageUrl, '_blank')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      window.open(snapshot.pageUrl, '_blank');
+                    }}
                     className="h-8 w-8"
                   >
                     <ExternalLink className="h-4 w-4" />

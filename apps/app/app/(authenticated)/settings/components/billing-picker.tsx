@@ -17,9 +17,6 @@ interface BillingPickerProps {
 export function BillingPicker({ currentPlan }: BillingPickerProps) {
   const router = useRouter();
   const [isAnnual, setIsAnnual] = useState(true);
-  const monthlyPrice = 9.99;
-  const annualPrice = monthlyPrice * 12 * 0.5;
-  const [clicked, setClicked] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -107,7 +104,7 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
                 )}
                 disabled={currentPlan === 'pro'}
                 onClick={() => {
-                  setClicked(true);
+                  // setClicked(true);
                   fetch(`/api/billing/upgrade`, {
                     method: "POST",
                     headers: {
@@ -135,7 +132,7 @@ export function BillingPicker({ currentPlan }: BillingPickerProps) {
                       alert(err);
                     })
                     .finally(() => {
-                      setClicked(false);
+                      // setClicked(false);
                     });
                 }}
               >

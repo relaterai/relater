@@ -27,7 +27,7 @@ const fetcher = async (url: string, { params }: { params?: Record<string, any> }
   };
 };
 
-export function useSnapshots(params?: z.infer<typeof getSnapshotsQuerySchema>) {
+export function useSnapshots(params?: Partial<z.infer<typeof getSnapshotsQuerySchema>>) {
   const { data, error, isLoading, mutate } = useSWR(
     ['/api/snapshots', params],
     ([url, queryParams]) => fetcher(url, { params: queryParams }),

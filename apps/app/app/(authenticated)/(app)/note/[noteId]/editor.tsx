@@ -13,6 +13,7 @@ import { timeAgo } from '@repo/utils';
 import { openDB } from 'idb';
 import { Loader2, Plus, Save, X } from 'lucide-react';
 import { useEffect, useState, } from 'react';
+import { useTags } from '@/swr/use-tags';
 
 export default function NotePage(props: { noteId: string }) {
   const noteId = props.noteId;
@@ -33,6 +34,8 @@ export default function NotePage(props: { noteId: string }) {
   const [lastSavedState, setLastSavedState] = useState({ title: '', content: '', tags: [] as Array<{ name: string, emoji: string }> });
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved'>('saved');
   const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
+
+  const { mutate } = useTags();
 
   useEffect(() => {
     if (snapshot && firstLoad) {
@@ -94,7 +97,7 @@ export default function NotePage(props: { noteId: string }) {
     }
   }, [snapshot]);
 
-  const handleSave = async (changes: any) => {
+  const handleSave = async (changes: { title?: string, content?: string, tags?: string[] }) => {
     setSaveStatus('saving');
     try {
       const response = await fetch(`/api/snapshots/${noteId}`, {
@@ -109,10 +112,10 @@ export default function NotePage(props: { noteId: string }) {
         setLastSavedState({ title, content, tags });
         setLastSavedTime(new Date());
         setSaveStatus('saved');
-        toast({
-          title: "Saved",
-          duration: 2000,
-        });
+
+        if (changes.tags) {
+          mutate();
+        }
       }
     } catch (error) {
       setSaveStatus('unsaved');

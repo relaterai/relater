@@ -130,9 +130,7 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
   const [newName, setNewName] = useState(item.title);
   const [newIcon, setNewIcon] = useState(item.emoji || '');
   const [isLoading, setIsLoading] = useState(false);
-  const { mutate } = useTags({
-    withSnapshotsCount: true
-  })
+  const { mutate } = useTags()
 
   const togglePin = async () => {
     try {
@@ -332,9 +330,7 @@ const RecursiveMenuItem = ({ item, pinned = false, level = 0 }: { item: TagNode,
 export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
   const sidebar = useSidebar();
   const { user } = useUser();
-  const { tags, counts } = useTags({
-    withSnapshotsCount: true
-  });
+  const { tags, counts } = useTags();
 
   const tagTree = buildTagTree(tags || [], counts || [])
   const pinnedTags = tagTree.filter(tag => tag.pinned)
