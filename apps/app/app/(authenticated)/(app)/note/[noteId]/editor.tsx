@@ -216,9 +216,9 @@ export default function NotePage(props: { noteId: string }) {
         </div>
       </header>
 
-      <div className='flex flex-1 flex-col overflow-hidden lg:flex-row'>
+      <div className='flex flex-1 flex-col overflow-hidden lg:!flex-row'>
         {(snapshot?.screenshotFileKey || snapshot?.snapshotFileKey) && (
-          <div className='w-full overflow-auto border-b p-4 lg:w-2/3 lg:border-r lg:border-b-0'>
+          <div className='overflow-auto w-full border-b p-4 lg:!w-2/3 lg:border-r lg:border-b-0'>
             <div className='flex h-full flex-col gap-4'>
               <Tabs defaultValue={snapshot?.screenshotFileKey ? "screenshot" : "snapshot"} className="w-full">
                 <div className="flex justify-end">
