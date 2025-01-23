@@ -24,27 +24,32 @@ const legals = fs
   .filter((file) => !file.name.startsWith('('))
   .map((file) => file.name.replace('.mdx', ''));
 
+const protocol = env.VERCEL_PROJECT_PRODUCTION_URL?.startsWith('https')
+  ? 'https'
+  : 'http';
+const url = new URL(`${protocol}://${env.VERCEL_PROJECT_PRODUCTION_URL}`);
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: env.VERCEL_PROJECT_PRODUCTION_URL,
+      url: new URL('/', url).href,
       lastModified: new Date(),
     },
     ...pages.map((page) => ({
-      url: new URL(page, env.VERCEL_PROJECT_PRODUCTION_URL).href,
+      url: new URL(page, url).href,
       lastModified: new Date(),
     })),
     ...blogs.map((blog) => ({
       url: new URL(
         `blog/${blog}`,
-        env.VERCEL_PROJECT_PRODUCTION_URL
+        url
       ).href,
       lastModified: new Date(),
     })),
     ...legals.map((legal) => ({
       url: new URL(
         `legal/${legal}`,
-        env.VERCEL_PROJECT_PRODUCTION_URL
+        url
       ).href,
       lastModified: new Date(),
     })),
