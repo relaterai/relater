@@ -17,6 +17,11 @@ type BlogPostProperties = {
   }>;
 };
 
+const protocol = env.VERCEL_PROJECT_PRODUCTION_URL?.startsWith('https')
+  ? 'https'
+  : 'http';
+const url = new URL(`${protocol}://${env.VERCEL_PROJECT_PRODUCTION_URL}`);
+
 export const generateMetadata = async ({
   params,
 }: BlogPostProperties): Promise<Metadata> => {
@@ -56,7 +61,7 @@ const BlogPost = async ({ params }: BlogPostProperties) => {
       '@type': 'WebPage',
       '@id': new URL(
         `/blog/${slug}`,
-        env.VERCEL_PROJECT_PRODUCTION_URL
+        url
       ).toString(),
     },
     headline: page.title,
