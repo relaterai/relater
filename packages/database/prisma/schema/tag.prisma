@@ -2,7 +2,7 @@
 model Tag {
   id              String     @id @default(cuid())
   /// Unique name of the tag, e.g., a/b/c
-  name            String     @unique
+  name            String
   /// 1st name of the tag, e.g., a
   firstPath       String     @map("first_path")
   /// Array of tag path segments, e.g., for tag "a/b/c" it contains ["a", "a/b", "a/b/c"]
