@@ -53,7 +53,7 @@ export default function ApiKeyCreatedTemplate({
             <Section className='mt-4 mb-8 text-center'>
               <Link
                 className='rounded-full bg-black px-6 py-3 text-center font-semibold text-[12px] text-white no-underline'
-                href={`https://app.later.run/settings/tokens`}
+                href={`https://app.relater.ai/settings/tokens`}
               >
                 View API Keys
               </Link>
@@ -61,7 +61,7 @@ export default function ApiKeyCreatedTemplate({
             <Text className='text-black text-sm leading-6'>
               If you did not create this API key, you can{' '}
               <Link
-                href={`https://app.later.run/settings/tokens`}
+                href={`https://app.relater.ai/settings/tokens`}
                 className="text-black underline"
               >
                 <strong>delete this key</strong>

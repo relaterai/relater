@@ -7,10 +7,10 @@ type MetadataGenerator = Omit<Metadata, 'description' | 'title'> & {
   image?: string;
 };
 
-const applicationName = 'later.run';
+const applicationName = 'relater.ai';
 const author: Metadata['authors'] = {
   name: 'Tsui',
-  url: 'https://later.run/',
+  url: 'https://relater.ai/',
 };
 const publisher = 'Tsui';
 const twitterHandle = '@tsui';

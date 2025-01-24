@@ -13,7 +13,7 @@ test('GET /api/snapshots', async (ctx) => {
   const newSnapshot: z.infer<typeof createSnapshotSchema> = {
     title: 'Test Snapshot',
     snippet: 'Test Snippet',
-    pageUrl: 'https://later.run',
+    pageUrl: 'https://relater.ai',
     screenshotFileKey: 'test-test-test.tsx',
     snapshotFileKey: 'test-test-test.tsx',
   };

@@ -35,7 +35,7 @@ export const withSession = (handler: WithSessionHandler) =>
             throw new LaterApiError({
               code: "bad_request",
               message:
-                "Misconfigured authorization header. Did you forget to add 'Bearer '? Learn more: https://later.run/docs/auth",
+                "Misconfigured authorization header. Did you forget to add 'Bearer '? Learn more: https://relater.ai/docs/auth",
             });
           }
           const apiKey = authorizationHeader.replace("Bearer ", "");

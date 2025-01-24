@@ -1,6 +1,6 @@
 {
   "name": "@repo/zod",
-  "description": "Zod utilities for Later.run",
+  "description": "Zod utilities for relater.ai",
   "version": "0.0.0",
   "sideEffects": false,
   "dependencies": {

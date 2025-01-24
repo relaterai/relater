@@ -2,7 +2,7 @@ import ApiKeyCreatedTemplate from '@repo/email/templates/api-key-created';
 
 const ExampleAPIKeyCreatedEmail = () => (
   <ApiKeyCreatedTemplate
-    email="no-reply@later.run"
+    email="no-reply@relater.ai"
     token={{
       name: 'Relater API Key',
       type: 'All access',

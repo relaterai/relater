@@ -15,7 +15,7 @@ import Footer from '../components/footer';
 
 export default function UpgradeEmailTemplate({
   name = 'Tsui',
-  email = 'no-reply@later.run',
+  email = 'no-reply@relater.ai',
   plan = 'Pro',
 }: {
   name: string | null;

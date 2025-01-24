@@ -15,7 +15,7 @@ import Footer from '../components/footer';
 
 export default function WelcomeEmailTemplate({
   name = 'Tsui',
-  email = 'no-reply@later.run',
+  email = 'no-reply@relater.ai',
 }: {
   name: string | null;
   email: string;

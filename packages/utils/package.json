@@ -1,6 +1,6 @@
 {
   "name": "@repo/utils",
-  "description": "Utility functions and constants for Later.run",
+  "description": "Utility functions and constants for relater.ai",
   "version": "0.0.0",
   "sideEffects": false,
   "peerDependencies": {
@@ -24,7 +24,7 @@
     "punycode": "^2.3.0",
     "tailwind-merge": "^2.4.0"
   },
-  "homepage": "https://later.run",
+  "homepage": "https://relater.ai",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tsui66/later.git"
@@ -32,13 +32,7 @@
   "bugs": {
     "url": "https://github.com/tsui66/later/issues"
   },
-  "keywords": [
-    "later",
-    "later.run",
-    "utils",
-    "utility",
-    "functions"
-  ],
+  "keywords": ["later", "relater.ai", "utils", "utility", "functions"],
   "publishConfig": {
     "access": "public"
   }

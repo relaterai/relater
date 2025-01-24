@@ -23,7 +23,7 @@ export const getAuthTokenOrThrow = (
       throw new LaterApiError({
         code: 'bad_request',
         message:
-          "Misconfigured authorization header. Did you forget to add 'Bearer '? Learn more: https://later.run/docs/auth",
+          "Misconfigured authorization header. Did you forget to add 'Bearer '? Learn more: https://relater.ai/docs/auth",
       });
     }
 

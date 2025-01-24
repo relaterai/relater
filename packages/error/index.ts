@@ -62,7 +62,7 @@ export class LaterApiError extends Error {
   }
 }
 
-const docErrorUrl = 'https://later.run/docs/api-reference/errors';
+const docErrorUrl = 'https://relater.ai/docs/api-reference/errors';
 
 export function fromZodError(error: ZodError): ErrorResponse {
   return {
@@ -160,9 +160,7 @@ export const exceededLimitError = ({
   limit: number;
   type: 'storage' | 'AI';
 }) => {
-  return `You've reached your ${
-    type === 'storage' || type === 'AI' ? 'monthly' : ''
-  } limit of ${limit} ${
-    limit === 1 ? type.slice(0, -1) : type
-  } on the ${capitalize(plan)} plan. Please upgrade to add more ${type}.`;
+  return `You've reached your ${type === 'storage' || type === 'AI' ? 'monthly' : ''
+    } limit of ${limit} ${limit === 1 ? type.slice(0, -1) : type
+    } on the ${capitalize(plan)} plan. Please upgrade to add more ${type}.`;
 };

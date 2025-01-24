@@ -1,6 +1,6 @@
 # `@repo/utils`
 
-`@repo/utils` is a library of utility functions that are used across Later.run's web applications.
+`@repo/utils` is a library of utility functions that are used across relater.ai's web applications.
 
 ## Installation
 

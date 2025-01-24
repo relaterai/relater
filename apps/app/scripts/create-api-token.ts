@@ -11,7 +11,7 @@ async function main() {
     },
     update: {},
     create: {
-      email: 'test@later.run',
+      email: 'test@relater.ai',
     },
   });
   const hashedKey = await hashToken(token);

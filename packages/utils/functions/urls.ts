@@ -13,7 +13,7 @@ export const getUrlFromString = (str: string) => {
     if (str.includes('.') && !str.includes(' ')) {
       return new URL(`https://${str}`).toString();
     }
-  } catch (_) {}
+  } catch (_) { }
   return str;
 };
 
@@ -23,7 +23,7 @@ export const getUrlFromStringIfValid = (str: string) => {
     if (str.includes('.') && !str.includes(' ')) {
       return new URL(`https://${str}`).toString();
     }
-  } catch (_) {}
+  } catch (_) { }
   return null;
 };
 
@@ -133,8 +133,8 @@ export const createHref = (
   // any params, doesn't have to be all of them
   utmParams?: Partial<Record<(typeof UTMTags)[number], string>>
 ) => {
-  if (domain === 'later.run') return href;
-  const url = new URL(href.startsWith('/') ? `https://later.run${href}` : href);
+  if (domain === 'relater.ai') return href;
+  const url = new URL(href.startsWith('/') ? `https://relater.ai${href}` : href);
   if (utmParams) {
     Object.entries(utmParams).forEach(([key, value]) => {
       url.searchParams.set(key, value);

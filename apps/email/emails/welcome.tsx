@@ -1,7 +1,7 @@
 import WelcomeEmailTemplate from '@repo/email/templates/welcome-email';
 
 const ExampleWelcomeEmail = () => (
-  <WelcomeEmailTemplate email="hello@later.run" name="Tsui" />
+  <WelcomeEmailTemplate email="hello@relater.ai" name="Tsui" />
 );
 
 export default ExampleWelcomeEmail;
