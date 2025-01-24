@@ -26,9 +26,10 @@ export const GET = withSession(async ({ req, session }) => {
         message: 'User not found',
       });
     }
+
     return NextResponse.json({
       ...user,
-      image: await getPreSignedGetUrl(user.image || "")
+      image: user?.image && await getPreSignedGetUrl(user?.image)
     });
   } catch (error) {
     req.log.error(error as string);

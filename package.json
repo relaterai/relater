@@ -1,5 +1,5 @@
 {
-  "name": "later-run",
+  "name": "relater",
   "version": "1.0.0",
   "scripts": {
     "build": "turbo build",
