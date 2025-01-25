@@ -1,5 +1,5 @@
 import { PrismaAdapter } from '@auth/prisma-adapter';
-import prisma from '@repo/database/edge';
+import prisma from '@repo/database';
 import { keys } from '../keys';
 import type { NextAuthConfig } from "next-auth"
 import type { User } from 'next-auth';
@@ -8,11 +8,14 @@ import type { AdapterUser } from 'next-auth/adapters';
 import type { JWT } from 'next-auth/jwt';
 import type { UserProps } from './utils';
 import { sendVerificationRequest } from './authSendRequest';
-
+import { HTTPAdapter } from '@repo/auth-js-http-adapter';
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = keys();
 
 export const authOptions: NextAuthConfig = {
-  adapter: PrismaAdapter(prisma),
+  adapter: HTTPAdapter({
+    authUrl: process.env.NEXT_PUBLIC_APP_URL,
+    secret: keys().AUTH_HTTP_ADAPTER_JWT,
+  }),
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60,

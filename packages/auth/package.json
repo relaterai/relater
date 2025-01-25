@@ -9,6 +9,7 @@
     "@hookform/resolvers": "^3.9.1",
     "@neondatabase/serverless": "^0.10.4",
     "@repo/database": "workspace:*",
+    "@repo/auth-js-http-adapter": "workspace:*",
     "@repo/design-system": "workspace:*",
     "@repo/email": "workspace:*",
     "@repo/error": "workspace:*",

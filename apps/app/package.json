@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
+    "@auth/prisma-adapter": "^2.7.4",
+    "@repo/auth-js-http-adapter": "workspace:*",
     "@prisma/client": "6.1.0",
     "@repo/analytics": "workspace:*",
     "@repo/auth": "workspace:*",
@@ -50,6 +52,7 @@
     "jsdom": "^25.0.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
+    "dotenv": "^16.4.7",
     "vitest": "^2.1.5"
   }
 }
