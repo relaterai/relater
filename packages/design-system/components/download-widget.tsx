@@ -4,7 +4,7 @@ import { Button } from "@repo/design-system/components/ui/button";
 
 export function DownloadWidget({ compact = false }: { compact?: boolean }) {
   const handleDownload = () => {
-    window.open("https://chrome.google.com/webstore", "_blank");
+    window.open("https://chromewebstore.google.com/detail/relater-your-ai-pair-crea/lgigglbhjlfanedbldgepjcdfghkaenj", "_blank");
   };
 
   return (
@@ -13,38 +13,38 @@ export function DownloadWidget({ compact = false }: { compact?: boolean }) {
         <Button
           onClick={handleDownload}
           variant="outline"
-          className="p-8 flex gap-4 rounded-full group"
+          className='group flex gap-4 rounded-full p-8'
         >
-          <img src="/chrome-icon.svg" alt="Chrome" className="w-10 h-10" />
+          <img src="/chrome-icon.svg" alt="Chrome" className='h-10 w-10' />
           <span>Add to Chrome for free</span>
         </Button >
       )}
 
-      <div className="flex gap-4 mt-2">
+      {/* <div className='mt-2 flex gap-4'>
         {compact &&
-          <Button variant="ghost" className="p-2 h-12 rounded-full">
+          <Button variant="ghost" className='h-12 rounded-full p-2'>
             <img
               src="/chrome-icon.svg"
               alt="Chrome"
-              className="w-8 h-8"
+              className='h-8 w-8'
             />
           </Button>
         }
-        <Button variant="ghost" className="p-2 h-12 rounded-full">
+        <Button variant="ghost" className='h-12 rounded-full p-2'>
           <img
             src="/firefox-icon.svg"
             alt="Firefox"
-            className="w-8 h-8"
+            className='h-8 w-8'
           />
         </Button>
-        <Button variant="ghost" className="p-2 h-12 rounded-full">
+        <Button variant="ghost" className='h-12 rounded-full p-2'>
           <img
             src="/edge-icon.svg"
             alt="Edge"
-            className="w-8 h-8"
+            className='h-8 w-8'
           />
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 }
