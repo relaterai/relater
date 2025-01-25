@@ -1,0 +1,17 @@
+{
+  "name": "@repo/auth-js-http-adapter",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@auth/core": "^0.37.4",
+    "next": "15.1.0",
+    "server-only": "^0.0.1",
+    "@t3-oss/env-nextjs": "^0.11.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "22.9.4",
+    "typescript": "^5.7.2"
+  }
+}
