@@ -36,7 +36,7 @@ export const genSnapshotTags = async (input: {
 }) => {
   const defaultPrompt = genSnapshotTagsDefaultPrompt(
     input.title || '',
-    input.snippet || '',
+    (input.snippet || '').slice(0, 1000),
     input.tags,
     'en-US'
   );
