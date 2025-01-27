@@ -16,7 +16,8 @@ export const httpAdapterRouteHandlers = ({ adapter }: { adapter: Adapter }) => {
   };
 
   return {
-    POST: async (req: NextRequest, { params }: { params: { method: keyof Adapter } }) => {
+    // @ts-ignore
+    POST: async (req: NextRequest, params: { params: { method: keyof Adapter } }) => {
       if (!isValidRequest(req)) {
         return NextResponse.json(
           { error: "Invalid or missing authorization header" },
@@ -24,10 +25,10 @@ export const httpAdapterRouteHandlers = ({ adapter }: { adapter: Adapter }) => {
         );
       }
       const paramsAwaited = await params;
-      const adapterHook = adapter[paramsAwaited.method];
+      const adapterHook = adapter[paramsAwaited.params.method];
       if (!adapterHook) {
         return NextResponse.json(
-          { error: `Invalid adapter method: ${paramsAwaited.method}` },
+          { error: `Invalid adapter method: ${paramsAwaited.params.method}` },
           { status: 400 }
         );
       }
