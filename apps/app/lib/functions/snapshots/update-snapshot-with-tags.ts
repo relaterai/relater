@@ -69,8 +69,10 @@ export async function updateSnapshotWithTags({
           const tagsSplit = tag.split('/');
           return {
             where: {
-              name: tag,
-              userId: snapshot.userId,
+              userId_name: {
+                userId: snapshot.userId,
+                name: tag,
+              },
             },
             create: {
               name: tag,
