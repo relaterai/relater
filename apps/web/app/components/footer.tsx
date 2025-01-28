@@ -7,15 +7,25 @@ export const Footer = () => {
     {
       title: 'Home',
       href: '/',
-      description: '',
+      description: 'Relater is an open-source, read-it-later tool that helps you capture and review content from anywhere.',
     },
     {
       title: 'Pages',
-      description: 'Managing a small business today is already tough.',
+      description: '',
       items: [
         {
           title: 'Blog',
           href: '/blog',
+        },
+      ],
+    },
+    {
+      title: 'Community',
+      description: '',
+      items: [
+        {
+          title: 'X/Twitter',
+          href: 'https://x.com/relaterai',
         },
       ],
     },
@@ -68,7 +78,7 @@ export const Footer = () => {
               </div>
               {/* <Status /> */}
             </div>
-            <div className="grid items-start gap-10 lg:grid-cols-3">
+            <div className="grid items-start gap-10 lg:grid-cols-4">
               {navigationItems.map((item) => (
                 <div
                   key={item.title}

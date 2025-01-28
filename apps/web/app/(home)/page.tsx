@@ -11,7 +11,7 @@ import { Hero } from './components/hero';
 const meta = {
   title: 'Your AI pair creator.',
   description:
-    'Relater is a tool that helps you capture and review content from anywhere.',
+    'Relater is an open-source, read-it-later tool that helps you capture and review content from anywhere.',
 };
 
 export const metadata: Metadata = createMetadata(meta);

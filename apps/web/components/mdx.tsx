@@ -38,6 +38,7 @@ const img = (properties: HTMLProps<HTMLImageElement>) => {
 };
 
 const CompanyName = () => 'USQUE, Inc.';
+const ProductName = () => 'Relater AI';
 
 export const Mdx = ({
   code,
@@ -50,6 +51,7 @@ export const Mdx = ({
         a,
         img,
         CompanyName,
+        ProductName,
         ...components,
       }}
     />

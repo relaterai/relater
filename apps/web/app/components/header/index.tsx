@@ -23,7 +23,7 @@ export const Header = () => {
     {
       title: 'Home',
       href: '/',
-      description: '',
+      description: 'Relater is an open-source, read-it-later tool that helps you capture and review content from anywhere.',
     },
     {
       title: 'Product',
@@ -33,22 +33,22 @@ export const Header = () => {
           title: 'Chrome Extension',
           href: '/chrome-extension',
         },
-        {
-          title: 'Edge Add-on',
-          href: '/edge-add-on',
-        },
-        {
-          title: 'Firefox Add-on',
-          href: '/firefox-add-on',
-        },
-        {
-          title: 'iOS App',
-          href: '/ios-app',
-        },
-        {
-          title: 'Android App',
-          href: '/android-app',
-        },
+        // {
+        //   title: 'Edge Add-on',
+        //   href: '/edge-add-on',
+        // },
+        // {
+        //   title: 'Firefox Add-on',
+        //   href: '/firefox-add-on',
+        // },
+        // {
+        //   title: 'iOS App',
+        //   href: '/ios-app',
+        // },
+        // {
+        //   title: 'Android App',
+        //   href: '/android-app',
+        // },
       ],
     },
     {

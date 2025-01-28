@@ -7,8 +7,8 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const title = 'Blog';
-const description = 'Thoughts, ideas, and opinions.';
+const title = 'Relater AI Blog | Thoughts, ideas, and opinions.';
+const description = 'Relater is an open-source, read-it-later tool that helps you capture and review content from anywhere.';
 
 export const metadata: Metadata = createMetadata({ title, description });
 
