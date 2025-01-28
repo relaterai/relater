@@ -13,8 +13,6 @@ const pages = appFolders
     return !['styles', 'components'].includes(foldername)
   });
 
-console.log(pages, 'pages')
-
 const blogs = fs
   .readdirSync('content/blog', { withFileTypes: true })
   .filter((file) => !file.isDirectory())
