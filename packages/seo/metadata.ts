@@ -7,13 +7,13 @@ type MetadataGenerator = Omit<Metadata, 'description' | 'title'> & {
   image?: string;
 };
 
-const applicationName = 'relater.ai';
+const applicationName = 'Relater AI';
 const author: Metadata['authors'] = {
-  name: 'Tsui',
-  url: 'https://relater.ai/',
+  name: 'Relater AI',
+  url: 'https://x.com/relaterai',
 };
-const publisher = 'Tsui';
-const twitterHandle = '@tsui';
+const publisher = 'Relater AI';
+const twitterHandle = '@relaterai';
 
 export const createMetadata = ({
   title,
