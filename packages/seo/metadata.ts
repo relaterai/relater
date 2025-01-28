@@ -15,6 +15,18 @@ const author: Metadata['authors'] = {
 const publisher = 'Relater AI';
 const twitterHandle = '@relaterai';
 
+export const keywords = [
+  'Relater AI',
+  'deepseek',
+  'gemini',
+  'web-clipper',
+  'read it later',
+  'ai-agent',
+  'bookmark',
+  'singlefile',
+  'bookmark manager',
+];
+
 export const createMetadata = ({
   title,
   description,
@@ -24,7 +36,7 @@ export const createMetadata = ({
   const parsedTitle = `${title} | ${applicationName}`;
   const defaultMetadata: Metadata = {
     title: parsedTitle,
-    description,
+    description: `${description} | ${keywords.join(' | ')}`,
     applicationName,
     authors: [author],
     creator: author.name,
