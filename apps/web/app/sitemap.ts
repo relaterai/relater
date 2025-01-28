@@ -8,7 +8,12 @@ const pages = appFolders
   .filter((file) => file.isDirectory())
   .filter((folder) => !folder.name.startsWith('_'))
   .filter((folder) => !folder.name.startsWith('('))
-  .map((folder) => folder.name);
+  .map((folder) => folder.name)
+  .filter(foldername => {
+    return !['styles', 'components'].includes(foldername)
+  });
+
+console.log(pages, 'pages')
 
 const blogs = fs
   .readdirSync('content/blog', { withFileTypes: true })
