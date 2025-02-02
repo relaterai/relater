@@ -25,5 +25,8 @@
   "prettier.enable": false,
   "tailwindCSS.experimental.configFile": "./packages/tailwind-config/config.ts",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "svg.preview.background": "transparent"
+  "svg.preview.background": "transparent",
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  }
 }

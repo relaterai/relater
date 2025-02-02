@@ -1,0 +1,31 @@
+@media (min-width: 651px) {
+  .ce-block__content {
+    max-width: calc(100% - 120px) !important;
+    margin: 0 0px;
+  }
+}
+
+@media (min-width: 651px) {
+  .ce-toolbar__content {
+    width: 0px !important;
+    margin-right: 0px;
+  }
+}
+
+.cdx-block {
+  max-width: 100% !important;
+}
+
+@media (min-width: 651px) {
+  .codex-editor--narrow .ce-toolbox .ce-popover {
+    left: 0;
+    right: 0;
+  }
+}
+
+@media (min-width: 651px) {
+  .codex-editor--narrow .ce-settings .ce-popover {
+    right: 0;
+    left: 0;
+  }
+}

@@ -10,13 +10,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/design-system/co
 import { toast } from '@repo/design-system/components/ui/use-toast';
 import { timeAgo } from '@repo/utils';
 import { openDB } from 'idb';
-import { Loader2, Plus, Save, X } from 'lucide-react';
-import { useCallback, useEffect, useMemo, useRef, useState, } from 'react';
+import { Loader2, Pencil, Plus, Save, SquareArrowOutUpRight, X } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState, } from 'react';
 import { useTags } from '@/swr/use-tags';
 
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
+import './style.css'
+import Link from 'next/link';
 
 export default function NotePage(props: { noteId: string }) {
   const noteId = props.noteId;
@@ -77,7 +79,7 @@ export default function NotePage(props: { noteId: string }) {
       const initialContent = snapshot.note || '';
       const initialTags = snapshot.tags || [];
 
-      editorRef.current?.render(JSON.parse(snapshot.note))
+      if (snapshot.note) editorRef.current?.render(JSON.parse(snapshot.note))
 
       setTitle(initialTitle);
       setContent(initialContent);
@@ -225,7 +227,7 @@ export default function NotePage(props: { noteId: string }) {
       case 'saving':
         return (
           <span className='flex items-center gap-1 whitespace-nowrap text-muted-foreground text-sm'>
-            <Loader2 className="h-3 w-3 animate-spin" />
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
             Saving...
           </span>
         );
@@ -234,7 +236,7 @@ export default function NotePage(props: { noteId: string }) {
       case 'saved':
         return (
           <span className='flex items-center gap-1 whitespace-nowrap text-muted-foreground text-sm'>
-            <Save className="h-3 w-3" />
+            <Save className="h-3.5 w-3.5" />
             {lastSavedTime ? `Saved ${timeAgo(lastSavedTime, { withAgo: true })}` : 'Saved'}
           </span>
         );
@@ -247,6 +249,16 @@ export default function NotePage(props: { noteId: string }) {
         <div className='flex w-full items-center justify-between gap-2 px-4'>
           <div className="flex items-center gap-2">
             <SidebarTrigger className="-ml-1" />
+          </div>
+          <div className="flex items-center gap-2">
+            {snapshot?.pageUrl && (
+              <Button variant="ghost" size="sm" asChild>
+                <Link href={snapshot.pageUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1">
+                  {snapshot.pageUrl.length > 50 ? snapshot.pageUrl.slice(0, 50) + '...' : snapshot.pageUrl}
+                  <SquareArrowOutUpRight />
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       </header>
@@ -289,35 +301,18 @@ export default function NotePage(props: { noteId: string }) {
         <div className="flex-1 overflow-auto">
           <div className='container mx-auto space-y-6 p-6'>
             <div className="flex items-center justify-between">
-              <Input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Note Title"
-                className='border-none bg-transparent px-0 font-semibold text-2xl shadow-none focus-visible:ring-0'
-              />
+              <div className="flex items-center gap-2">
+                <Pencil className="h-4 w-4 text-muted-foreground" />
+                <Input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Note Title"
+                  className='border-none !w-fit bg-transparent px-0 font-semibold !text-2xl shadow-none focus-visible:ring-0'
+                />
+              </div>
               {getSaveStatusText()}
             </div>
             <div className='flex flex-wrap items-center gap-2'>
-              {isAddingTag ? (
-                <Input
-                  value={newTag}
-                  onChange={(e) => setNewTag(e.target.value)}
-                  onBlur={handleAddTag}
-                  onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
-                  placeholder="New tag"
-                  className='h-7 w-32 border-none bg-transparent shadow-none focus-visible:ring-0'
-                  autoFocus
-                />
-              ) : (
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setIsAddingTag(true)}
-                  className="h-6 px-2"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              )}
               {tags.map((tag, index) => (
                 editingTagIndex === index ? (
                   <Input
@@ -342,9 +337,29 @@ export default function NotePage(props: { noteId: string }) {
                   </Badge>
                 )
               ))}
+              {isAddingTag ? (
+                <Input
+                  value={newTag}
+                  onChange={(e) => setNewTag(e.target.value)}
+                  onBlur={handleAddTag}
+                  onKeyDown={(e) => e.key === 'Enter' && handleAddTag()}
+                  placeholder="New tag"
+                  className='h-7 w-32 border-none bg-transparent shadow-none focus-visible:ring-0'
+                  autoFocus
+                />
+              ) : (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setIsAddingTag(true)}
+                  className="h-6 px-2"
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              )}
             </div>
             <Separator />
-            <div ref={editorHolderRef} className='h-[calc(100vh-48rem)] pl-4 w-full resize-none border-none px-0 shadow-none focus-visible:ring-0 [&_h2]:text-[2rem]' />
+            <div ref={editorHolderRef} className='h-[calc(100vh-48rem)] w-full resize-none border-none px-0 shadow-none focus-visible:ring-0 [&_h2]:text-[2rem]' />
           </div>
         </div>
       </div>
