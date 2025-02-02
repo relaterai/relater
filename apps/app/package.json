@@ -12,10 +12,18 @@
   "dependencies": {
     "@auth/core": "^0.37.4",
     "@auth/prisma-adapter": "^2.7.4",
-    "@repo/auth-js-http-adapter": "workspace:*",
+    "@editorjs/editorjs": "^2.30.8",
+    "@editorjs/header": "^2.8.8",
+    "@editorjs/link": "^2.6.2",
+    "@editorjs/list": "^2.0.4",
+    "@editorjs/quote": "^2.7.6",
+    "@milkdown/crepe": "^7.6.2",
+    "@milkdown/kit": "^7.6.2",
+    "@milkdown/theme-nord": "^7.6.2",
     "@prisma/client": "6.1.0",
     "@repo/analytics": "workspace:*",
     "@repo/auth": "workspace:*",
+    "@repo/auth-js-http-adapter": "workspace:*",
     "@repo/database": "workspace:*",
     "@repo/design-system": "workspace:*",
     "@repo/feature-flags": "workspace:*",
@@ -49,10 +57,10 @@
     "@types/node": "22.9.4",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
+    "dotenv": "^16.4.7",
     "jsdom": "^25.0.1",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "dotenv": "^16.4.7",
     "vitest": "^2.1.5"
   }
 }

@@ -7,13 +7,16 @@ import { Input } from '@repo/design-system/components/ui/input';
 import { Separator } from '@repo/design-system/components/ui/separator';
 import { SidebarTrigger } from '@repo/design-system/components/ui/sidebar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/design-system/components/ui/tabs';
-import { Textarea } from '@repo/design-system/components/ui/textarea';
 import { toast } from '@repo/design-system/components/ui/use-toast';
 import { timeAgo } from '@repo/utils';
 import { openDB } from 'idb';
 import { Loader2, Plus, Save, X } from 'lucide-react';
-import { useEffect, useState, } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, } from 'react';
 import { useTags } from '@/swr/use-tags';
+
+import EditorJS from '@editorjs/editorjs';
+import Header from '@editorjs/header';
+import List from '@editorjs/list';
 
 export default function NotePage(props: { noteId: string }) {
   const noteId = props.noteId;
@@ -35,13 +38,46 @@ export default function NotePage(props: { noteId: string }) {
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved'>('saved');
   const [lastSavedTime, setLastSavedTime] = useState<Date | null>(null);
 
+  const [editorReady, setEditorReady] = useState(false);
+
   const { mutate } = useTags();
 
+  const [editorHolder, setEditorHolder] = useState<HTMLElement | null>(null);
+  const editorHolderRef = useCallback((node: HTMLElement | null) => {
+    if (node) setEditorHolder(node)
+  }, [])
+  const editorRef = useRef<EditorJS | null>(null);
+
   useEffect(() => {
-    if (snapshot && firstLoad) {
+    if (editorHolder && !editorRef.current) {
+      editorRef.current = new EditorJS({
+        // data: JSON.parse(snapshot.note),
+        holder: editorHolder,
+        tools: {
+          header: Header,
+          list: List
+        },
+        onReady: async () => {
+          setEditorReady(true)
+        },
+        onChange: async () => {
+          if (editorRef.current) {
+            setContent(JSON.stringify(await editorRef.current.save()))
+          }
+        }
+      })
+    }
+  }, [editorHolder])
+
+  useEffect(() => {
+    if (snapshot && firstLoad && editorReady) {
+      setFirstLoad(false);
+
       const initialTitle = snapshot.title || '';
       const initialContent = snapshot.note || '';
       const initialTags = snapshot.tags || [];
+
+      editorRef.current?.render(JSON.parse(snapshot.note))
 
       setTitle(initialTitle);
       setContent(initialContent);
@@ -53,7 +89,6 @@ export default function NotePage(props: { noteId: string }) {
         content: initialContent,
         tags: initialTags
       });
-      setFirstLoad(false);
 
       const initDB = async () => {
         const db = await openDB('snapshots', 1, {
@@ -95,7 +130,7 @@ export default function NotePage(props: { noteId: string }) {
 
       loadFiles();
     }
-  }, [snapshot]);
+  }, [snapshot, editorReady]);
 
   const handleSave = async (changes: { title?: string, content?: string, tags?: string[] }) => {
     setSaveStatus('saving');
@@ -229,7 +264,7 @@ export default function NotePage(props: { noteId: string }) {
                 </div>
                 <TabsContent value="screenshot" className="relative aspect-video w-full">
                   {screenshotUrl && (
-                    <div className='h-[calc(100%)] w-full overflow-y-auto lg:h-[calc(100vh-10rem)]'>
+                    <div className='h-[calc(100%)] w-full overflow-y-auto lg:h-[calc(100vh-10rem)] flex items-center justify-center'>
                       <img
                         src={screenshotUrl}
                         alt="Screenshot preview"
@@ -309,12 +344,7 @@ export default function NotePage(props: { noteId: string }) {
               ))}
             </div>
             <Separator />
-            <Textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Start writing..."
-              className='min-h-[calc(100vh-48rem)] resize-none border-none px-0 shadow-none focus-visible:ring-0'
-            />
+            <div ref={editorHolderRef} className='h-[calc(100vh-48rem)] pl-4 w-full resize-none border-none px-0 shadow-none focus-visible:ring-0 [&_h2]:text-[2rem]' />
           </div>
         </div>
       </div>
