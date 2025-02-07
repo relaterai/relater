@@ -13,17 +13,23 @@ import { openDB } from 'idb';
 import { Loader2, Pencil, Plus, Save, SquareArrowOutUpRight, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState, } from 'react';
 import { useTags } from '@/swr/use-tags';
+import Link from 'next/link';
 
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import './style.css'
-import Link from 'next/link';
+
+// import { defaultValueCtx, Editor, rootCtx } from '@milkdown/kit/core';
+// import { commonmark } from '@milkdown/kit/preset/commonmark';
+// import { gfm } from '@milkdown/kit/preset/gfm';
+// import { nord } from '@milkdown/theme-nord';
+// import '@milkdown/theme-nord/style.css';
 
 export default function NotePage(props: { noteId: string }) {
   const noteId = props.noteId;
 
-  const { snapshot, isLoading } = useSnapshot(noteId);
+  const { snapshot, isLoading, mutate: mutateNote } = useSnapshot(noteId);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [tags, setTags] = useState<Array<{ name: string, emoji: string }>>([]);
@@ -48,6 +54,8 @@ export default function NotePage(props: { noteId: string }) {
   const editorHolderRef = useCallback((node: HTMLElement | null) => {
     if (node) setEditorHolder(node)
   }, [])
+
+  // const editorRef = useRef<Editor>()
   const editorRef = useRef<EditorJS | null>(null);
 
   useEffect(() => {
@@ -68,6 +76,32 @@ export default function NotePage(props: { noteId: string }) {
           }
         }
       })
+    }
+
+    // if (editorHolder) {
+    //   Editor.make()
+    //     .config((ctx) => {
+    //       ctx.set(rootCtx, editorHolder);
+    //       ctx.set(defaultValueCtx, content || '');
+    //     })
+    //     .config(nord)
+    //     .use(commonmark)
+    //     .use(gfm)
+    //     .create()
+    //     .then(editor => {
+    //       editorRef.current = editor
+    //     })
+
+    //   setEditorReady(true);
+
+    //   return () => {
+    //     editorRef.current?.destroy();
+    //   };
+    // }
+
+    return () => {
+      editorRef.current?.destroy()
+      editorRef.current = null
     }
   }, [editorHolder])
 
@@ -161,6 +195,8 @@ export default function NotePage(props: { noteId: string }) {
         description: "Please try again later",
         variant: "destructive",
       });
+    } finally {
+      mutateNote()
     }
   };
 

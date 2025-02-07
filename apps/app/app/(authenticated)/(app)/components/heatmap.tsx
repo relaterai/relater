@@ -45,16 +45,22 @@ const Heatmap = () => {
       <div className="p-4">
         <div className='mb-4 grid grid-cols-3 gap-4 text-gray-600 text-sm'>
           <div className="text-center">
-            <div className="font-medium">{stats?.snapshotsCount || 0}</div>
-            <div>Notes</div>
+            <div className='my-1'>
+              <Skeleton className='h-6 w-6 m-auto' />
+            </div>
+            <div className='text-muted-foreground text-xs'>NOTE</div>
           </div>
           <div className="text-center">
-            <div className="font-medium">{stats?.tagsCount || 0}</div>
-            <div>Tags</div>
+            <div className='my-1'>
+              <Skeleton className='h-6 w-6 m-auto' />
+            </div>
+            <div className='text-muted-foreground text-xs'>TAG</div>
           </div>
           <div className="text-center">
-            <div className="font-medium">{stats?.regDays || 0}</div>
-            <div>Days</div>
+            <div className='my-1'>
+              <Skeleton className='h-6 w-6 m-auto' />
+            </div>
+            <div className='text-muted-foreground text-xs'>DAY</div>
           </div>
         </div>
 

@@ -1,7 +1,6 @@
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import z from '@repo/zod';
 import { SnapshotSchema } from '@repo/zod/schemas/snapshots';
-import useSWRImmutable from 'swr/immutable';
 
 const fetcher = async (url: string) => {
   const res = await fetch(url);
@@ -17,7 +16,7 @@ const fetcher = async (url: string) => {
 };
 
 export function useSnapshot(id: string) {
-  const { data, error, isLoading } = useSWRImmutable(
+  const { data, error, isLoading, mutate } = useSWR(
     id ? `/api/snapshots/${id}` : null,
     fetcher
   );
@@ -25,6 +24,7 @@ export function useSnapshot(id: string) {
   return {
     snapshot: data ? SnapshotSchema.parse(data) : undefined,
     error,
-    isLoading
+    isLoading,
+    mutate
   };
 }
