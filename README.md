@@ -15,7 +15,7 @@ Your AI pair creator.
 🔗 API Integrations: Seamlessly connect Relater to your workflows and AI agents through our powerful API - access all your saved content and metadata with ease.
 
 🔒 Privacy-first & Open Source
-Your privacy is our priority. All your data stays under your control, and we never use it for AI training. As an open-source project, our commitment to privacy is transparent and verifiable.
+Your privacy is our priority. All your data stays under your control. As an open-source project, our commitment to privacy is transparent and verifiable.
 
 ## Project Structure
 
