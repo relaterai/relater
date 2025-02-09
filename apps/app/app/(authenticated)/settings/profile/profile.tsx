@@ -157,10 +157,10 @@ export default function ProfilePage() {
   return (
     <div className="mx-auto">
       {/* <h1 className="text-2xl font-semibold">Profile</h1> */}
-      <div className="py-4">
+      <div>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div>
-            <Label className="block my-2">Avatar</Label>
+            <Label className="block mb-2">Avatar</Label>
             <div className="relative group w-16 h-16">
               <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
                 {formData.newAvatarPreview ? (

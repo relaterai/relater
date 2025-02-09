@@ -42,7 +42,7 @@ export const POST = withSession(async ({ req, session }) => {
   const { name } = createTokenSchema.parse(await parseRequestBody(req));
 
   // Create token
-  const token = `later_${nanoid(24)}`;
+  const token = `relater_${nanoid(24)}`;
   const hashedKey = await hashToken(token);
   const partialKey = `${token.slice(0, 3)}...${token.slice(-4)}`;
 

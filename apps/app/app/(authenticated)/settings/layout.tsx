@@ -16,6 +16,10 @@ const sidebarNavItems = [
   {
     title: "Billing",
     href: "/settings/billing",
+  },
+  {
+    title: "API Keys",
+    href: "/settings/api",
   }
 ]
 
