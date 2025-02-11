@@ -13,7 +13,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export const userAuthSchema = z.object({
   email: z.string().email(),
@@ -106,7 +106,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         className={cn(buttonVariants({ variant: 'outline' }))}
         onClick={() => {
           setIsGoogleLoading(true);
-          signIn('email');
+          signIn('google');
         }}
         disabled={isLoading || isGoogleLoading}
       >
