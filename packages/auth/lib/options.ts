@@ -28,6 +28,7 @@ export const authOptions: NextAuthConfig = {
     GoogleProvider({
       clientId: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     {
       id: 'email',
