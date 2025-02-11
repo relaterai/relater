@@ -15,7 +15,7 @@
     "@repo/error": "workspace:*",
     "@repo/tailwind-config": "workspace:*",
     "@repo/utils": "workspace:*",
-    "@vercel/functions": "^1.5.2",
+    "@vercel/functions": "^1.6.0",
     "lucide-react": "^0.461.0",
     "next": "15.1.0",
     "next-auth": "5.0.0-beta.25",
