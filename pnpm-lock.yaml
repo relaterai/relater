@@ -515,6 +515,9 @@ importers:
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
+      sonner:
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.3.1)(react@18.3.1)
       zod:
         specifier: ^3.23.8
         version: 3.24.1
@@ -705,8 +708,13 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-themes:
+<<<<<<< HEAD
         specifier: ^0.4.3
         version: 0.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+=======
+        specifier: ^0.4.4
+        version: 0.4.4(react-dom@18.3.1)(react@18.3.1)
+>>>>>>> a42d17e (refactor: update sign-in process and user data handling)
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -729,8 +737,13 @@ importers:
         specifier: ^0.0.1
         version: 0.0.1
       sonner:
+<<<<<<< HEAD
         specifier: ^1.7.0
         version: 1.7.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+=======
+        specifier: ^1.7.1
+        version: 1.7.1(react-dom@18.3.1)(react@18.3.1)
+>>>>>>> a42d17e (refactor: update sign-in process and user data handling)
       tailwind-merge:
         specifier: ^2.5.5
         version: 2.5.5
@@ -19823,7 +19836,23 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+<<<<<<< HEAD
   source-map-js@1.2.1: {}
+=======
+  /sonner@2.0.1(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-FRBphaehZ5tLdLcQ8g2WOIRE+Y7BCfWi5Zyd8bCvBjiW8TxxAyoWZIxS661Yz6TGPqFQ4VLzOF89WEYhfynSFQ==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
+  /source-map-js@1.2.1:
+    resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
+    engines: {node: '>=0.10.0'}
+>>>>>>> a42d17e (refactor: update sign-in process and user data handling)
 
   source-map-support@0.5.21:
     dependencies:

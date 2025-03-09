@@ -83,7 +83,6 @@ export const withSession = (handler: WithSessionHandler) =>
           //     headers,
           //   });
           // }
-
           waitUntil(
             prisma.token.update({
               where: {
@@ -92,7 +91,7 @@ export const withSession = (handler: WithSessionHandler) =>
               data: {
                 lastUsed: new Date(),
               },
-            }),
+            }).then()
           );
           session = {
             user: {

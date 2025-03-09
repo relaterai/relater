@@ -423,7 +423,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                 <DropdownMenuItem>
                   <Link href="/settings/profile" className="flex items-center gap-2">
                     <UserIcon className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
+                    <span>Settings</span>
                   </Link>
                 </DropdownMenuItem>
                 {/* <DropdownMenuItem>

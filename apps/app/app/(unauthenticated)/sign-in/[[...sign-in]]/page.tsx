@@ -1,12 +1,14 @@
 import { createMetadata } from '@repo/seo/metadata';
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
+import SignIn from '@repo/auth/components/sign-in';
 
 const title = 'Welcome back';
 const description = 'Enter your email to sign in.';
-const SignIn = dynamic(() =>
-  import('@repo/auth/components/sign-in').then((mod) => mod.default)
-);
+
+// const SignIn = dynamic(() =>
+//   import('@repo/auth/components/sign-in').then((mod) => mod.default)
+// );
 
 export const metadata: Metadata = createMetadata({ title, description });
 

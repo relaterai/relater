@@ -1,3 +1,4 @@
+'use client';
 
 import { Suspense } from 'react';
 import { UserAuthForm } from './user-auth-form';
@@ -16,9 +17,7 @@ export default function SignIn() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <div className="mx-auto flex w-full flex-col justify-center space-y-24 sm:w-[350px]">
-        <Suspense fallback={<SearchBarFallback />}>
-          <UserAuthForm />
-        </Suspense>
+        <UserAuthForm />
       </div>
     </div>
   );
