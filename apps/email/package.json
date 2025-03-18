@@ -10,13 +10,13 @@
   "dependencies": {
     "@react-email/components": "0.0.28",
     "@repo/email": "workspace:*",
-    "react": "18.3.1",
+    "react": "19.0.0",
     "react-email": "3.0.2"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*",
     "@types/node": "22.9.4",
-    "@types/react": "18.3.12",
+    "@types/react": "19.0.11",
     "typescript": "^5.7.2"
   }
 }

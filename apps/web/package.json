@@ -23,7 +23,7 @@
     "lucide-react": "^0.461.0",
     "mdx-bundler": "^10.0.3",
     "next": "15.1.0",
-    "react": "18.3.1",
+    "react": "19.0.0",
     "react-dom": "18.3.1",
     "react-wrap-balancer": "^1.1.1",
     "reading-time": "^1.5.0",
@@ -42,7 +42,7 @@
     "@content-collections/next": "^0.2.4",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "22.9.4",
-    "@types/react": "18.3.12",
+    "@types/react": "19.0.11",
     "@types/react-dom": "18.3.1",
     "typescript": "^5.7.2"
   }
