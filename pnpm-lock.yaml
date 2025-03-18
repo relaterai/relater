@@ -154,8 +154,8 @@ importers:
         specifier: ^0.11.1
         version: 0.11.1(typescript@5.7.2)(zod@3.24.1)
       '@vercel/functions':
-        specifier: ^1.5.2
-        version: 1.5.2
+        specifier: ^1.6.0
+        version: 1.6.0
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
@@ -193,8 +193,8 @@ importers:
         specifier: ^7.4.0
         version: 7.4.0
       sonner:
-        specifier: ^1.7.0
-        version: 1.7.1(react-dom@18.3.1)(react@18.3.1)
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.3.1)(react@18.3.1)
       swr:
         specifier: ^2.2.5
         version: 2.2.5(react@18.3.1)
@@ -515,6 +515,9 @@ importers:
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
+      sonner:
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.3.1)(react@18.3.1)
       zod:
         specifier: ^3.23.8
         version: 3.24.1
@@ -705,7 +708,7 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1(react-dom@18.3.1)(react@18.3.1)
       next-themes:
-        specifier: ^0.4.3
+        specifier: ^0.4.4
         version: 0.4.4(react-dom@18.3.1)(react@18.3.1)
       react:
         specifier: 18.3.1
@@ -729,8 +732,8 @@ importers:
         specifier: ^0.0.1
         version: 0.0.1
       sonner:
-        specifier: ^1.7.0
-        version: 1.7.1(react-dom@18.3.1)(react@18.3.1)
+        specifier: ^2.0.1
+        version: 2.0.1(react-dom@18.3.1)(react@18.3.1)
       tailwind-merge:
         specifier: ^2.5.5
         version: 2.5.5
@@ -9886,6 +9889,16 @@ packages:
         optional: true
     dev: false
 
+  /@vercel/functions@1.6.0:
+    resolution: {integrity: sha512-R6FKQrYT5MZs5IE1SqeCJWxMuBdHawFcCZboKKw8p7s+6/mcd55Gx6tWmyKnQTyrSEA04NH73Tc9CbqpEle8RA==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      '@aws-sdk/credential-provider-web-identity': '*'
+    peerDependenciesMeta:
+      '@aws-sdk/credential-provider-web-identity':
+        optional: true
+    dev: false
+
   /@vercel/toolbar@0.1.28(next@15.1.0)(react@18.3.1):
     resolution: {integrity: sha512-/cOX1xVJV1hESg+JNzM/4wA4XcSkNnqhr+hK/BcsS6hbPswFWk7UdQlk2APMlX9w6hvHM1jMs3h9++RLsqnAMw==}
     peerDependencies:
@@ -16591,8 +16604,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /sonner@1.7.1(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-b6LHBfH32SoVasRFECrdY8p8s7hXPDn3OHUFbZZbiB1ctLS9Gdh6rpX2dVrpQA0kiL5jcRzDDldwwLkSKk3+QQ==}
+  /sonner@2.0.1(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-FRBphaehZ5tLdLcQ8g2WOIRE+Y7BCfWi5Zyd8bCvBjiW8TxxAyoWZIxS661Yz6TGPqFQ4VLzOF89WEYhfynSFQ==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc

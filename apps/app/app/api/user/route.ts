@@ -18,6 +18,7 @@ export const GET = withSession(async ({ req, session }) => {
         email: true,
         image: true,
         createdAt: true,
+        plan: true
       },
     });
     if (!user) {

@@ -4,7 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { buttonVariants } from '@repo/design-system/components/ui/button';
 import { Input } from '@repo/design-system/components/ui/input';
 import { Label } from '@repo/design-system/components/ui/label';
-import { toast } from '@repo/design-system/components/ui/use-toast';
+// import { toast } from '@repo/design-system/components/ui/use-toast';
+import { toast } from "sonner";
 import { Icons, cn } from '@repo/utils';
 import { LoaderCircle } from 'lucide-react';
 import { signIn } from 'next-auth/react';
@@ -45,18 +46,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     setIsLoading(false);
 
+    // console.log("signInResult>>>>>>>>>>>>>>", signInResult);
+
     if (!signInResult?.ok) {
-      return toast({
-        title: 'Something went wrong.',
-        description: 'Your sign in request failed. Please try again.',
-        variant: 'destructive',
-      });
+      toast.error("Something went wrong. Please try again.");
+      return
     }
 
-    return toast({
-      title: 'Check your email',
-      description: 'We have sent you a login link.',
-    });
+    toast.success("Check your email");
   }
 
   return (
