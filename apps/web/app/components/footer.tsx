@@ -73,7 +73,7 @@ export const Footer = () => {
                   Your AI pair creator.
                 </p>
                 <p className='text-foreground/75 text-muted-foreground text-sm leading-relaxed tracking-tight'>
-                  © {new Date().getFullYear()} USQUE, Inc.
+                  © {new Date().getFullYear()} Relater AI, Inc.
                 </p>
               </div>
               {/* <Status /> */}
