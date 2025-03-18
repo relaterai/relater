@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
-    "@auth/prisma-adapter": "^2.7.4",
+    "@auth/prisma-adapter": "^2.8.0",
     "@editorjs/editorjs": "^2.30.8",
     "@editorjs/header": "^2.8.8",
     "@editorjs/link": "^2.6.2",
